@@ -93,8 +93,9 @@ BEGIN
   UPDATE district_ratings dr
   SET rank = r.new_rank
   FROM ranked r
-  WHERE dr.district_id = r.district_id;
-END;
+  WHERE dr.district_id = r.district_id
+  AND dr.rank IS DISTINCT FROM r.new_rank;
+  END;
 $$ LANGUAGE plpgsql;
 
 -- This trigger will call the update_district_ranks function
