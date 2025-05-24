@@ -34,12 +34,12 @@ export default function Range({
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Icon name={iconName} size={20} color="#480201" />
           <label>{name}</label>
         </div>
-        <p className={displayRatingColor(value)}>{value}</p>
+        <p className={`text-large font-bold ${displayRatingColor(value)}`}>{value}</p>
       </div>
       <input
         type="range"
