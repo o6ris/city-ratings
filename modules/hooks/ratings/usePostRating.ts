@@ -9,7 +9,6 @@ export default function usePostRating() {
     education_schools: number;
     shops_amenities: number;
     sports_recreation: number;
-    quality_of_life: number;
     comment: string;
   }) => {
     console.log("hook payload", payload);
