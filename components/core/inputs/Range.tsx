@@ -20,21 +20,26 @@ export default function Range({
   iconName?: keyof typeof icons;
   className?: string;
 }) {
-  const displayColor = (value: number) => {
+  const displayRangeColor = (value: number) => {
     if (value <= 3) return "range-error [--range-bg:#F99483]";
     if (value <= 6 && value > 3) return "range-warning [--range-bg:#FACE88]";
     if (value >= 7) return "range-success [--range-bg:#CFE7AB]";
   };
 
+  const displayRatingColor = (value: number) => {
+    if (value <= 3) return "text-error";
+    if (value <= 6 && value > 3) return "text-warning";
+    if (value >= 7) return "text-success";
+  };
+
   return (
     <div>
-      <div className="flex items-center gap-2 mb-2">
-        <Icon
-          name={iconName}
-          size={20}
-          color="#480201"
-        />
-        <label>{name}</label>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <Icon name={iconName} size={20} color="#480201" />
+          <label>{name}</label>
+        </div>
+        <p className={displayRatingColor(value)}>{value}</p>
       </div>
       <input
         type="range"
@@ -46,7 +51,9 @@ export default function Range({
         onChange={
           onChange ? (e) => onChange(Number(e.target.value)) : undefined
         }
-        className={`${displayColor(value)} ${className} range w-full range-xl [--range-thumb:#480201]`}
+        className={`${displayRangeColor(
+          value
+        )} ${className} range w-full range-xl [--range-thumb:#480201]`}
       />
     </div>
   );
