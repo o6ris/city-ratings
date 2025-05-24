@@ -1,3 +1,6 @@
+import Icon from "@components/core/Icons/Icon";
+import { icons } from "lucide-react";
+
 export default function Range({
   min = 1,
   max = 10,
@@ -5,6 +8,7 @@ export default function Range({
   value = 5,
   name,
   onChange,
+  iconName,
   className,
 }: {
   min?: number;
@@ -13,6 +17,7 @@ export default function Range({
   value?: number;
   name?: string;
   onChange?: (value: number) => void;
+  iconName?: keyof typeof icons;
   className?: string;
 }) {
   const displayColor = (value: number) => {
@@ -22,15 +27,27 @@ export default function Range({
   };
 
   return (
-    <input
-      type="range"
-      min={min}
-      max={max}
-      step={step}
-      value={value}
-      name={name}
-      onChange={onChange ? (e) => onChange(Number(e.target.value)) : undefined}
-      className={`${displayColor(value)} ${className}`}
-    />
+    <div>
+      <div className="flex items-center gap-2 mb-2">
+        <Icon
+          name={iconName}
+          size={20}
+          color="#480201"
+        />
+        <label>{name}</label>
+      </div>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        name={name}
+        onChange={
+          onChange ? (e) => onChange(Number(e.target.value)) : undefined
+        }
+        className={`${displayColor(value)} ${className} range w-full range-xl [--range-thumb:#480201]`}
+      />
+    </div>
   );
 }
