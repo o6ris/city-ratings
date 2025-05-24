@@ -39,7 +39,7 @@ export default function Range({
           <Icon name={iconName} size={20} color="#480201" />
           <label>{name}</label>
         </div>
-        <p className={`text-large font-bold ${displayRatingColor(value)}`}>{value}</p>
+        <p className={`!text-large !font-bold ${displayRatingColor(value)}`}>{value}</p>
       </div>
       <input
         type="range"

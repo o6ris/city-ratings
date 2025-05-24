@@ -17,7 +17,7 @@ export default function RatingForm({ districtId }: { districtId: string }) {
     comment: "",
   });
   return (
-    <section className="flex flex-col gap-8">
+    <section className="flex flex-col gap-8 w-full">
       <Range
         min={1}
         max={10}

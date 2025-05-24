@@ -58,3 +58,31 @@
   --depth: 1;
   --noise: 0;
 }
+
+h1 {
+  font-size: var(--text-xxlarge);
+  font-weight: var(--font-weight-black);
+}
+
+h2 {
+  font-size: var(--text-xlarge);
+  font-weight: var(--font-weight-bold);
+}
+h3 {
+  font-size: var(--text-large);
+  font-weight: var(--font-weight-regular);
+}
+
+p {
+  font-size: var(--text-medium);
+  font-weight: var(--font-weight-regular);
+}
+
+body {
+  padding: 1rem
+}
+@media screen and (min-width: 640px) {
+  body {
+    padding: 10rem;
+  }
+}
