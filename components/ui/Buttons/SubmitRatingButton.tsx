@@ -4,28 +4,26 @@ import usePostRating from "@/modules/hooks/ratings/usePostRating";
 
 export default function SubmitRatingButton({
   districtId,
+  rating,
 }: {
   districtId: string;
+  rating: {
+    safety_security: number;
+    cost_of_living: number;
+    healthcare_access: number;
+    transportation_mobility: number;
+    environment_nature: number;
+    education_schools: number;
+    shops_amenities: number;
+    sports_recreation: number;
+    comment: string;
+  };
 }) {
   const { postRating } = usePostRating();
 
-  const payload = {
-    district_id: districtId,
-    safety_security: 8,
-    cost_of_living: 5,
-    healthcare_access: 5,
-    transportation_mobility: 6,
-    environment_nature: 5,
-    education_schools: 6,
-    shops_amenities: 4,
-    sports_recreation: 9,
-    quality_of_life: 4,
-    comment: "Good place to live",
-  };
-
   const handleSubmit = async () => {
     try {
-      const response = await postRating(payload);
+      const response = await postRating({ ...rating, district_id: districtId });
       if (response.error) {
         console.error("Error submitting rating:", response.error);
       } else {

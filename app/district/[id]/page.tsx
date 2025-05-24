@@ -1,4 +1,5 @@
 import { getOneDistrict } from "./action";
+import RatingForm from "@/components/ui/DistrictRating/RatingForm";
 
 export default async function OneDistrict({
   params,
@@ -11,5 +12,12 @@ export default async function OneDistrict({
     return <div>District not found</div>;
   }
   console.log("district", district);
-  return <div>District: {district.name}</div>;
+  return (
+    <section className="flex flex-col gap-8">
+      <h1>{district.name}</h1>
+      <section>
+        <RatingForm districtId={id} />
+      </section>
+    </section>
+  );
 }
