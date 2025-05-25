@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import Range from "@/components/core/inputs/Range";
 import Textarea from "@/components/core/inputs/Textarea";
 import SubmitRatingButton from "@/components/ui/Buttons/SubmitRatingButton";
@@ -181,9 +182,9 @@ export default function RatingForm({ districtId }: { districtId: string }) {
           </section>
         </section>
         <section className="grid grid-cols-2 gap-4 w-full">
-          <button className="btn btn-neutral text-primary rounded-full">
+          <Link className="btn btn-neutral text-primary rounded-full" href={`/district/${districtId}`}>
             Cancel
-          </button>
+          </Link>
           <SubmitRatingButton
             className="btn btn-secondary text-primary rounded-full"
             districtId={districtId}

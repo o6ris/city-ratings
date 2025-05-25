@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { getOneDistrict } from "./action";
+import { getOneDistrict } from "../action";
+import RatingForm from "@/components/ui/DistrictRating/RatingForm";
 
 export default async function OneDistrict({
   params,
@@ -15,7 +15,7 @@ export default async function OneDistrict({
   return (
     <section className="flex flex-col gap-8 items-center lg:items-start">
       <h1>{district.name}</h1>
-      <Link className="btn btn-secondary text-primary rounded-full" href={`/district/${district.id}/rating`}>Rate {district.name}</Link>
+      <RatingForm districtId={id} />
     </section>
   );
 }
