@@ -43,7 +43,7 @@ export default function RatingForm({ districtId }: { districtId: string }) {
   }, [totalScoreMemo]);
 
   return (
-    <section className="flex flex-col gap-12 w-full">
+    <section className="flex flex-col gap-12 w-full lg:grid lg:grid-cols-2 lg:gap-8">
       <section className="flex flex-col gap-6 w-full">
         <Range
           min={1}
@@ -163,6 +163,7 @@ export default function RatingForm({ districtId }: { districtId: string }) {
           <Textarea
             placeholder="Very nice area, I loved it!"
             name="Share your toughts"
+            className="w-full h-32 p-4 rounded-lg shadow-md border border-base-200 lg:h-64"
             value={rating.comment}
             onChange={(value) =>
               setRating((prev) => ({

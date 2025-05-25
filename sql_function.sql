@@ -16,7 +16,7 @@ BEGIN
     NEW.shops_amenities +
     NEW.sports_recreation +
     NEW.quality_of_life
-  ) / 9.0, 2);
+  ) / 8.0, 2);
 
   -- If district already exists, update its aggregated averages
   IF EXISTS (SELECT 1 FROM district_ratings WHERE district_id = NEW.district_id) THEN
