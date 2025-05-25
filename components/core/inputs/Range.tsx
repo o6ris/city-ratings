@@ -27,9 +27,9 @@ export default function Range({
   };
 
   const displayRatingColor = (value: number) => {
-    if (value <= 3) return "text-error";
-    if (value <= 6 && value > 3) return "text-warning";
-    if (value >= 7) return "text-success";
+    if (value <= 3) return "!text-error";
+    if (value <= 6 && value > 3) return "!text-warning";
+    if (value >= 7) return "!text-success";
   };
 
   return (

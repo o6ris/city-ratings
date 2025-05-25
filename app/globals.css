@@ -12,9 +12,9 @@
   --font-weight-light: 300;
   --font-weight-thin: 100;
 }
-@plugin "daisyui"{
+@plugin "daisyui" {
   themes: mytheme;
-};
+}
 @plugin "daisyui/theme" {
   name: "mytheme";
   default: true; /* set as default */
@@ -23,7 +23,7 @@
 
   --color-base-100: oklch(0.93 0.04 91);
   --color-base-200: oklch(0.91 0.05 91);
-  --color-base-300: oklch(0.89 0.06 91);  
+  --color-base-300: oklch(0.89 0.06 91);
   --color-base-content: oklch(20% 0.05 240);
   --color-primary: oklch(0.2545 0.1012 29.33);
   --color-primary-content: oklch(98% 0.01 240);
@@ -35,7 +35,7 @@
   --color-neutral-content: oklch(98% 0.01 240);
   --color-info: oklch(70% 0.2 220);
   --color-info-content: oklch(98% 0.01 220);
-  --color-success: oklch(0.80 0.21 142);
+  --color-success: oklch(0.8 0.21 142);
   --color-success-content: oklch(98% 0.01 140);
   --color-warning: oklch(0.82 0.13 72);
   --color-warning-content: oklch(20% 0.05 80);
@@ -70,16 +70,22 @@ h2 {
 }
 h3 {
   font-size: var(--text-large);
-  font-weight: var(--font-weight-regular);
+  font-weight: var(--font-weight-bold);
 }
-
-p {
+h4 {
   font-size: var(--text-medium);
+  font-weight: var(--font-weight-bold);
+}
+p,
+label,
+span {
+  font-size: var(--text-small);
   font-weight: var(--font-weight-regular);
 }
 
 body {
-  padding: 1rem
+  padding: 1rem;
+  color: var(--color-primary);
 }
 @media screen and (min-width: 640px) {
   body {
