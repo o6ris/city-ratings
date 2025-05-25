@@ -13,11 +13,9 @@ export default async function OneDistrict({
   }
   console.log("district", district);
   return (
-    <section className="flex flex-col gap-8">
+    <section className="flex flex-col gap-8 items-center lg:items-start">
       <h1>{district.name}</h1>
-      <section>
-        <RatingForm districtId={id} />
-      </section>
+      <RatingForm districtId={id} />
     </section>
   );
 }

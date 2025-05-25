@@ -3,9 +3,11 @@
 import usePostRating from "@/modules/hooks/ratings/usePostRating";
 
 export default function SubmitRatingButton({
+  className,
   districtId,
   rating,
 }: {
+  className: string;
   districtId: string;
   rating: {
     safety_security: number;
@@ -35,7 +37,7 @@ export default function SubmitRatingButton({
   };
 
   return (
-    <button onClick={handleSubmit} className="bg-red-200 p-2 rounded">
+    <button onClick={handleSubmit} className={className}>
       Submit Rating
     </button>
   );

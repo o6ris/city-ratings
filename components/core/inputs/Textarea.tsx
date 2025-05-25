@@ -18,7 +18,7 @@ export default function Textarea({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className={`w-full h-32 p-4 rounded-lg shadow-md ${className}`}
+        className={`w-full h-32 p-4 rounded-lg shadow-md border border-base-200 ${className}`}
       />
     </div>
   );
