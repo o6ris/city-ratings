@@ -1,14 +1,22 @@
-import { createClient } from "@/utils/supabase/server";
+import { isConected } from "@/app/login/actions";
+import { getDistricts } from "./action";
+import Link from "next/link";
 
 export default async function Home() {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
-    console.log("error!!!!!", error);
-    console.log("data!!!!!", data);
-    return <p>Home!!!!</p>;
-  }
-  console.log("user", data.user);
-  return <p>Hello {data.user.email}</p>;
+  const user = await isConected();
+  const districts = await getDistricts();
+  console.log("districts", districts);
+  return (
+    <section>
+      <p>Hello {user.email}</p>
+      <h1>Districts</h1>
+      <ul>
+        {districts.map((district) => (
+          <li key={district.id}>
+            <Link href={`/district/${district.id}`}>{district.name}</Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 }
