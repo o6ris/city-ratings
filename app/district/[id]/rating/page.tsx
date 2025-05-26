@@ -1,7 +1,7 @@
 import { getOneDistrict } from "../action";
 import RatingForm from "@/components/ui/DistrictRating/RatingForm";
 
-export default async function OneDistrict({
+export default async function OneDistrictRating({
   params,
 }: {
   params: Promise<{ id: string }>;
