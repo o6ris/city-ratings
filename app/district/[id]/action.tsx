@@ -125,12 +125,46 @@ export async function getoneDistrictReviews(id: string) {
       )`
     )
     .eq("district_id", id)
-    .order('created_at', { ascending: false });
+    .order("created_at", { ascending: false });
 
   if (error) {
     console.error("Error fetching district reviews:", error);
     return [];
   }
 
-  return data;
+  const transformed = data.map((review) => {
+    const user = Array.isArray(review.users) ? review.users[0] : review.users;
+    const total =
+      (review.safety_security +
+        review.cost_of_living +
+        review.healthcare_access +
+        review.transportation_mobility +
+        review.environment_nature +
+        review.education_schools +
+        review.shops_amenities +
+        review.sports_recreation) /
+      8;
+
+    return {
+      id: review.id,
+      comment: review.comment,
+      average_rating: Math.round(total * 100) / 100,
+      created_at: review.created_at,
+      user: {
+        name: user?.name || "Anonymous",
+        avatar_url: user?.avatar_url || "No Avatar",
+        email: user?.email,
+      },
+      safety_security: review.safety_security,
+      cost_of_living: review.cost_of_living,
+      healthcare_access: review.healthcare_access,
+      transportation_mobility: review.transportation_mobility,
+      environment_nature: review.environment_nature,
+      education_schools: review.education_schools,
+      shops_amenities: review.shops_amenities,
+      sports_recreation: review.sports_recreation,
+    };
+  });
+
+  return transformed;
 }
