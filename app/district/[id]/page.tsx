@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getOneDistrictInfos } from "./action";
 import { getoneDistrictReviews } from "./action";
+import ReviewsCarrousel from "@/components/ui/Carrousel/ReviewsCarrousel";
 import iconDict from "@/modules/utils/iconDict";
 import criteriasDict from "@/modules/utils/criteriasDict";
 import Icon from "@/components/core/Icons/Icon";
@@ -14,11 +15,11 @@ export default async function OneDistrict({
   const district = await getOneDistrictInfos(id);
   const reviews = await getoneDistrictReviews(id);
   console.log("reviews", reviews);
+  console.log("district", district);
   if (!district) {
     return <div>District not found</div>;
   }
   const rating = district.district_ratings;
-  console.log("district", district);
   const scoreColor = () => {
     if (rating.average_rating >= 7) {
       return "bg-success";
@@ -75,6 +76,8 @@ export default async function OneDistrict({
       >
         Rate {district.name}
       </Link>
+      <h2>Last reviews</h2>
+      <ReviewsCarrousel reviews={reviews} />
     </section>
   );
 }
