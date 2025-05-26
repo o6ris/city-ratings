@@ -1,5 +1,28 @@
 "use server";
 
+type DistrictRating = {
+  rank: number;
+  district_id: string;
+  average_rating: number;
+  cost_of_living: number;
+  safety_security: number;
+  shops_amenities: number;
+  education_schools: number;
+  healthcare_access: number;
+  sports_recreation: number;
+  environment_nature: number;
+  transportation_mobility: number;
+};
+
+type District = {
+  id: string;
+  name: string;
+  population: number;
+  sector: string;
+  description: string | null;
+  district_ratings: DistrictRating;
+};
+
 import { createClient } from "@/utils/supabase/server";
 
 export async function getOneDistrict(id: string) {
@@ -19,13 +42,12 @@ export async function getOneDistrict(id: string) {
   return data;
 }
 
-export async function getOneDistrictInfos(id: string) {
+export async function getOneDistrictInfos(id: string): Promise<District | null> {
   const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("districts")
-    .select(
-      `
+    .select(`
       id,
       name,
       population,
@@ -41,10 +63,10 @@ export async function getOneDistrictInfos(id: string) {
         environment_nature,
         education_schools,
         shops_amenities,
-        sports_recreation
+        sports_recreation,
+        rank
       )
-    `
-    )
+    `)
     .eq("id", id)
     .single();
 
@@ -53,5 +75,8 @@ export async function getOneDistrictInfos(id: string) {
     return null;
   }
 
-  return data;
+  console.log("Fetched district data:", data);
+
+  return data as unknown as District;
 }
+
