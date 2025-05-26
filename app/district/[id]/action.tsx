@@ -46,31 +46,17 @@ export async function getOneDistrict(id: string) {
   return data;
 }
 
-export async function getOneDistrictInfos(id: string): Promise<District | null> {
+export async function getOneDistrictInfos(
+  id: string
+): Promise<District | null> {
   const supabase = await createClient();
-  
+
   const { data, error } = await supabase
     .from("districts")
-    .select(`
-      id,
-      name,
-      population,
-      sector,
-      description,
-      district_ratings (
-        district_id,
-        average_rating,
-        safety_security,
-        cost_of_living,
-        healthcare_access,
-        transportation_mobility,
-        environment_nature,
-        education_schools,
-        shops_amenities,
-        sports_recreation,
-        rank
-      )
-    `)
+    .select(
+      `id,name,population,sector,description,district_ratings ( district_id, average_rating,safety_security,cost_of_living,healthcare_access,transportation_mobility, environment_nature,education_schools,shops_amenities, sports_recreation, rank
+      )`
+    )
     .eq("id", id)
     .single();
 
@@ -82,8 +68,8 @@ export async function getOneDistrictInfos(id: string): Promise<District | null> 
   if (!data || !data.district_ratings) return null;
 
   // district_ratings comes as an array from Supabase join, get the first element
-  const ratingData = Array.isArray(data.district_ratings) 
-    ? data.district_ratings[0] 
+  const ratingData = Array.isArray(data.district_ratings)
+    ? data.district_ratings[0]
     : data.district_ratings;
 
   if (!ratingData) return null;
@@ -128,4 +114,23 @@ export async function getOneDistrictInfos(id: string): Promise<District | null> 
   return district;
 }
 
+export async function getoneDistrictReviews(id: string) {
+  const supabase = await createClient();
 
+  const { data, error } = await supabase
+    .from("ratings")
+    .select(
+      `id, comment, created_at, district_id, safety_security, cost_of_living, healthcare_access, transportation_mobility, environment_nature, education_schools, shops_amenities, sports_recreation, created_at, users (
+        id, name, email, avatar_url
+      )`
+    )
+    .eq("district_id", id)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error("Error fetching district reviews:", error);
+    return [];
+  }
+
+  return data;
+}

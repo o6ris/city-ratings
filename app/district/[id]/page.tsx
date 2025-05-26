@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getOneDistrictInfos } from "./action";
+import { getoneDistrictReviews } from "./action";
 import iconDict from "@/modules/utils/iconDict";
 import criteriasDict from "@/modules/utils/criteriasDict";
 import Icon from "@/components/core/Icons/Icon";
@@ -11,6 +12,8 @@ export default async function OneDistrict({
 }) {
   const { id } = await params;
   const district = await getOneDistrictInfos(id);
+  const reviews = await getoneDistrictReviews(id);
+  console.log("reviews", reviews);
   if (!district) {
     return <div>District not found</div>;
   }
@@ -53,7 +56,6 @@ export default async function OneDistrict({
       <section className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
         {Object.entries(district.district_ratings.criterias).map(
           ([key, value]) => {
-            console.log("key", key);
             return (
               <div
                 key={key}
