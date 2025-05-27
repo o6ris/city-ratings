@@ -1,4 +1,4 @@
-import { isConected } from "@/app/login/actions";
+import { isConected } from "@/lib/auth-actions";
 import { getDistricts } from "./action";
 import Link from "next/link";
 

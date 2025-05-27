@@ -1,6 +1,6 @@
-import { signup } from "./actions";
+import { signup } from "@/lib/auth-actions";
 import LoginForm from "@/components/ui/LoginForm/LoginForm";
 
-export default function LoginPage() {
+export default function SignupPage() {
   return <LoginForm onAction={signup} onActionText="Sign up" />;
 }
