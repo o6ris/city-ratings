@@ -1,10 +1,10 @@
-import { login } from "./actions";
-import Link from "next/link";
+import { signup } from "./actions";
 import Icon from "@/components/core/Icons/Icon";
 
 export default function LoginPage() {
   return (
     <form className="flex flex-col items-center gap-8 p-4 max-w-sm mx-auto">
+      {/* email */}
       <div className="flex flex-col gap-2 w-full">
         <label
           htmlFor="email"
@@ -22,6 +22,7 @@ export default function LoginPage() {
         </label>
         <div className="validator-hint hidden">Enter valid email address</div>
       </div>
+      {/* password */}
       <div className="flex flex-col gap-2 w-full">
         <label
           htmlFor="password"
@@ -46,11 +47,10 @@ export default function LoginPage() {
       </div>
       <button
         className="btn btn-wide bg-primary text-neutral rounded-full"
-        formAction={login}
+        formAction={signup}
       >
-        Log in
+        Sign up
       </button>
-      <Link href={"/signup"}>Sign up</Link>
     </form>
   );
 }
