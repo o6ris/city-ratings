@@ -42,7 +42,7 @@ export default function ReviewsCarrousel({
   };
 
   return (
-    <div className="relative w-full">
+    <section className="relative w-full">
       {/* Carousel Container */}
       <div
         ref={carouselRef}
@@ -53,9 +53,9 @@ export default function ReviewsCarrousel({
             key={review.id}
             className="carousel-item flex-1 min-w-full md:min-w-[49%] lg:min-w-[33%]"
           >
-            <div className="p-4 bg-neutral text-neutral-content rounded-2xl w-full shadow-lg flex flex-col items-center justify-center">
+            <div className="flex flex-col gap-4 p-4 bg-neutral text-neutral-content rounded-2xl w-full shadow-lg flex flex-col items-center justify-center">
               {/* header */}
-              <div className="flex justify-between items-center w-full mb-4">
+              <section className="flex justify-between items-center w-full">
                 <div className="flex items-center gap-2">
                   <div className="w-[20px] h-[20px] bg-primary rounded-full"></div>
                   <p className="text-primary">{review.user.name}</p>
@@ -66,7 +66,7 @@ export default function ReviewsCarrousel({
                   </span>
                   <span className="text-primary">/10</span>
                 </div>
-              </div>
+              </section>
               {/* Criterias  */}
               <section className="grid grid-cols-4 w-full gap-2 md:grid-cols-4 md:gap-6  ">
                 {Object.entries(review.criterias).map(([key, value]) => {
@@ -82,17 +82,25 @@ export default function ReviewsCarrousel({
                         strokeWidth={2}
                         color="#480201"
                       />
-                      <span className="!font-bold text-primary">
-                        {value}
-                      </span>
+                      <span className="!font-bold text-primary">{value}</span>
                     </div>
                   );
                 })}
               </section>
               {/* Comment */}
-              <p className="text-lg font-semibold text-center">
-                {review.comment}
-              </p>
+              <section className="flex justify-start w-full">
+                <p className=" text-primary h-32">{review.comment}</p>
+              </section>
+              {/* footer */}
+              <section className="flex justify-end items-center w-full">
+                <p className="text-xs text-primary !text-xsmall">
+                  {new Date(review.created_at).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
+              </section>
             </div>
           </div>
         ))}
@@ -109,6 +117,6 @@ export default function ReviewsCarrousel({
           ❯
         </button>
       </div>
-    </div>
+    </section>
   );
 }
