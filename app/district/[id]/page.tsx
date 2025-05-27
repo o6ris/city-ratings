@@ -39,7 +39,7 @@ export default async function OneDistrict({
         >
           <h3>Score</h3>
           <div>
-            <span className="!text-xlarge !font-black">
+            <span className="!text-xxlarge !font-black">
               {rating.average_rating}
             </span>
             <span>/10</span>
@@ -48,7 +48,7 @@ export default async function OneDistrict({
         <div className="flex-1 flex flex-col items-center gap-4 p-4 bg-primary text-secondary rounded-2xl xl:flex-none xl:w-[400px]">
           <h3>Rank</h3>
           <div>
-            <span className="!text-xlarge !font-black">{rating.rank}</span>
+            <span className="!text-xxlarge !font-black">{rating.rank}</span>
             <span>/10</span>
           </div>
         </div>
