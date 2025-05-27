@@ -1,31 +1,23 @@
-## [0.2.0] - 2025-05-24
+## [0.3.0] - 2025-05-26
 
-### ⭐️ District Rating Feature
+### 🏙️ District Rating & Review Display
 
-- **District Rating Flow**:
-  - Created a `POST /rating` route allowing users to rate a district.
-  - Built `usePostRating` hook and `SubmitRatingButton` to handle rating submission.
-  - Created a `RatingForm` with multiple range inputs and a textarea for comments.
-  - Displayed total score dynamically and styled the form for both mobile and desktop.
+- **District Rating Page**:
+  - Split district details and rating submission into two dedicated pages.
+  - Implemented new route to fetch both district details and related `district_rating` records.
 
-- **Dynamic District Page**:
-  - Implemented `[districtId]` page to fetch and display a single district by ID ready for rating.
+- **Data Handling**:
+  - Refactored rating criteria to be returned as a single object.
+  - Fixed data types and response format from join tables.
+  - Created dictionary mappings for criteria label & icon rendering.
+  - Sorted reviews by most recent first for better relevance.
+  - Added fallback UI when no ratings are available.
 
-- **Signup Enhancements**:
-  - Upon signup, users are inserted into the `user` table.
+- **Review Carousel**:
+  - Created `ReviewCarousel` component to display district reviews.
+  - Each review shows its individual criteria ratings and submission date.
 
-### 🎨 UI & Design Improvements
+### 🛠️ Improvements & Styling
 
-- **New UI Components**:
-  - Created reusable `Range`, `Textarea`, and `Icon` components.
-  - Installed and configured **DaisyUI** and **Lucide React** icons.
-
-- **Styling Enhancements**:
-  - Customized the global theme and typography (font size, weight, and colors).
-  - Styled `p`, `span`, `label`, and headings for a cleaner, cohesive look.
-  - Improved styles for rating components, labels, and responsive design.
-
-### 🔧 Fixes & Refactors
-
-- Removed `quality_of_life` field as it no longer exists in the data model.
-- Fixed rating trigger function for consistent updates.
+- Enhanced global body styling to maintain layout consistency.
+- Added more district-specific info on the district page (e.g., rank, score, review count).

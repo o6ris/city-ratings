@@ -5,7 +5,6 @@ import Link from "next/link";
 export default async function Home() {
   const user = await isConected();
   const districts = await getDistricts();
-  console.log("districts", districts);
   return (
     <section>
       <p>Hello {user.email}</p>
