@@ -22,7 +22,7 @@ export default function LoginForm({
     if (result?.message) {
       setErrorMessage(result.message);
     } else {
-      router.push(onActionText === "sign up" ? "/login" : "/home");
+      router.push(onActionText === "Sign up" ? "/email-confirmation" : "/home");
     }
   }
 

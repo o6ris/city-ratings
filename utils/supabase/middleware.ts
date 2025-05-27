@@ -45,6 +45,7 @@ export async function updateSession(request: NextRequest) {
   const isPublic =
     path.startsWith("/login") ||
     path.startsWith("/signup") ||
+    path.startsWith("/email-confirmation") ||
     path === "/home" ||
     path === "/district" ||
     /^\/district\/[^/]+$/.test(path) || // dynamic /district/[id]

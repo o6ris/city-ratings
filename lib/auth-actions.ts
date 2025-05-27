@@ -51,7 +51,6 @@ export async function signup(
       }
     }
 
-    revalidatePath("/login", "layout");
   } catch (err) {
     console.error("Unexpected signup error:", err);
     return { message: "Something went wrong. Please try again later." };
