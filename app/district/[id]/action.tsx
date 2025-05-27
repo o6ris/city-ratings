@@ -24,7 +24,7 @@ type District = {
   population: number;
   sector: string;
   description: string | null;
-  district_ratings: DistrictRating;
+  district_ratings: DistrictRating | null;
 };
 
 import { createClient } from "@/utils/supabase/server";
@@ -65,14 +65,28 @@ export async function getOneDistrictInfos(
     return null;
   }
 
-  if (!data || !data.district_ratings) return null;
+  console.log("Fetched district data:", data);
+  
+  if (!data) return null;
 
   // district_ratings comes as an array from Supabase join, get the first element
   const ratingData = Array.isArray(data.district_ratings)
     ? data.district_ratings[0]
     : data.district_ratings;
 
-  if (!ratingData) return null;
+    console.log("Rating data:", ratingData);
+
+  if (!ratingData) {
+    const district: District = {
+    id: data.id,
+    name: data.name,
+    population: data.population,
+    sector: data.sector,
+    description: data.description,
+    district_ratings: null,
+  };
+    return district
+  };
 
   const {
     cost_of_living,
