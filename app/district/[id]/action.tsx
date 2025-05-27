@@ -155,14 +155,16 @@ export async function getoneDistrictReviews(id: string) {
         avatar_url: user?.avatar_url || "No Avatar",
         email: user?.email,
       },
-      safety_security: review.safety_security,
-      cost_of_living: review.cost_of_living,
-      healthcare_access: review.healthcare_access,
-      transportation_mobility: review.transportation_mobility,
-      environment_nature: review.environment_nature,
-      education_schools: review.education_schools,
-      shops_amenities: review.shops_amenities,
-      sports_recreation: review.sports_recreation,
+      criterias: {
+        safety_security: review.safety_security,
+        cost_of_living: review.cost_of_living,
+        healthcare_access: review.healthcare_access,
+        transportation_mobility: review.transportation_mobility,
+        environment_nature: review.environment_nature,
+        education_schools: review.education_schools,
+        shops_amenities: review.shops_amenities,
+        sports_recreation: review.sports_recreation,
+      },
     };
   });
 
