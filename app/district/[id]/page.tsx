@@ -30,7 +30,7 @@ export default async function OneDistrict({
     return "bg-error";
   };
   return (
-    <section className="flex flex-col gap-8 items-center w-full lg:items-start">
+    <section className="flex flex-col gap-8 w-full items-start">
       <h1 className="w-full break-words whitespace-normal">{district.name}</h1>
       {/* SCORE & RANK */}
       <section className="flex gap-4 items-center w-full">
@@ -71,13 +71,24 @@ export default async function OneDistrict({
         )}
       </section>
       <Link
-        className="btn btn-secondary text-primary rounded-full"
+        className="btn btn-wide btn-secondary text-primary rounded-full mx-auto"
         href={`/district/${district.id}/rating`}
       >
         Rate {district.name}
       </Link>
       <h2>Last reviews</h2>
       <ReviewsCarrousel reviews={reviews} />
+      <h2>More informations</h2>
+      <section className="grid grid-cols-2 gap-4 w-full">
+        <div className="flex flex-col gap-2 bg-neutral p-4 rounded-2xl box-shadow border border-base-200">
+          <p>Population</p>
+          <p className="!text-medium !font-bold">{district.population.toLocaleString()}</p>
+        </div>
+        <div className="flex flex-col gap-2 bg-neutral p-4 rounded-2xl box-shadow border border-base-200">
+          <p>Sector</p>
+          <p className="!text-medium !font-bold">{district.sector.charAt(0).toUpperCase() + district.sector.slice(1)}</p>
+        </div>
+      </section>
     </section>
   );
 }
