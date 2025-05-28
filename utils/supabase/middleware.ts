@@ -46,6 +46,7 @@ export async function updateSession(request: NextRequest) {
     path.startsWith("/login") ||
     path.startsWith("/signup") ||
     path.startsWith("/email-confirmation") ||
+    path.startsWith("/auth/callback") ||
     path === "/home" ||
     path === "/district" ||
     /^\/district\/[^/]+$/.test(path) || // dynamic /district/[id]

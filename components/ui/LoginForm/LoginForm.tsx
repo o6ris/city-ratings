@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Icon from "@/components/core/Icons/Icon";
+import SignInWithGoogleButton from "@/components/ui/Buttons/SignupWithGoogleButton";
 import Link from "next/link";
 
 export default function LoginForm({
@@ -48,7 +49,6 @@ export default function LoginForm({
           />
         </label>
       </div>
-
       {/* username (for signup only) */}
       {onActionText === "Sign up" && (
         <div className="flex flex-col gap-2 w-full">
@@ -68,7 +68,6 @@ export default function LoginForm({
           </label>
         </div>
       )}
-
       {/* password */}
       <div className="flex flex-col gap-2 w-full">
         <label
@@ -86,20 +85,24 @@ export default function LoginForm({
           />
         </label>
 
-        {errorMessage && (
-          <p className="text-red-500 text-sm">{errorMessage}</p>
-        )}
+        {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
       </div>
-
-      <button
-        type="submit"
-        className="btn btn-wide bg-primary text-neutral rounded-full"
-      >
-        {onActionText}
-      </button>
-
+      {/* submit buttons */}
+      <div className="flex flex-col items-center gap-4 w-full">
+        <button
+          type="submit"
+          className="btn btn-wide bg-primary text-neutral rounded-full w-full"
+        >
+          {onActionText}
+        </button>
+        <SignInWithGoogleButton
+          buttonText={
+            onActionText === "Login" ? "Login with Google" : "Signup with Google"
+          }
+        />
+      </div>
+      {/* Error message */}
       -- OR --
-
       {onActionText === "Login" ? (
         <Link href="/signup">Sign up</Link>
       ) : (

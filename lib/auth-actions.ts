@@ -50,7 +50,6 @@ export async function signup(
         return { message: "Something went wrong during account creation." };
       }
     }
-
   } catch (err) {
     console.error("Unexpected signup error:", err);
     return { message: "Something went wrong. Please try again later." };
@@ -91,6 +90,28 @@ export async function login(formData: FormData) {
       status: 500,
     };
   }
+}
+
+// lib/auth-actions.ts
+export async function signInWithGoogle(): Promise<{ url: string | null }> {
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: "http://localhost:3000/auth/callback",
+      queryParams: {
+        access_type: "offline",
+        prompt: "consent",
+      },
+    },
+  });
+
+  if (error || !data?.url) {
+    console.error("OAuth error:", error?.message);
+    return { url: null };
+  }
+
+  return { url: data.url };
 }
 
 export async function isConected() {
