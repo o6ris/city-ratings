@@ -39,17 +39,22 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const path = request.nextUrl.pathname;
+  const path = request.nextUrl.pathname.replace(/\/$/, "");
 
-  // Define all routes that are publicly accessible
+  const PUBLIC_PATHS = [
+    "/login",
+    "/signup",
+    "/email-confirmation",
+    "/auth/callback",
+    "/home",
+    "/district",
+  ];
+
   const isPublic =
-    path.startsWith("/login") ||
-    path.startsWith("/signup") ||
-    path.startsWith("/email-confirmation") ||
-    path.startsWith("/auth/callback") ||
-    path === "/home" ||
-    path === "/district" ||
-    /^\/district\/[^/]+$/.test(path) || // dynamic /district/[id]
+    PUBLIC_PATHS.some(
+      (publicPath) => path === publicPath || path.startsWith(publicPath + "/")
+    ) ||
+    /^\/district\/[^/]+$/.test(path) ||
     path.startsWith("/api/auth");
 
   if (!user && !isPublic) {
