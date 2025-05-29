@@ -4,19 +4,15 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 
 export default function AuthCallback() {
-  const router = useRouter();
-
   useEffect(() => {
     const handleAuth = async () => {
       const supabase = createClient();
       const { data: sessionData } = await supabase.auth.getSession();
 
       const user = sessionData.session?.user;
-      if (!user) {
-        return router.push("/error");
-      }
+      if (!user) return window.location.href = "/error";
 
-      const { data: existingUser, error } = await supabase
+      const { data: existingUser } = await supabase
         .from("users")
         .select("id")
         .eq("id", user.id)
@@ -31,18 +27,18 @@ export default function AuthCallback() {
             avatar_url: user.user_metadata?.avatar_url ?? null,
           },
         ]);
-
         if (insertError) {
           console.error("Failed to insert user:", insertError);
-          return router.push("/error");
+          return window.location.href = "/error";
         }
       }
 
-      router.push("/home");
+      // ✅ Force full reload so SSR gets cookies
+      window.location.href = "/home";
     };
 
     handleAuth();
-  }, [router]);
+  }, []);
 
   return <p className="text-center mt-10">Signing you in…</p>;
 }
