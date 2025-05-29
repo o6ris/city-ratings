@@ -12,11 +12,12 @@ export default async function Navigation() {
       {user ? (
         <div>
           <Modal
-          content={
-            <div>
-              <h4>Are you sure you want to logout ?</h4>
-            </div>
-          }
+            modalId="modal-logout"
+            content={
+              <div>
+                <h4>Are you sure you want to logout ?</h4>
+              </div>
+            }
             triggerBtnText="Logout"
             triggerBtnStyle=""
             onActionBtnText="Logout"
