@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Alexandria } from "next/font/google";
 import "./globals.css";
+import Navigation from "@/components/ui/Navigation/Navigation";
 
 const AlexandriaFont = Alexandria({
   subsets: ["latin"],
@@ -19,9 +20,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${AlexandriaFont.variable} antialiased`}
-      >
+      <body className={`${AlexandriaFont.variable} antialiased`}>
+        <Navigation />
         {children}
       </body>
     </html>
