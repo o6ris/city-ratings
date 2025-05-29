@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Modal from "@/components/core/modal/Modal";
 import Icon from "@/components/core/Icons/Icon";
 import iconDict from "@/modules/utils/iconDict";
 
@@ -96,13 +97,33 @@ export default function ReviewsCarrousel({
                 <section className="flex justify-start w-full">
                   <div className="text-primary h-32 w-full break-words overflow-hidden">
                     <p className="whitespace-pre-wrap">
-                      {`" `}{shortComment}
+                      {`" `}
+                      {shortComment}
                       {isLong && (
-                        <button
-                          className="text-secondary"
-                        >
-                          view more
-                        </button>
+                        <Modal
+                          modalId={`modal-review-${review.id}`}
+                          triggerBtnText="view more"
+                          triggerBtnStyle="text-secondary"
+                          content={
+                            <div className="flex flex-col gap-4">
+                              <div className="flex justify-between items-center w-full">
+                                <div className="flex items-center gap-2">
+                                  <div className="w-[20px] h-[20px] bg-primary rounded-full"></div>
+                                  <p className="text-primary">
+                                    {review.user.name}
+                                  </p>
+                                </div>
+                                <div>
+                                  <span className="text-primary !font-bold !text-2xl">
+                                    {review.average_rating.toFixed(1)}
+                                  </span>
+                                  <span className="text-primary">/10</span>
+                                </div>
+                              </div>
+                              <p>{review.comment}</p>
+                            </div>
+                          }
+                        />
                       )}
                       {` "`}
                     </p>
