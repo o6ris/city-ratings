@@ -48,62 +48,81 @@ export default function ReviewsCarrousel({
         ref={carouselRef}
         className="carousel carousel-center rounded-box gap-4 px-2 overflow-x-auto scroll-smooth flex p-4"
       >
-        {reviews.map((review) => (
-          <div
-            key={review.id}
-            className="carousel-item flex-1 min-w-full md:min-w-[49%] lg:min-w-[33%]"
-          >
-            <div className="flex flex-col gap-4 p-4 bg-neutral text-neutral-content rounded-2xl w-full shadow-lg flex flex-col items-center justify-center">
-              {/* header */}
-              <section className="flex justify-between items-center w-full">
-                <div className="flex items-center gap-2">
-                  <div className="w-[20px] h-[20px] bg-primary rounded-full"></div>
-                  <p className="text-primary">{review.user.name}</p>
-                </div>
-                <div>
-                  <span className="text-primary !font-bold !text-2xl">
-                    {review.average_rating.toFixed(1)}
-                  </span>
-                  <span className="text-primary">/10</span>
-                </div>
-              </section>
-              {/* Criterias  */}
-              <section className="grid grid-cols-4 w-full gap-2 md:grid-cols-4 md:gap-6  ">
-                {Object.entries(review.criterias).map(([key, value]) => {
-                  console.log(key, value);
-                  return (
-                    <div
-                      key={key}
-                      className="flex items-center justify-between rounded-2xl bg-base-100 shadow-sm border border-base-200 py-2 px-4"
-                    >
-                      <Icon
-                        name={iconDict[key]}
-                        size={20}
-                        strokeWidth={2}
-                        color="#480201"
-                      />
-                      <span className="!font-bold text-primary">{value}</span>
-                    </div>
-                  );
-                })}
-              </section>
-              {/* Comment */}
-              <section className="flex justify-start w-full">
-                <p className=" text-primary h-32">{review.comment}</p>
-              </section>
-              {/* footer */}
-              <section className="flex justify-end items-center w-full">
-                <p className="text-xs text-primary !text-xsmall">
-                  {new Date(review.created_at).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
+        {reviews.map((review) => {
+          const maxChars = 200; // or however many characters fit into your h-32
+          const isLong = review.comment.length > maxChars;
+          const shortComment = isLong
+            ? review.comment.slice(0, maxChars).trim() + "..."
+            : review.comment;
+          return (
+            <div
+              key={review.id}
+              className="carousel-item flex-1 min-w-full md:min-w-[49%] lg:min-w-[32%]"
+            >
+              <div className="flex flex-col gap-4 p-4 bg-neutral text-neutral-content rounded-2xl w-full shadow-lg flex flex-col items-center justify-center">
+                {/* header */}
+                <section className="flex justify-between items-center w-full">
+                  <div className="flex items-center gap-2">
+                    <div className="w-[20px] h-[20px] bg-primary rounded-full"></div>
+                    <p className="text-primary">{review.user.name}</p>
+                  </div>
+                  <div>
+                    <span className="text-primary !font-bold !text-2xl">
+                      {review.average_rating.toFixed(1)}
+                    </span>
+                    <span className="text-primary">/10</span>
+                  </div>
+                </section>
+                {/* Criterias  */}
+                <section className="grid grid-cols-4 w-full gap-2 md:grid-cols-4 md:gap-6  ">
+                  {Object.entries(review.criterias).map(([key, value]) => {
+                    console.log(key, value);
+                    return (
+                      <div
+                        key={key}
+                        className="flex items-center justify-between rounded-2xl bg-base-100 shadow-sm border border-base-200 py-2 px-4"
+                      >
+                        <Icon
+                          name={iconDict[key]}
+                          size={20}
+                          strokeWidth={2}
+                          color="#480201"
+                        />
+                        <span className="!font-bold text-primary">{value}</span>
+                      </div>
+                    );
                   })}
-                </p>
-              </section>
+                </section>
+                {/* Comment */}
+                <section className="flex justify-start w-full">
+                  <div className="text-primary h-32 w-full break-words overflow-hidden">
+                    <p className="whitespace-pre-wrap">
+                      {`" `}{shortComment}
+                      {isLong && (
+                        <button
+                          className="text-secondary"
+                        >
+                          view more
+                        </button>
+                      )}
+                      {` "`}
+                    </p>
+                  </div>
+                </section>
+                {/* footer */}
+                <section className="flex justify-end items-center w-full">
+                  <p className="text-xs text-primary !text-xsmall">
+                    {new Date(review.created_at).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </p>
+                </section>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Arrows - only visible on large screens */}
