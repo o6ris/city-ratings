@@ -1,12 +1,16 @@
 "use client";
 
+import { ReactElement } from "react";
+
 export default function Modal({
+  content,
   triggerBtnText,
   triggerBtnStyle = "btn btn-primary",
   onAction,
   onActionBtnText = "Confirm",
   closeBtnText = "Close",
 }: {
+  content: ReactElement;
   triggerBtnText: string;
   triggerBtnStyle?: string;
   onAction?: () => void;
@@ -30,10 +34,7 @@ export default function Modal({
       </button>
       <dialog id="my_modal" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Hello!</h3>
-          <p className="py-4">
-            Press ESC key or click the button below to close
-          </p>
+          {content}
           <div className="modal-action">
             <form method="dialog" className="flex gap-2 w-full">
               <button className="btn btn-neutral text-primary flex-1 shadow-sm border border-base-200 rounded-full">{closeBtnText}</button>

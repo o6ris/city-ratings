@@ -76,7 +76,6 @@ export default function ReviewsCarrousel({
                 {/* Criterias  */}
                 <section className="grid grid-cols-4 w-full gap-2 md:grid-cols-4 md:gap-6  ">
                   {Object.entries(review.criterias).map(([key, value]) => {
-                    console.log(key, value);
                     return (
                       <div
                         key={key}

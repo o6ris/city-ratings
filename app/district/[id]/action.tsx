@@ -64,8 +64,6 @@ export async function getOneDistrictInfos(
     console.error("Error fetching district with ratings:", error);
     return null;
   }
-
-  console.log("Fetched district data:", data);
   
   if (!data) return null;
 
@@ -73,8 +71,6 @@ export async function getOneDistrictInfos(
   const ratingData = Array.isArray(data.district_ratings)
     ? data.district_ratings[0]
     : data.district_ratings;
-
-    console.log("Rating data:", ratingData);
 
   if (!ratingData) {
     const district: District = {
