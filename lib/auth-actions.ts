@@ -114,16 +114,19 @@ export async function signInWithGoogle(): Promise<{ url: string | null }> {
   return { url: data.url };
 }
 
+export async function signout() {
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    console.log(error);
+    redirect("/error");
+  }
+
+  redirect("/home");
+}
+
 export async function isConected() {
   const supabase = await createClient();
-
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-
-  if (error || !user) {
-    redirect("/login");
-  }
-  return user;
+  const { data: { user } } = await supabase.auth.getUser();
+  return user ?? null; // Explicitly return null if not logged in
 }
