@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { getOneDistrictInfos } from "./action";
-import { getoneDistrictReviews } from "./action";
+import { getOneDistrictInfos, getOneDistrictReviews } from "./action";
 import ReviewsCarrousel from "@/components/ui/Carrousel/ReviewsCarrousel";
 import iconDict from "@/modules/utils/iconDict";
 import criteriasDict from "@/modules/utils/criteriasDict";
@@ -13,7 +12,8 @@ export default async function OneDistrict({
 }) {
   const { id } = await params;
   const district = await getOneDistrictInfos(id);
-  const reviews = await getoneDistrictReviews(id);
+  const reviews = await getOneDistrictReviews(id, { limit: 6 });
+  console.log("reviews", reviews)
 
   if (!district) {
     return (
@@ -129,10 +129,11 @@ export default async function OneDistrict({
         </Link>
       </section>
 
-      {reviews.length > 0 && (
+      {reviews.reviews.length > 0 && (
         <>
           <h2>Last reviews</h2>
-          <ReviewsCarrousel reviews={reviews} />
+          <ReviewsCarrousel reviews={reviews.reviews} />
+          <Link href={`/district/${district.id}/reviews`}> View all</Link>
         </>
       )}
 
