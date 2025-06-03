@@ -188,7 +188,7 @@ export default function RatingForm({ districtId }: { districtId: string }) {
           <SubmitRatingButton
             className="btn btn-secondary text-primary rounded-full"
             districtId={districtId}
-            rating={rating}
+            rating={{...rating, total_score:totalScoreMemo}}
           />
         </section>
       </section>
