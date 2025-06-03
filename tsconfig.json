@@ -24,6 +24,7 @@
       "modules/*": ["./modules/*"],
       "@lib/*": ["./lib/*"],
       "@actions/*": ["./actions/*"],
+      "@types/*":["./types/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
