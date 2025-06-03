@@ -19,7 +19,7 @@ export default function SubmitRatingButton({
     shops_amenities: number;
     sports_recreation: number;
     comment: string;
-    total_score: number;
+    average_rating: number;
   };
 }) {
   const { postRating } = usePostRating();

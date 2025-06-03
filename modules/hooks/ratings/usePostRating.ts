@@ -10,7 +10,7 @@ export default function usePostRating() {
     shops_amenities: number;
     sports_recreation: number;
     comment: string;
-    total_score: number;
+    average_rating: number;
   }) => {
     console.log("hook payload", payload);
     const response = await fetch("/api/ratings", {

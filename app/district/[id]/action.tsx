@@ -147,7 +147,7 @@ export async function getOneDistrictReviews(
       `
       id, comment, created_at, district_id, safety_security, cost_of_living, healthcare_access,
       transportation_mobility, environment_nature, education_schools, shops_amenities,
-      sports_recreation, users (
+      sports_recreation, average_rating, users (
         id, name, email, avatar_url
       )`,
       { count: "exact" }
@@ -163,21 +163,11 @@ export async function getOneDistrictReviews(
 
   const transformed = data.map((review) => {
     const user = Array.isArray(review.users) ? review.users[0] : review.users;
-    const totalRating =
-      (review.safety_security +
-        review.cost_of_living +
-        review.healthcare_access +
-        review.transportation_mobility +
-        review.environment_nature +
-        review.education_schools +
-        review.shops_amenities +
-        review.sports_recreation) /
-      8;
 
     return {
       id: review.id,
       comment: review.comment,
-      average_rating: Math.round(totalRating * 100) / 100,
+      average_rating: review.average_rating,
       created_at: review.created_at,
       user: {
         name: user?.name || "Anonymous",
