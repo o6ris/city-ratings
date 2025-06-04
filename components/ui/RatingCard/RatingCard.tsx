@@ -7,7 +7,7 @@ import iconDict from "@/modules/utils/iconDict";
 import { Review } from "@/types/review";
 
 export default function RatingCard({ review }: { review: Review }) {
-  const { postVote } = usePostVotes();
+  const { postVote, voteCounts } = usePostVotes();
   const maxChars = 200; // or however many characters fit into your h-32
   const isLong = review.comment.length > maxChars;
   const shortComment = isLong
@@ -94,6 +94,7 @@ export default function RatingCard({ review }: { review: Review }) {
             }
             className="btn rounded-full flex items-center gap-2"
           >
+            <span className="text-primary">{voteCounts ? voteCounts.up : 0}</span>
             <Icon name="ThumbsUp" strokeWidth={2} size={16} color="#480201" />
           </button>
           <button
@@ -105,6 +106,7 @@ export default function RatingCard({ review }: { review: Review }) {
             }
             className="btn rounded-full flex items-center gap-2"
           >
+            <span className="text-primary">{voteCounts ? voteCounts.down : 0}</span>
             <Icon name="ThumbsDown" strokeWidth={2} size={16} color="#480201" />
           </button>
         </div>

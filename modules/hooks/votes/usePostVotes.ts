@@ -1,4 +1,10 @@
+import { useState } from "react";
+
 export default function usePostVotes() {
+
+  const [voteCounts, setVoteCounts] = useState<{ up: number; down: number } | null>(null);
+  console.log("voteCounts", voteCounts)
+
   const postVote = async (payload: {
     rating_id: string;
     vote_type: "up" | "down";
@@ -12,14 +18,12 @@ export default function usePostVotes() {
       body: JSON.stringify(payload),
     });
 
-    console.log("response", response)
-
     if (!response.ok) {
       throw new Error("Failed to submit vote");
     }
-
-    return response.json();
+    const data = await response.json()
+    setVoteCounts(data.voteCounts)
   };
 
-  return { postVote };
+  return { postVote, voteCounts };
 }
