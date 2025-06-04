@@ -136,7 +136,7 @@ export default async function OneDistrict({
         <>
           <h2>Last reviews</h2>
           <ReviewsCarrousel reviews={reviews.reviews} />
-          <Link href={`/district/${district.id}/reviews`}> View all</Link>
+          <Link className="btn btn-wide btn-secondary text-primary rounded-full mx-auto" href={`/district/${district.id}/reviews`}> View all</Link>
         </>
       )}
 
