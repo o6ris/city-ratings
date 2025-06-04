@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { getOneDistrictInfos } from "./action";
-import { getoneDistrictReviews } from "./action";
+import { getOneDistrictInfos, getOneDistrictReviews } from "./action";
 import ReviewsCarrousel from "@/components/ui/Carrousel/ReviewsCarrousel";
 import iconDict from "@/modules/utils/iconDict";
 import criteriasDict from "@/modules/utils/criteriasDict";
@@ -13,7 +12,8 @@ export default async function OneDistrict({
 }) {
   const { id } = await params;
   const district = await getOneDistrictInfos(id);
-  const reviews = await getoneDistrictReviews(id);
+  const reviews = await getOneDistrictReviews(id, { limit: 6 });
+  console.log("reviews", reviews);
 
   if (!district) {
     return (
@@ -52,23 +52,26 @@ export default async function OneDistrict({
             {/* SCORE & RANK */}
             <section className="flex gap-4 items-center w-full">
               <div
-                className={`flex-1 flex flex-col items-center gap-4 p-4 rounded-2xl xl:flex-none xl:w-[400px] ${scoreColor()}`}
+                className={`flex-1 flex flex-col items-center p-4 rounded-2xl xl:flex-none xl:w-[400px] ${scoreColor()}`}
               >
-                <h3>Score</h3>
-                <div>
-                  <span className="!text-xxlarge !font-black">
-                    {rating.average_rating}
-                  </span>
-                  <span>/10</span>
+                <div className={`flex-1 flex flex-col items-center`}>
+                  <h3>Score</h3>
+                  <div>
+                    <span className="!text-xxlarge !font-black">
+                      {rating.average_rating}
+                    </span>
+                    <span>/10</span>
+                  </div>
                 </div>
+                <p className="!text-xsmall">Based on <strong>{reviews.total}</strong> reviews</p>
               </div>
-              <div className="flex-1 flex flex-col items-center gap-4 p-4 bg-primary text-secondary rounded-2xl xl:flex-none xl:w-[400px]">
+              <div className="flex-1 flex flex-col items-center p-6 bg-primary text-secondary rounded-2xl xl:flex-none xl:w-[400px]">
                 <h3>Rank</h3>
                 <div>
                   <span className="!text-xxlarge !font-black">
                     {rating.rank}
                   </span>
-                  <span>/10</span>
+                  <span>/200</span>
                 </div>
               </div>
             </section>
@@ -129,10 +132,11 @@ export default async function OneDistrict({
         </Link>
       </section>
 
-      {reviews.length > 0 && (
+      {reviews.reviews.length > 0 && (
         <>
           <h2>Last reviews</h2>
-          <ReviewsCarrousel reviews={reviews} />
+          <ReviewsCarrousel reviews={reviews.reviews} />
+          <Link className="btn btn-wide btn-secondary text-primary rounded-full mx-auto" href={`/district/${district.id}/reviews`}> View all</Link>
         </>
       )}
 

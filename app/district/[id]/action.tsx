@@ -65,8 +65,6 @@ export async function getOneDistrictInfos(
     return null;
   }
 
-  console.log("Fetched district data:", data);
-  
   if (!data) return null;
 
   // district_ratings comes as an array from Supabase join, get the first element
@@ -74,19 +72,17 @@ export async function getOneDistrictInfos(
     ? data.district_ratings[0]
     : data.district_ratings;
 
-    console.log("Rating data:", ratingData);
-
   if (!ratingData) {
     const district: District = {
-    id: data.id,
-    name: data.name,
-    population: data.population,
-    sector: data.sector,
-    description: data.description,
-    district_ratings: null,
-  };
-    return district
-  };
+      id: data.id,
+      name: data.name,
+      population: data.population,
+      sector: data.sector,
+      description: data.description,
+      district_ratings: null,
+    };
+    return district;
+  }
 
   const {
     cost_of_living,
@@ -128,41 +124,50 @@ export async function getOneDistrictInfos(
   return district;
 }
 
-export async function getoneDistrictReviews(id: string) {
-  const supabase = await createClient();
+export async function getOneDistrictReviews(
+  id: string,
+  options?: { limit?: number; offset?: number }
+) {
+  const { limit = 6, offset = 0 } = options || {};
 
-  const { data, error } = await supabase
+  // if (process.env.NODE_ENV === "development") {
+  //   const { mockReviews } = await import("@/lib/mocks/mockReviews");
+
+  //   const paginated = mockReviews.slice(offset, offset + limit);
+  //   return {
+  //     reviews: paginated,
+  //     total: mockReviews.length,
+  //   };
+  // }
+
+  const supabase = await createClient();
+  const { data, error, count } = await supabase
     .from("ratings")
     .select(
-      `id, comment, created_at, district_id, safety_security, cost_of_living, healthcare_access, transportation_mobility, environment_nature, education_schools, shops_amenities, sports_recreation, created_at, users (
+      `
+      id, comment, created_at, district_id, safety_security, cost_of_living, healthcare_access,
+      transportation_mobility, environment_nature, education_schools, shops_amenities,
+      sports_recreation, average_rating, users (
         id, name, email, avatar_url
-      )`
+      )`,
+      { count: "exact" }
     )
     .eq("district_id", id)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .range(offset, offset + limit - 1);
 
   if (error) {
-    console.error("Error fetching district reviews:", error);
-    return [];
+    console.error("Error fetching reviews:", error);
+    return { reviews: [], total: 0 };
   }
 
   const transformed = data.map((review) => {
     const user = Array.isArray(review.users) ? review.users[0] : review.users;
-    const total =
-      (review.safety_security +
-        review.cost_of_living +
-        review.healthcare_access +
-        review.transportation_mobility +
-        review.environment_nature +
-        review.education_schools +
-        review.shops_amenities +
-        review.sports_recreation) /
-      8;
 
     return {
       id: review.id,
       comment: review.comment,
-      average_rating: Math.round(total * 100) / 100,
+      average_rating: review.average_rating,
       created_at: review.created_at,
       user: {
         name: user?.name || "Anonymous",
@@ -182,5 +187,5 @@ export async function getoneDistrictReviews(id: string) {
     };
   });
 
-  return transformed;
+  return { reviews: transformed, total: count ?? 0 };
 }

@@ -14,7 +14,7 @@ export default async function OneDistrictRating({
   console.log("district", district);
   return (
     <section className="flex flex-col gap-8 items-center lg:items-start">
-      <h1>{district.name}</h1>
+      <h1 className="w-full break-words whitespace-normal">{district.name}</h1>
       <RatingForm districtId={id} />
     </section>
   );

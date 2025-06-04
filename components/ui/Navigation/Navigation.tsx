@@ -4,7 +4,6 @@ import Link from "next/link";
 
 export default async function Navigation() {
   const user = await isConected();
-  console.log("User in Navigation:", user);
   return (
     <nav className="flex justify-between items-center w-full">
       <div className="flex items-center gap-4">
@@ -13,6 +12,12 @@ export default async function Navigation() {
       {user ? (
         <div>
           <Modal
+            modalId="modal-logout"
+            content={
+              <div>
+                <h4>Are you sure you want to logout ?</h4>
+              </div>
+            }
             triggerBtnText="Logout"
             triggerBtnStyle=""
             onActionBtnText="Logout"

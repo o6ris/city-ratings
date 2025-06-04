@@ -1,34 +1,10 @@
 "use client";
 
 import { useRef } from "react";
-import Icon from "@/components/core/Icons/Icon";
-import iconDict from "@/modules/utils/iconDict";
+import RatingCard from "@/components/ui/RatingCard/RatingCard";
+import { Review } from "@/types/review";
 
-export default function ReviewsCarrousel({
-  reviews,
-}: {
-  reviews: Array<{
-    id: string;
-    average_rating: number;
-    comment: string;
-    created_at: string;
-    criterias: {
-      safety_security: number;
-      cost_of_living: number;
-      healthcare_access: number;
-      transportation_mobility: number;
-      environment_nature: number;
-      education_schools: number;
-      shops_amenities: number;
-      sports_recreation: number;
-    };
-    user: {
-      name: string | null;
-      email: string;
-      avatar_url: string | null;
-    };
-  }>;
-}) {
+export default function ReviewsCarrousel({ reviews }: { reviews: Review[] }) {
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const scroll = (dir: "left" | "right") => {
@@ -48,62 +24,16 @@ export default function ReviewsCarrousel({
         ref={carouselRef}
         className="carousel carousel-center rounded-box gap-4 px-2 overflow-x-auto scroll-smooth flex p-4"
       >
-        {reviews.map((review) => (
-          <div
-            key={review.id}
-            className="carousel-item flex-1 min-w-full md:min-w-[49%] lg:min-w-[33%]"
-          >
-            <div className="flex flex-col gap-4 p-4 bg-neutral text-neutral-content rounded-2xl w-full shadow-lg flex flex-col items-center justify-center">
-              {/* header */}
-              <section className="flex justify-between items-center w-full">
-                <div className="flex items-center gap-2">
-                  <div className="w-[20px] h-[20px] bg-primary rounded-full"></div>
-                  <p className="text-primary">{review.user.name}</p>
-                </div>
-                <div>
-                  <span className="text-primary !font-bold !text-2xl">
-                    {review.average_rating.toFixed(1)}
-                  </span>
-                  <span className="text-primary">/10</span>
-                </div>
-              </section>
-              {/* Criterias  */}
-              <section className="grid grid-cols-4 w-full gap-2 md:grid-cols-4 md:gap-6  ">
-                {Object.entries(review.criterias).map(([key, value]) => {
-                  console.log(key, value);
-                  return (
-                    <div
-                      key={key}
-                      className="flex items-center justify-between rounded-2xl bg-base-100 shadow-sm border border-base-200 py-2 px-4"
-                    >
-                      <Icon
-                        name={iconDict[key]}
-                        size={20}
-                        strokeWidth={2}
-                        color="#480201"
-                      />
-                      <span className="!font-bold text-primary">{value}</span>
-                    </div>
-                  );
-                })}
-              </section>
-              {/* Comment */}
-              <section className="flex justify-start w-full">
-                <p className=" text-primary h-32">{review.comment}</p>
-              </section>
-              {/* footer */}
-              <section className="flex justify-end items-center w-full">
-                <p className="text-xs text-primary !text-xsmall">
-                  {new Date(review.created_at).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </p>
-              </section>
+        {reviews.map((review) => {
+          return (
+            <div
+              key={review.id}
+              className="carousel-item flex-1 min-w-full md:min-w-[49%] lg:min-w-[32%]"
+            >
+              <RatingCard review={review} />
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Arrows - only visible on large screens */}

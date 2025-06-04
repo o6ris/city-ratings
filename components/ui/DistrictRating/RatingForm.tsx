@@ -30,7 +30,7 @@ export default function RatingForm({ districtId }: { districtId: string }) {
         rating.shops_amenities +
         rating.sports_recreation) /
       8;
-    return Math.round(total*100)/100;
+    return Math.round(total * 100) / 100;
   }, [rating]);
 
   const totalScorBgColor = useMemo(() => {
@@ -173,7 +173,9 @@ export default function RatingForm({ districtId }: { districtId: string }) {
               }))
             }
           />
-          <section className={`flex gap-2 items-center justify-between p-6 rounded-xl ${totalScorBgColor}`}>
+          <section
+            className={`flex gap-2 items-center justify-between p-6 rounded-xl ${totalScorBgColor}`}
+          >
             <h3>Total score</h3>
             <div>
               <span className="!text-xlarge !font-black">{totalScoreMemo}</span>
@@ -182,13 +184,16 @@ export default function RatingForm({ districtId }: { districtId: string }) {
           </section>
         </section>
         <section className="grid grid-cols-2 gap-4 w-full">
-          <Link className="btn btn-neutral text-primary rounded-full" href={`/district/${districtId}`}>
+          <Link
+            className="btn btn-neutral text-primary rounded-full"
+            href={`/district/${districtId}`}
+          >
             Cancel
           </Link>
           <SubmitRatingButton
             className="btn btn-secondary text-primary rounded-full"
             districtId={districtId}
-            rating={rating}
+            rating={{ ...rating, average_rating: totalScoreMemo }}
           />
         </section>
       </section>

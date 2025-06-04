@@ -1,28 +1,16 @@
 --  This SQL function is designed to update the average rating of a district
---  whenever a new rating is added or an existing rating is updated. 
+--  whenever a new rating is added or an existing rating is updated.
 CREATE OR REPLACE FUNCTION update_district_rating()
 RETURNS TRIGGER AS $$
 DECLARE
   new_avg NUMERIC(4,2);
-BEGIN
-  -- Calculate new overall average
-  new_avg := ROUND((
-    NEW.safety_security +
-    NEW.cost_of_living +
-    NEW.healthcare_access +
-    NEW.transportation_mobility +
-    NEW.environment_nature +
-    NEW.education_schools +
-    NEW.shops_amenities +
-    NEW.sports_recreation +
-    NEW.quality_of_life
-  ) / 8.0, 2);
 
+BEGIN
   -- If district already exists, update its aggregated averages
   IF EXISTS (SELECT 1 FROM district_ratings WHERE district_id = NEW.district_id) THEN
     UPDATE district_ratings
     SET
-      average_rating = ROUND(((average_rating * rating_count) + new_avg) / (rating_count + 1), 2),
+      average_rating = ROUND(((average_rating * rating_count + NEW.average_rating)::numeric) / (rating_count + 1), 2),
       safety_security = ROUND(((safety_security * rating_count) + NEW.safety_security) / (rating_count + 1), 2),
       cost_of_living = ROUND(((cost_of_living * rating_count) + NEW.cost_of_living) / (rating_count + 1), 2),
       healthcare_access = ROUND(((healthcare_access * rating_count) + NEW.healthcare_access) / (rating_count + 1), 2),
@@ -31,7 +19,6 @@ BEGIN
       education_schools = ROUND(((education_schools * rating_count) + NEW.education_schools) / (rating_count + 1), 2),
       shops_amenities = ROUND(((shops_amenities * rating_count) + NEW.shops_amenities) / (rating_count + 1), 2),
       sports_recreation = ROUND(((sports_recreation * rating_count) + NEW.sports_recreation) / (rating_count + 1), 2),
-      quality_of_life = ROUND(((quality_of_life * rating_count) + NEW.quality_of_life) / (rating_count + 1), 2),
       rating_count = rating_count + 1,
       updated_at = NOW()
     WHERE district_id = NEW.district_id;
@@ -49,13 +36,12 @@ BEGIN
       education_schools,
       shops_amenities,
       sports_recreation,
-      quality_of_life,
       rating_count,
       updated_at
     )
     VALUES (
       NEW.district_id,
-      new_avg,
+      NEW.average_rating,
       NEW.safety_security,
       NEW.cost_of_living,
       NEW.healthcare_access,
@@ -64,7 +50,6 @@ BEGIN
       NEW.education_schools,
       NEW.shops_amenities,
       NEW.sports_recreation,
-      NEW.quality_of_life,
       1,
       NOW()
     );
@@ -112,7 +97,3 @@ CREATE TRIGGER trg_update_district_ranks
 AFTER INSERT OR UPDATE ON district_ratings
 FOR EACH STATEMENT
 EXECUTE FUNCTION trigger_update_district_ranks();
-
-
-
-
