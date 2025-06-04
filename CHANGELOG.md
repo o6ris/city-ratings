@@ -1,30 +1,31 @@
-## [0.4.0] - 2025-05-29
+## [0.5.0] - 2025-06-03
 
-### 🔐 Authentication System
+### 📝 Reviews System & UI
 
-- **Login & Signup Pages**:
-  - Created dedicated signup page.
-  - Updated UI of login page with improved layout and styling.
-  - Introduced a reusable `LoginForm` used in both login and signup pages.
+- **Reviews Display**:
+  - Created a dedicated `/district/[id]/reviews` page to show all reviews for a district.
+  - Enhanced `ReviewCarrousel`:
+    - Long comments are truncated with an option to view full content in a modal.
+    - Clicking on a review opens a modal displaying the full comment.
 
-- **Auth Flow Enhancements**:
-  - After signup, users are redirected to an email confirmation page.
-  - Implemented signup and login using Google OAuth.
-  - Created a centralized `auth-actions.ts` file to handle all auth logic (signup, signin, signout).
-  - Added a `signout` function with confirmation modal using a reusable `Modal` component.
+- **Modal Improvements**:
+  - `Modal` component now supports dynamic content injection.
+  - Each modal uses a unique dynamic ID for more flexible use across components.
 
-- **Error Handling & UX**:
-  - Login form now dynamically displays validation and server-side errors.
+- **Ratings Data Flow**:
+  - On rating submission, the `average_rating` is saved directly in the ratings table.
+  - Added logic to calculate and update average rating per review.
+  - Introduced a `Card` component to display rating summaries cleanly.
+  - Added a dedicated type file for reviews for better TypeScript support.
 
-- **Middleware & Route Protection**:
-  - Introduced public route handling via middleware.
-  - Refactored middleware to dynamically protect or allow routes depending on user session.
+- **District Page Enhancements**:
+  - Now displays the number of reviews under the score.
+  - Users can navigate from an district reviews back to its related district page.
 
-### 🧭 Layout & Navigation
+- **Developer Tools**:
+  - Created mock reviews to facilitate front-end development and testing.
 
-- **Navigation Bar**:
-  - Added basic navigation layout for home and auth-related pages.
-  - Improved navigation behavior based on auth state (e.g., signout appears only when logged in).
+### ♻️ Refactors & Wording Adjustments
 
-- **Other Improvements**:
-  - Used `window.location` for auth callback to avoid stale routing issues post-login/signup.
+- Renamed `total_score` to `average_rating` in the UI and backend for consistency and clarity.
+
