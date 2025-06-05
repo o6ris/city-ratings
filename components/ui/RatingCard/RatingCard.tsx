@@ -8,11 +8,17 @@ import { Review } from "@/types/review";
 
 export default function RatingCard({ review }: { review: Review }) {
   const { postVote, voteCounts } = useVotes(review.id);
-  const maxChars = 200; // or however many characters fit into your h-32
-  const isLong = review.comment.length > maxChars;
-  const shortComment = isLong
-    ? review.comment.slice(0, maxChars).trim() + "..."
+  const maxCharsComment = 200; // TODO: or however many characters fit into your h-32
+  const maxChartUsername = 20;
+  const isCommentLong = review.comment.length > maxCharsComment;
+  const shortComment = isCommentLong
+    ? review.comment.slice(0, maxCharsComment).trim() + "..."
     : review.comment;
+  const username = review.user.name ?? "Anonymous";
+  const isUsernameLong = username.length > maxChartUsername;
+  const shortUsername = isUsernameLong
+    ? username.slice(0, maxChartUsername).trim() + "..."
+    : username;
 
   return (
     <div className="flex flex-col gap-4 p-4 bg-neutral text-neutral-content rounded-2xl w-full shadow-lg flex flex-col items-center justify-center">
@@ -20,7 +26,9 @@ export default function RatingCard({ review }: { review: Review }) {
       <section className="flex justify-between items-center w-full">
         <div className="flex items-center gap-2">
           <div className="w-[20px] h-[20px] bg-primary rounded-full"></div>
-          <p className="text-primary">{review.user.name}</p>
+          <p className="text-primary">
+            {review.is_user_review ? "You" : shortUsername}
+          </p>
         </div>
         <div>
           <span className="text-primary !font-bold !text-2xl">
@@ -54,7 +62,7 @@ export default function RatingCard({ review }: { review: Review }) {
           <p className="whitespace-pre-wrap">
             {`" `}
             {shortComment}
-            {isLong && (
+            {isCommentLong && (
               <Modal
                 modalId={`modal-review-${review.id}`}
                 triggerBtnText="view more"

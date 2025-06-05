@@ -1,9 +1,9 @@
-import { isConected, signout } from "@/lib/auth-actions";
+import { isConnected, signout } from "@/lib/auth-actions";
 import Modal from "@/components/core/modal/Modal";
 import Link from "next/link";
 
 export default async function Navigation() {
-  const user = await isConected();
+  const user = await isConnected();
   return (
     <nav className="flex justify-between items-center w-full">
       <div className="flex items-center gap-4">
