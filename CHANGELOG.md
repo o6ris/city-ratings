@@ -1,31 +1,19 @@
-## [0.5.0] - 2025-06-03
+## [0.6.0] - 2025-06-05
 
-### 📝 Reviews System & UI
+### 👍 Review Voting System
 
-- **Reviews Display**:
-  - Created a dedicated `/district/[id]/reviews` page to show all reviews for a district.
-  - Enhanced `ReviewCarrousel`:
-    - Long comments are truncated with an option to view full content in a modal.
-    - Clicking on a review opens a modal displaying the full comment.
+- **Voting Functionality**:
+  - Users can **upvote or downvote** a review.
+  - Users can **update or remove** their previous vote.
+  - Total votes (up + down) are displayed per review.
 
-- **Modal Improvements**:
-  - `Modal` component now supports dynamic content injection.
-  - Each modal uses a unique dynamic ID for more flexible use across components.
+- **Backend Logic**:
+  - Created a flexible **votes API route**:
+    - Handles add/update/delete of votes.
+    - Returns the vote status for the current user on a specific review.
 
-- **Ratings Data Flow**:
-  - On rating submission, the `average_rating` is saved directly in the ratings table.
-  - Added logic to calculate and update average rating per review.
-  - Introduced a `Card` component to display rating summaries cleanly.
-  - Added a dedicated type file for reviews for better TypeScript support.
-
-- **District Page Enhancements**:
-  - Now displays the number of reviews under the score.
-  - Users can navigate from an district reviews back to its related district page.
-
-- **Developer Tools**:
-  - Created mock reviews to facilitate front-end development and testing.
-
-### ♻️ Refactors & Wording Adjustments
-
-- Renamed `total_score` to `average_rating` in the UI and backend for consistency and clarity.
+- **Frontend Integration**:
+  - Built a custom **votes hook** to:
+    - Fetch and render all votes at component mount.
+    - Display real-time vote status (upvoted/downvoted) per review.
 
