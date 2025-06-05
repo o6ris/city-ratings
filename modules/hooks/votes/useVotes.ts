@@ -4,6 +4,9 @@ export default function useVotes(ratingId: string) {
   const [voteCounts, setVoteCounts] = useState<{
     up: number;
     down: number;
+    rating_id: string;
+    user_id: [string];
+    has_voted: "up" | "down" | null;
   } | null>(null);
 
   const getVotes = async () => {
@@ -18,7 +21,6 @@ export default function useVotes(ratingId: string) {
       throw new Error("Failed to get votes");
     }
     const data = await response.json();
-    console.log("data", data)
     setVoteCounts(data);
   };
 
@@ -30,7 +32,6 @@ export default function useVotes(ratingId: string) {
     rating_id: string;
     vote_type: "up" | "down";
   }) => {
-    console.log("hook payload", payload);
     const response = await fetch("/api/votes", {
       method: "POST",
       headers: {

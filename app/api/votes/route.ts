@@ -3,12 +3,22 @@ import { createClient } from "@/utils/supabase/server";
 
 export async function GET(request: NextRequest) {
   const supabase = await createClient();
-  const rating_id = request.nextUrl.searchParams.get("review")
+  const rating_id = request.nextUrl.searchParams.get("review");
+
+  // Get the authenticated user
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   // ✅ Count up and down votes for this rating
   const { data: allVotes, error: countError } = await supabase
     .from("rating_votes")
-    .select("vote_type", { count: "exact" })
+    .select("user_id, rating_id, vote_type", { count: "exact" })
     .eq("rating_id", rating_id);
 
   if (countError) {
@@ -18,10 +28,17 @@ export async function GET(request: NextRequest) {
     );
   }
 
+  const hasVoted = allVotes.find((v) => {
+    return v.user_id === user.id;
+  });
+
   // Group counts manually
   const voteCounts = {
+    rating_id: allVotes[0].rating_id,
+    user_id: allVotes.map((v) => v.user_id),
     up: allVotes.filter((v) => v.vote_type === "up").length,
     down: allVotes.filter((v) => v.vote_type === "down").length,
+    has_voted: hasVoted ? hasVoted.vote_type : null,
   };
 
   return NextResponse.json(voteCounts);
@@ -63,7 +80,7 @@ export async function POST(request: NextRequest) {
     // ✅ Count up and down votes for this rating
     const { data: allVotes, error: countError } = await supabase
       .from("rating_votes")
-      .select("vote_type", { count: "exact" })
+      .select("user_id, rating_id, vote_type", { count: "exact" })
       .eq("rating_id", rating_id);
 
     if (countError) {
@@ -73,10 +90,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const hasVoted = allVotes.find((v) => {
+      return v.user_id === user.id;
+    });
+
     // Group counts manually
     const voteCounts = {
+      rating_id: allVotes[0].rating_id,
+      user_id: allVotes.map((v) => v.user_id),
       up: allVotes.filter((v) => v.vote_type === "up").length,
       down: allVotes.filter((v) => v.vote_type === "down").length,
+      has_voted: hasVoted ? hasVoted.vote_type : null,
     };
     return voteCounts;
   };
@@ -97,7 +121,6 @@ export async function POST(request: NextRequest) {
       }
 
       const voteCounts = await countVotes();
-      console.log("voteCounts delete", voteCounts, data);
 
       return NextResponse.json({
         success: true,
@@ -120,7 +143,6 @@ export async function POST(request: NextRequest) {
         );
       }
       const voteCounts = await countVotes();
-      console.log("voteCounts update", voteCounts, data);
       return NextResponse.json({
         success: true,
         action: "updated",
@@ -142,7 +164,6 @@ export async function POST(request: NextRequest) {
       );
     }
     const voteCounts = await countVotes();
-    console.log("voteCounts add", voteCounts, data);
     return NextResponse.json({
       success: true,
       action: "inserted",

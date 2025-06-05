@@ -92,9 +92,13 @@ export default function RatingCard({ review }: { review: Review }) {
                 vote_type: "up",
               })
             }
-            className="btn rounded-full flex items-center gap-2"
+            className={`${
+              voteCounts?.has_voted === "up" ? "btn-secondary" : ""
+            } btn rounded-full flex items-center gap-2`}
           >
-            <span className="text-primary">{voteCounts ? voteCounts.up : 0}</span>
+            <span className="text-primary">
+              {voteCounts ? voteCounts.up : 0}
+            </span>
             <Icon name="ThumbsUp" strokeWidth={2} size={16} color="#480201" />
           </button>
           <button
@@ -104,9 +108,13 @@ export default function RatingCard({ review }: { review: Review }) {
                 vote_type: "down",
               })
             }
-            className="btn rounded-full flex items-center gap-2"
+            className={`${
+              voteCounts?.has_voted === "down" ? "btn-secondary" : ""
+            } btn rounded-full flex items-center gap-2`}
           >
-            <span className="text-primary">{voteCounts ? voteCounts.down : 0}</span>
+            <span className="text-primary">
+              {voteCounts ? voteCounts.down : 0}
+            </span>
             <Icon name="ThumbsDown" strokeWidth={2} size={16} color="#480201" />
           </button>
         </div>
