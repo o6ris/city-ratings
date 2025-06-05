@@ -13,7 +13,6 @@ export default async function OneDistrict({
   const { id } = await params;
   const district = await getOneDistrictInfos(id);
   const reviews = await getOneDistrictReviews(id, { limit: 6 });
-  console.log("reviews", reviews);
 
   if (!district) {
     return (

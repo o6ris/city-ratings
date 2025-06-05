@@ -1,9 +1,13 @@
+"use client";
+
+import useVotes from "@/modules/hooks/votes/useVotes";
 import Modal from "@/components/core/modal/Modal";
 import Icon from "@/components/core/Icons/Icon";
 import iconDict from "@/modules/utils/iconDict";
 import { Review } from "@/types/review";
 
 export default function RatingCard({ review }: { review: Review }) {
+  const { postVote, voteCounts } = useVotes(review.id);
   const maxChars = 200; // or however many characters fit into your h-32
   const isLong = review.comment.length > maxChars;
   const shortComment = isLong
@@ -79,7 +83,41 @@ export default function RatingCard({ review }: { review: Review }) {
         </div>
       </section>
       {/* footer */}
-      <section className="flex justify-end items-center w-full">
+      <section className="flex justify-between items-center w-full">
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() =>
+              postVote({
+                rating_id: review.id,
+                vote_type: "up",
+              })
+            }
+            className={`${
+              voteCounts?.has_voted === "up" ? "btn-secondary" : ""
+            } btn rounded-full flex items-center gap-2`}
+          >
+            <span className="text-primary">
+              {voteCounts ? voteCounts.up : 0}
+            </span>
+            <Icon name="ThumbsUp" strokeWidth={2} size={16} color="#480201" />
+          </button>
+          <button
+            onClick={() =>
+              postVote({
+                rating_id: review.id,
+                vote_type: "down",
+              })
+            }
+            className={`${
+              voteCounts?.has_voted === "down" ? "btn-secondary" : ""
+            } btn rounded-full flex items-center gap-2`}
+          >
+            <span className="text-primary">
+              {voteCounts ? voteCounts.down : 0}
+            </span>
+            <Icon name="ThumbsDown" strokeWidth={2} size={16} color="#480201" />
+          </button>
+        </div>
         <p className="text-xs text-primary !text-xsmall">
           {new Date(review.created_at).toLocaleDateString("en-US", {
             year: "numeric",
