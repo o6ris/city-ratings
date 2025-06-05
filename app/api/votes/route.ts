@@ -1,7 +1,33 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 
-export async function POST(request: Request) {
+export async function GET(request: NextRequest) {
+  const supabase = await createClient();
+  const rating_id = request.nextUrl.searchParams.get("review")
+
+  // ✅ Count up and down votes for this rating
+  const { data: allVotes, error: countError } = await supabase
+    .from("rating_votes")
+    .select("vote_type", { count: "exact" })
+    .eq("rating_id", rating_id);
+
+  if (countError) {
+    return NextResponse.json(
+      { error: "Failed to count votes", message: countError.message },
+      { status: 500 }
+    );
+  }
+
+  // Group counts manually
+  const voteCounts = {
+    up: allVotes.filter((v) => v.vote_type === "up").length,
+    down: allVotes.filter((v) => v.vote_type === "down").length,
+  };
+
+  return NextResponse.json(voteCounts);
+}
+
+export async function POST(request: NextRequest) {
   const supabase = await createClient();
 
   const body = await request.json();

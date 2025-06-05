@@ -1,13 +1,13 @@
 "use client";
 
-import usePostVotes from "@/modules/hooks/votes/usePostVotes";
+import useVotes from "@/modules/hooks/votes/useVotes";
 import Modal from "@/components/core/modal/Modal";
 import Icon from "@/components/core/Icons/Icon";
 import iconDict from "@/modules/utils/iconDict";
 import { Review } from "@/types/review";
 
 export default function RatingCard({ review }: { review: Review }) {
-  const { postVote, voteCounts } = usePostVotes();
+  const { postVote, voteCounts } = useVotes(review.id);
   const maxChars = 200; // or however many characters fit into your h-32
   const isLong = review.comment.length > maxChars;
   const shortComment = isLong
