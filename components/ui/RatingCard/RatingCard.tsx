@@ -6,10 +6,9 @@ import Modal from "@/components/core/modal/Modal";
 import Icon from "@/components/core/Icons/Icon";
 import iconDict from "@/modules/utils/iconDict";
 import { Review } from "@/types/review";
-import useRating from "@/modules/hooks/ratings/useRating";
+import DeleteRatingbutton from "../Buttons/DeleteRatingButton";
 
 export default function RatingCard({ review }: { review: Review }) {
-  const { deleteRating } = useRating();
   const { postVote, voteCounts } = useVotes(review.id);
   const maxCharsComment = 200; // TODO: or however many characters fit into your h-32
   const maxChartUsername = 20; // TODO: or however many characters fit into full width
@@ -22,17 +21,6 @@ export default function RatingCard({ review }: { review: Review }) {
   const shortUsername = isUsernameLong
     ? username.slice(0, maxChartUsername).trim() + "..."
     : username;
-
-  const handleDelete = async () => {
-    try {
-      await deleteRating(review.id);
-      console.log("Rating deleted successfully");
-      // Optional: show toast or refresh UI
-    } catch (error) {
-      console.error("Delete failed:", error);
-      // Optional: show user-friendly error toast
-    }
-  };
 
   console.log("review", review);
 
@@ -151,26 +139,9 @@ export default function RatingCard({ review }: { review: Review }) {
               >
                 <Icon name="Pencil" color="#480201" size={16} strokeWidth={2} />
               </Link>
-              <Modal
-                modalId={`modal-delete-review-${review.id}`}
-                onActionBtnText="Delete"
-                onAction={handleDelete}
-                triggerBtnContent={
-                  <Icon
-                    name="Trash"
-                    color="#FC3E3E"
-                    size={16}
-                    strokeWidth={2}
-                  />
-                }
-                triggerBtnStyle="bg-transparent border border-1 border-error rounded-xl p-2"
-                content={
-                  <div>
-                    <h4 className="!text-primary">
-                      Are you sure you want to delete your review ?
-                    </h4>
-                  </div>
-                }
+              <DeleteRatingbutton
+                reviewId={review.id}
+                districtId={review.district_id}
               />
             </div>
           )}

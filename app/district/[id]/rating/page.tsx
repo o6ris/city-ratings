@@ -8,7 +8,7 @@ export default async function OneDistrictRating({
 }) {
   const { id } = await params;
   const district = await getOneDistrict(id);
-  const review = await getOneReview(id)
+  const review = await getOneReview(id);
 
   return (
     <section className="flex flex-col gap-8 items-center lg:items-start">

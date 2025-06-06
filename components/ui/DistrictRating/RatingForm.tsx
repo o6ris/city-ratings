@@ -5,6 +5,7 @@ import Link from "next/link";
 import Range from "@/components/core/inputs/Range";
 import Textarea from "@/components/core/inputs/Textarea";
 import SubmitRatingButton from "@/components/ui/Buttons/SubmitRatingButton";
+import DeleteRatingbutton from "@/components/ui/Buttons/DeleteRatingButton";
 
 export default function RatingForm({
   districtId,
@@ -204,7 +205,11 @@ export default function RatingForm({
             </div>
           </section>
         </section>
-        <section className="grid grid-cols-2 gap-4 w-full">
+        <section
+          className={`grid gap-4 w-full ${
+            review?.id ? "grid-cols-[1fr_1fr_auto]" : "grid-cols-2"
+          }`}
+        >
           <Link
             className="btn btn-neutral text-primary rounded-full"
             href={`/district/${districtId}`}
@@ -217,6 +222,9 @@ export default function RatingForm({
             rating={{ ...rating, average_rating: totalScoreMemo }}
             reviewId={review?.id}
           />
+          {review?.id && (
+            <DeleteRatingbutton reviewId={review.id} districtId={districtId} />
+          )}
         </section>
       </section>
     </section>
