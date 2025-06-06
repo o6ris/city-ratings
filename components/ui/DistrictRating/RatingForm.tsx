@@ -5,18 +5,40 @@ import Link from "next/link";
 import Range from "@/components/core/inputs/Range";
 import Textarea from "@/components/core/inputs/Textarea";
 import SubmitRatingButton from "@/components/ui/Buttons/SubmitRatingButton";
+import DeleteRatingbutton from "@/components/ui/Buttons/DeleteRatingButton";
 
-export default function RatingForm({ districtId }: { districtId: string }) {
+export default function RatingForm({
+  districtId,
+  review,
+}: {
+  districtId: string;
+  review: {
+    id: string;
+    comment: string;
+    created_at: string;
+    district_id: string;
+    safety_security: number;
+    cost_of_living: number;
+    healthcare_access: number;
+    transportation_mobility: number;
+    environment_nature: number;
+    education_schools: number;
+    shops_amenities: number;
+    sports_recreation: number;
+    average_rating: number;
+    user_id: string;
+  } | null;
+}) {
   const [rating, setRating] = useState({
-    safety_security: 5,
-    cost_of_living: 5,
-    healthcare_access: 5,
-    transportation_mobility: 5,
-    environment_nature: 5,
-    education_schools: 5,
-    shops_amenities: 5,
-    sports_recreation: 5,
-    comment: "",
+    safety_security: review?.safety_security ?? 5,
+    cost_of_living: review?.cost_of_living ?? 5,
+    healthcare_access: review?.healthcare_access ?? 5,
+    transportation_mobility: review?.transportation_mobility ?? 5,
+    environment_nature: review?.environment_nature ?? 5,
+    education_schools: review?.education_schools ?? 5,
+    shops_amenities: review?.shops_amenities ?? 5,
+    sports_recreation: review?.sports_recreation ?? 5,
+    comment: review?.comment ?? "",
   });
 
   const totalScoreMemo = useMemo(() => {
@@ -183,7 +205,11 @@ export default function RatingForm({ districtId }: { districtId: string }) {
             </div>
           </section>
         </section>
-        <section className="grid grid-cols-2 gap-4 w-full">
+        <section
+          className={`grid gap-4 w-full ${
+            review?.id ? "grid-cols-[1fr_1fr_auto]" : "grid-cols-2"
+          }`}
+        >
           <Link
             className="btn btn-neutral text-primary rounded-full"
             href={`/district/${districtId}`}
@@ -194,7 +220,11 @@ export default function RatingForm({ districtId }: { districtId: string }) {
             className="btn btn-secondary text-primary rounded-full"
             districtId={districtId}
             rating={{ ...rating, average_rating: totalScoreMemo }}
+            reviewId={review?.id}
           />
+          {review?.id && (
+            <DeleteRatingbutton reviewId={review.id} districtId={districtId} />
+          )}
         </section>
       </section>
     </section>

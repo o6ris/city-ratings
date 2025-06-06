@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/utils/supabase/server";
 
@@ -16,7 +16,11 @@ const ratingSchema = z.object({
   average_rating: z.number().min(1).max(10),
 });
 
-export async function POST(request: Request) {
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const ratingId = params.id;
   const supabase = await createClient();
 
   const body = await request.json();
@@ -40,11 +44,13 @@ export async function POST(request: Request) {
 
   const { data, error } = await supabase
     .from("ratings")
-    .insert([{ ...result.data, user_id: user.id }])
+    .update({ ...result.data })
+    .eq("id", ratingId)
+    .eq("user_id", user.id)
     .select();
 
   if (error) {
-    console.error("Error inserting data:", {
+    console.error("Error updating data:", {
       message: error.message,
       details: error.details,
       hint: error.hint,
@@ -52,13 +58,20 @@ export async function POST(request: Request) {
     });
     return NextResponse.json(
       {
-        error: "Failed to submit rating",
+        error: "Failed to update rating",
         message: error.message,
         details: error.details,
         hint: error.hint,
         code: error.code,
       },
       { status: 500 }
+    );
+  }
+
+  if (!data || data.length === 0) {
+    return NextResponse.json(
+      { error: "No existing review found to update" },
+      { status: 404 }
     );
   }
 
@@ -76,4 +89,60 @@ export async function POST(request: Request) {
 
   console.log("Inserted data:", data);
   return NextResponse.json({ success: true, data });
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const ratingId = params.id;
+  const supabase = await createClient();
+
+  // Authenticate the user
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Check if the rating exists and belongs to the user
+  const { data: existing, error: fetchError } = await supabase
+    .from("ratings")
+    .select("id, district_id")
+    .eq("id", ratingId)
+    .eq("user_id", user.id)
+    .single();
+
+  if (fetchError || !existing) {
+    return NextResponse.json(
+      { error: "Rating not found or access denied" },
+      { status: 404 }
+    );
+  }
+
+  // Delete the rating
+  const { error: deleteError } = await supabase
+    .from("ratings")
+    .delete()
+    .eq("id", ratingId)
+    .eq("user_id", user.id);
+
+  if (deleteError) {
+    return NextResponse.json(
+      {
+        error: "Failed to delete rating",
+        message: deleteError.message,
+        details: deleteError.details,
+      },
+      { status: 500 }
+    );
+  }
+
+  // Optional logging
+  console.log(`Rating ${ratingId} deleted for user ${user.id}`);
+
+  return NextResponse.json({ success: true, deletedId: ratingId });
 }

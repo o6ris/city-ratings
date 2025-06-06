@@ -1,5 +1,8 @@
 "use server";
 
+import { createClient } from "@/utils/supabase/server";
+import { isConnected } from "@/lib/auth-actions";
+
 type DistrictRatingCriterias = {
   cost_of_living: number;
   safety_security: number;
@@ -26,8 +29,6 @@ type District = {
   description: string | null;
   district_ratings: DistrictRating | null;
 };
-
-import { createClient } from "@/utils/supabase/server";
 
 export async function getOneDistrict(id: string) {
   const supabase = await createClient();
@@ -129,6 +130,7 @@ export async function getOneDistrictReviews(
   options?: { limit?: number; offset?: number }
 ) {
   const { limit = 6, offset = 0 } = options || {};
+  const connectedUser = await isConnected();
 
   // if (process.env.NODE_ENV === "development") {
   //   const { mockReviews } = await import("@/lib/mocks/mockReviews");
@@ -163,12 +165,15 @@ export async function getOneDistrictReviews(
 
   const transformed = data.map((review) => {
     const user = Array.isArray(review.users) ? review.users[0] : review.users;
+    const isUserReview = connectedUser && connectedUser.id === user.id;
 
     return {
       id: review.id,
       comment: review.comment,
       average_rating: review.average_rating,
       created_at: review.created_at,
+      is_user_review: isUserReview,
+      district_id: review.district_id,
       user: {
         name: user?.name || "Anonymous",
         avatar_url: user?.avatar_url || "No Avatar",
@@ -189,3 +194,33 @@ export async function getOneDistrictReviews(
 
   return { reviews: transformed, total: count ?? 0 };
 }
+
+export async function getOneReview(districtId: string) {
+  const supabase = await createClient();
+  const user = await isConnected();
+  
+  if (!user) {
+    return null;
+  }
+
+  const { data, error } = await supabase
+    .from("ratings")
+    .select(
+      `
+      id, comment, created_at, district_id, safety_security, cost_of_living, healthcare_access,
+      transportation_mobility, environment_nature, education_schools, shops_amenities,
+      sports_recreation, average_rating, user_id
+      `
+    )
+    .eq("user_id", user.id)
+    .eq("district_id", districtId)
+    .single(); // <- expects only one result, will throw if multiple
+
+  if (error) {
+    console.error("Error fetching review:", error.message);
+    return null;
+  }
+
+  return data;
+}
+

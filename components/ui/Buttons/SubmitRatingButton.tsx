@@ -1,14 +1,17 @@
 "use client";
 
-import usePostRating from "@/modules/hooks/ratings/usePostRating";
+import useRating from "@/modules/hooks/ratings/useRating";
+import { useRouter } from "next/navigation";
 
 export default function SubmitRatingButton({
   className,
   districtId,
+  reviewId,
   rating,
 }: {
   className: string;
   districtId: string;
+  reviewId: string | undefined;
   rating: {
     safety_security: number;
     cost_of_living: number;
@@ -22,15 +25,28 @@ export default function SubmitRatingButton({
     average_rating: number;
   };
 }) {
-  const { postRating } = usePostRating();
+  const { postRating, updateRating } = useRating();
+  const router = useRouter();
 
   const handleSubmit = async () => {
+    const payload = {
+      ...rating,
+      district_id: districtId,
+    };
+
     try {
-      const response = await postRating({ ...rating, district_id: districtId });
+      let response;
+
+      if (reviewId) {
+        response = await updateRating(payload, reviewId);
+      } else {
+        response = await postRating(payload);
+      }
+
       if (response.error) {
         console.error("Error submitting rating:", response.error);
       } else {
-        console.log("Rating submitted successfully:", response.data);
+        router.push(`/district/${districtId}`);
       }
     } catch (error) {
       console.error("Unexpected error:", error);
@@ -39,7 +55,7 @@ export default function SubmitRatingButton({
 
   return (
     <button onClick={handleSubmit} className={className}>
-      Submit Rating
+      {reviewId ? "Edit Rating" : "Submit Rating"}
     </button>
   );
 }

@@ -1,4 +1,4 @@
-import { getOneDistrict } from "../action";
+import { getOneDistrict, getOneReview } from "../action";
 import RatingForm from "@/components/ui/DistrictRating/RatingForm";
 
 export default async function OneDistrictRating({
@@ -8,14 +8,12 @@ export default async function OneDistrictRating({
 }) {
   const { id } = await params;
   const district = await getOneDistrict(id);
-  if (!district) {
-    return <div>District not found</div>;
-  }
-  console.log("district", district);
+  const review = await getOneReview(id);
+
   return (
     <section className="flex flex-col gap-8 items-center lg:items-start">
       <h1 className="w-full break-words whitespace-normal">{district.name}</h1>
-      <RatingForm districtId={id} />
+      <RatingForm districtId={id} review={review} />
     </section>
   );
 }

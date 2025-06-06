@@ -1,19 +1,20 @@
-## [0.6.0] - 2025-06-05
+## [0.07.0] - 2025-06-06
 
-### 👍 Review Voting System
+### ⭐ User Review Management
 
-- **Voting Functionality**:
-  - Users can **upvote or downvote** a review.
-  - Users can **update or remove** their previous vote.
-  - Total votes (up + down) are displayed per review.
+- **View Own Review**:
+  - When accessing a district's rating page, the app checks if the user has already reviewed the district.
+  - If so, the form is pre-filled with existing data for editing convenience.
 
-- **Backend Logic**:
-  - Created a flexible **votes API route**:
-    - Handles add/update/delete of votes.
-    - Returns the vote status for the current user on a specific review.
+- **Update Rating**:
+  - Users can now **update their review**.
+  - Average score is **recalculated** accordingly in the database.
 
-- **Frontend Integration**:
-  - Built a custom **votes hook** to:
-    - Fetch and render all votes at component mount.
-    - Display real-time vote status (upvoted/downvoted) per review.
+- **Delete Rating**:
+  - Users can **delete their review** via a new `DeleteRatingButton` component.
+  - Deletion automatically adjusts the district’s aggregate data.
+
+- **UX Enhancements**:
+  - After submitting a review, the app **navigates back** to the district page.
+  - Each `RatingCard` displays a direct link for users to **edit their review**.
 

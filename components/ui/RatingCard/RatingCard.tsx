@@ -1,18 +1,28 @@
 "use client";
 
+import Link from "next/link";
 import useVotes from "@/modules/hooks/votes/useVotes";
 import Modal from "@/components/core/modal/Modal";
 import Icon from "@/components/core/Icons/Icon";
 import iconDict from "@/modules/utils/iconDict";
 import { Review } from "@/types/review";
+import DeleteRatingbutton from "../Buttons/DeleteRatingButton";
 
 export default function RatingCard({ review }: { review: Review }) {
   const { postVote, voteCounts } = useVotes(review.id);
-  const maxChars = 200; // or however many characters fit into your h-32
-  const isLong = review.comment.length > maxChars;
-  const shortComment = isLong
-    ? review.comment.slice(0, maxChars).trim() + "..."
+  const maxCharsComment = 200; // TODO: or however many characters fit into your h-32
+  const maxChartUsername = 20; // TODO: or however many characters fit into full width
+  const isCommentLong = review.comment.length > maxCharsComment;
+  const shortComment = isCommentLong
+    ? review.comment.slice(0, maxCharsComment).trim() + "..."
     : review.comment;
+  const username = review.user.name ?? "Anonymous";
+  const isUsernameLong = username.length > maxChartUsername;
+  const shortUsername = isUsernameLong
+    ? username.slice(0, maxChartUsername).trim() + "..."
+    : username;
+
+  console.log("review", review);
 
   return (
     <div className="flex flex-col gap-4 p-4 bg-neutral text-neutral-content rounded-2xl w-full shadow-lg flex flex-col items-center justify-center">
@@ -20,7 +30,9 @@ export default function RatingCard({ review }: { review: Review }) {
       <section className="flex justify-between items-center w-full">
         <div className="flex items-center gap-2">
           <div className="w-[20px] h-[20px] bg-primary rounded-full"></div>
-          <p className="text-primary">{review.user.name}</p>
+          <p className="text-primary">
+            {review.is_user_review ? "You" : shortUsername}
+          </p>
         </div>
         <div>
           <span className="text-primary !font-bold !text-2xl">
@@ -54,10 +66,10 @@ export default function RatingCard({ review }: { review: Review }) {
           <p className="whitespace-pre-wrap">
             {`" `}
             {shortComment}
-            {isLong && (
+            {isCommentLong && (
               <Modal
                 modalId={`modal-review-${review.id}`}
-                triggerBtnText="view more"
+                triggerBtnContent="view more"
                 triggerBtnStyle="text-secondary"
                 content={
                   <div className="flex flex-col gap-4">
@@ -118,13 +130,29 @@ export default function RatingCard({ review }: { review: Review }) {
             <Icon name="ThumbsDown" strokeWidth={2} size={16} color="#480201" />
           </button>
         </div>
-        <p className="text-xs text-primary !text-xsmall">
-          {new Date(review.created_at).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </p>
+        <div className="flex items-center gap-2">
+          {review.is_user_review && (
+            <div className="flex items-center gap-2">
+              <Link
+                href={`/district/${review.district_id}/rating`}
+                className="bg-transparent border border-1 border-primary rounded-xl p-2"
+              >
+                <Icon name="Pencil" color="#480201" size={16} strokeWidth={2} />
+              </Link>
+              <DeleteRatingbutton
+                reviewId={review.id}
+                districtId={review.district_id}
+              />
+            </div>
+          )}
+          <p className="text-xs text-primary !text-xsmall">
+            {new Date(review.created_at).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
+        </div>
       </section>
     </div>
   );

@@ -125,8 +125,10 @@ export async function signout() {
   redirect("/home");
 }
 
-export async function isConected() {
+export async function isConnected() {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   return user ?? null; // Explicitly return null if not logged in
 }

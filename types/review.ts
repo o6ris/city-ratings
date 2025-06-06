@@ -3,6 +3,8 @@ export type Review = {
   average_rating: number;
   comment: string;
   created_at: string;
+  district_id: string;
+  is_user_review: boolean | null;
   criterias: {
     safety_security: number;
     cost_of_living: number;
