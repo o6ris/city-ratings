@@ -83,7 +83,7 @@ export default async function OneDistrict({
                   className="flex flex-col rounded-2xl bg-neutral shadow-md border border-base-200 p-2"
                 >
                   <Icon name={iconDict[key]} size={20} color="#480201" />
-                  <p className="truncate w-full">{criteriasDict[key]}</p>
+                  <p className="truncate w-full">{criteriasDict[key].title}</p>
                   <span className="!text-xlarge !font-black">{value}</span>
                 </div>
               ))}
@@ -116,7 +116,7 @@ export default async function OneDistrict({
                   className="flex flex-col rounded-2xl bg-neutral shadow-md border border-base-200 p-2"
                 >
                   <Icon name={iconDict[key]} size={20} color="#480201" />
-                  <p className="truncate w-full">{criteriasDict[key]}</p>
+                  <p className="truncate w-full">{criteriasDict[key].title}</p>
                   <span className="!text-xlarge !font-black">N/A</span>
                 </div>
               ))}
