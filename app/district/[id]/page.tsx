@@ -4,6 +4,7 @@ import ReviewsCarrousel from "@/components/ui/Carrousel/ReviewsCarrousel";
 import iconDict from "@/modules/utils/iconDict";
 import criteriasDict from "@/modules/utils/criteriasDict";
 import Icon from "@/components/core/Icons/Icon";
+import CriteriaInfos from "@/components/ui/CriteriaInfos/CriteriaInfos";
 
 export default async function OneDistrict({
   params,
@@ -62,7 +63,9 @@ export default async function OneDistrict({
                     <span>/10</span>
                   </div>
                 </div>
-                <p className="!text-xsmall">Based on <strong>{reviews.total}</strong> reviews</p>
+                <p className="!text-xsmall">
+                  Based on <strong>{reviews.total}</strong> reviews
+                </p>
               </div>
               <div className="flex-1 flex flex-col items-center p-6 bg-primary text-secondary rounded-2xl xl:flex-none xl:w-[400px]">
                 <h3>Rank</h3>
@@ -78,13 +81,22 @@ export default async function OneDistrict({
             {/* CRITERIAS */}
             <section className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
               {Object.entries(rating.criterias).map(([key, value]) => (
-                <div
-                  key={key}
-                  className="flex flex-col rounded-2xl bg-neutral shadow-md border border-base-200 p-2"
-                >
-                  <Icon name={iconDict[key]} size={20} color="#480201" />
-                  <p className="truncate w-full">{criteriasDict[key].title}</p>
-                  <span className="!text-xlarge !font-black">{value}</span>
+                <div key={key}>
+                  <CriteriaInfos
+                    triggerBtnContent={
+                      <div className="flex flex-col items-center rounded-2xl bg-neutral shadow-md border border-base-200 p-2">
+                        <Icon name={iconDict[key]} size={20} color="#480201" />
+                        <p className="truncate w-full">
+                          {criteriasDict[key].title}
+                        </p>
+                        <span className="!text-xlarge !font-black">
+                          {value}
+                        </span>
+                      </div>
+                    }
+                    triggerBtnStyle="w-full"
+                    criteriaName={key}
+                  />
                 </div>
               ))}
             </section>
@@ -135,7 +147,13 @@ export default async function OneDistrict({
         <>
           <h2>Last reviews</h2>
           <ReviewsCarrousel reviews={reviews.reviews} />
-          <Link className="btn btn-wide btn-secondary text-primary rounded-full mx-auto" href={`/district/${district.id}/reviews`}> View all</Link>
+          <Link
+            className="btn btn-wide btn-secondary text-primary rounded-full mx-auto"
+            href={`/district/${district.id}/reviews`}
+          >
+            {" "}
+            View all
+          </Link>
         </>
       )}
 
