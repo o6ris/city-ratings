@@ -173,6 +173,7 @@ export async function getOneDistrictReviews(
       average_rating: review.average_rating,
       created_at: review.created_at,
       is_user_review: isUserReview,
+      district_id: review.district_id,
       user: {
         name: user?.name || "Anonymous",
         avatar_url: user?.avatar_url || "No Avatar",

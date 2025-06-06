@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import useVotes from "@/modules/hooks/votes/useVotes";
 import Modal from "@/components/core/modal/Modal";
 import Icon from "@/components/core/Icons/Icon";
@@ -19,6 +20,8 @@ export default function RatingCard({ review }: { review: Review }) {
   const shortUsername = isUsernameLong
     ? username.slice(0, maxChartUsername).trim() + "..."
     : username;
+
+  console.log("review", review);
 
   return (
     <div className="flex flex-col gap-4 p-4 bg-neutral text-neutral-content rounded-2xl w-full shadow-lg flex flex-col items-center justify-center">
@@ -126,13 +129,26 @@ export default function RatingCard({ review }: { review: Review }) {
             <Icon name="ThumbsDown" strokeWidth={2} size={16} color="#480201" />
           </button>
         </div>
-        <p className="text-xs text-primary !text-xsmall">
-          {new Date(review.created_at).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </p>
+        <div className="flex items-center gap-2">
+          {review.is_user_review && (
+            <div className="flex items-center gap-2">
+              <Link
+                href={`/district/${review.district_id}/rating`}
+                className="bg-transparent border border-1 border-primary rounded-xl p-2"
+              >
+                <Icon name="Pencil" color="#480201" size={16} strokeWidth={2} />
+              </Link>
+              <button className="bg-transparent border border-1 border-error rounded-xl p-2"><Icon name="Trash" color="#FC3E3E" size={16} strokeWidth={2} /></button>
+            </div>
+          )}
+          <p className="text-xs text-primary !text-xsmall">
+            {new Date(review.created_at).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
+        </div>
       </section>
     </div>
   );
