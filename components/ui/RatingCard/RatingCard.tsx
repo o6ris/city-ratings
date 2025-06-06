@@ -7,6 +7,7 @@ import Icon from "@/components/core/Icons/Icon";
 import iconDict from "@/modules/utils/iconDict";
 import { Review } from "@/types/review";
 import DeleteRatingbutton from "../Buttons/DeleteRatingButton";
+import CriteriaInfos from "../CriteriaInfos/CriteriaInfos";
 
 export default function RatingCard({ review }: { review: Review }) {
   const { postVote, voteCounts } = useVotes(review.id);
@@ -45,17 +46,22 @@ export default function RatingCard({ review }: { review: Review }) {
       <section className="grid grid-cols-4 w-full gap-2 md:grid-cols-4 md:gap-6  ">
         {Object.entries(review.criterias).map(([key, value]) => {
           return (
-            <div
-              key={key}
-              className="flex items-center justify-between rounded-2xl bg-base-100 shadow-sm border border-base-200 py-2 px-4"
-            >
-              <Icon
-                name={iconDict[key]}
-                size={20}
-                strokeWidth={2}
-                color="#480201"
+            <div key={key}>
+              <CriteriaInfos
+                triggerBtnContent={
+                  <div className="flex items-center justify-between rounded-2xl bg-base-100 shadow-sm border border-base-200 py-2 px-4">
+                    <Icon
+                      name={iconDict[key]}
+                      size={20}
+                      strokeWidth={2}
+                      color="#480201"
+                    />
+                    <span className="!font-bold text-primary">{value}</span>
+                  </div>
+                }
+                triggerBtnStyle="w-full"
+                criteriaName={key}
               />
-              <span className="!font-bold text-primary">{value}</span>
             </div>
           );
         })}
