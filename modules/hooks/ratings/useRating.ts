@@ -31,7 +31,6 @@ export default function useRating() {
   };
 
   const updateRating = async (payload: Review, id: string) => {
-    console.log("hook payload", payload);
     const response = await fetch(`/api/ratings/${id}`, {
       method: "PATCH",
       headers: {
@@ -47,5 +46,20 @@ export default function useRating() {
     return response.json();
   };
 
-  return { postRating, updateRating };
+  const deleteRating = async (id: string) => {
+    const response = await fetch(`/api/ratings/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to submit rating");
+    }
+
+    return response.json();
+  };
+
+  return { postRating, updateRating, deleteRating };
 }

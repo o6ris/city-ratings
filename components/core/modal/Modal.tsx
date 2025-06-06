@@ -1,10 +1,10 @@
 "use client";
 
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 
 export default function Modal({
   content,
-  triggerBtnText,
+  triggerBtnContent,
   triggerBtnStyle = "btn btn-primary",
   onAction,
   onActionBtnText = "Confirm",
@@ -12,7 +12,7 @@ export default function Modal({
   modalId,
 }: {
   content: ReactElement;
-  triggerBtnText: string;
+  triggerBtnContent: ReactNode;
   triggerBtnStyle?: string;
   onAction?: () => void;
   onActionBtnText?: string;
@@ -32,7 +32,7 @@ export default function Modal({
           }
         }}
       >
-        {triggerBtnText}
+        {triggerBtnContent}
       </button>
       <dialog id={modalId} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">

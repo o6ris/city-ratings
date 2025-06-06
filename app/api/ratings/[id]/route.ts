@@ -90,3 +90,59 @@ export async function PATCH(
   console.log("Inserted data:", data);
   return NextResponse.json({ success: true, data });
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const ratingId = params.id;
+  const supabase = await createClient();
+
+  // Authenticate the user
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Check if the rating exists and belongs to the user
+  const { data: existing, error: fetchError } = await supabase
+    .from("ratings")
+    .select("id, district_id")
+    .eq("id", ratingId)
+    .eq("user_id", user.id)
+    .single();
+
+  if (fetchError || !existing) {
+    return NextResponse.json(
+      { error: "Rating not found or access denied" },
+      { status: 404 }
+    );
+  }
+
+  // Delete the rating
+  const { error: deleteError } = await supabase
+    .from("ratings")
+    .delete()
+    .eq("id", ratingId)
+    .eq("user_id", user.id);
+
+  if (deleteError) {
+    return NextResponse.json(
+      {
+        error: "Failed to delete rating",
+        message: deleteError.message,
+        details: deleteError.details,
+      },
+      { status: 500 }
+    );
+  }
+
+  // Optional logging
+  console.log(`Rating ${ratingId} deleted for user ${user.id}`);
+
+  return NextResponse.json({ success: true, deletedId: ratingId });
+}

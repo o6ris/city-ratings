@@ -18,7 +18,7 @@ export default async function Navigation() {
                 <h4>Are you sure you want to logout ?</h4>
               </div>
             }
-            triggerBtnText="Logout"
+            triggerBtnContent="Logout"
             triggerBtnStyle=""
             onActionBtnText="Logout"
             onAction={signout}
