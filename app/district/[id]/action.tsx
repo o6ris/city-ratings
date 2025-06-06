@@ -165,7 +165,7 @@ export async function getOneDistrictReviews(
 
   const transformed = data.map((review) => {
     const user = Array.isArray(review.users) ? review.users[0] : review.users;
-    const isUserReview = connectedUser && connectedUser.id === user.id
+    const isUserReview = connectedUser && connectedUser.id === user.id;
 
     return {
       id: review.id,
@@ -193,3 +193,33 @@ export async function getOneDistrictReviews(
 
   return { reviews: transformed, total: count ?? 0 };
 }
+
+export async function getOneReview(districtId: string) {
+  const supabase = await createClient();
+  const user = await isConnected();
+  
+  if (!user) {
+    return null;
+  }
+
+  const { data, error } = await supabase
+    .from("ratings")
+    .select(
+      `
+      id, comment, created_at, district_id, safety_security, cost_of_living, healthcare_access,
+      transportation_mobility, environment_nature, education_schools, shops_amenities,
+      sports_recreation, average_rating, user_id
+      `
+    )
+    .eq("user_id", user.id)
+    .eq("district_id", districtId)
+    .single(); // <- expects only one result, will throw if multiple
+
+  if (error) {
+    console.error("Error fetching review:", error.message);
+    return null;
+  }
+
+  return data;
+}
+

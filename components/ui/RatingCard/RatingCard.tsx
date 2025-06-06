@@ -9,7 +9,7 @@ import { Review } from "@/types/review";
 export default function RatingCard({ review }: { review: Review }) {
   const { postVote, voteCounts } = useVotes(review.id);
   const maxCharsComment = 200; // TODO: or however many characters fit into your h-32
-  const maxChartUsername = 20;
+  const maxChartUsername = 20; // TODO: or however many characters fit into full width
   const isCommentLong = review.comment.length > maxCharsComment;
   const shortComment = isCommentLong
     ? review.comment.slice(0, maxCharsComment).trim() + "..."

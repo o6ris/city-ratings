@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
-  console.log("Validated data:", result.data);
+
   const {
     data: { user },
     error: authError,
