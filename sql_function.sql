@@ -1,10 +1,6 @@
---  This SQL function is designed to update the average rating of a district
---  whenever a new rating is added or an existing rating is updated.
+--  This SQL function is designed to update the average rating of a district whenever a new rating is added
 CREATE OR REPLACE FUNCTION update_district_rating()
 RETURNS TRIGGER AS $$
-DECLARE
-  new_avg NUMERIC(4,2);
-
 BEGIN
   -- If district already exists, update its aggregated averages
   IF EXISTS (SELECT 1 FROM district_ratings WHERE district_id = NEW.district_id) THEN
@@ -59,11 +55,79 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+--  This SQL function is designed to update the average rating of a district whenever a rating is updated or deleted
+CREATE OR REPLACE FUNCTION recalculate_district_rating()
+RETURNS TRIGGER AS $$
+DECLARE
+  district UUID;
+  rating_count INTEGER;
+BEGIN
+  -- Get the relevant district ID
+  IF (TG_OP = 'DELETE') THEN
+    district := OLD.district_id;
+  ELSE
+    district := NEW.district_id;
+  END IF;
+
+  -- Check how many ratings are left
+  SELECT COUNT(*) INTO rating_count FROM ratings WHERE district_id = district;
+
+  IF rating_count = 0 THEN
+    DELETE FROM district_ratings WHERE district_id = district;
+  ELSE
+    -- Full recalculation using subquery (safe with aggregate functions)
+    UPDATE district_ratings
+    SET
+      average_rating = sub.avg_rating,
+      safety_security = sub.avg_safety_security,
+      cost_of_living = sub.avg_cost_of_living,
+      healthcare_access = sub.avg_healthcare_access,
+      transportation_mobility = sub.avg_transportation_mobility,
+      environment_nature = sub.avg_environment_nature,
+      education_schools = sub.avg_education_schools,
+      shops_amenities = sub.avg_shops_amenities,
+      sports_recreation = sub.avg_sports_recreation,
+      rating_count = sub.rating_count,
+      updated_at = NOW()
+    FROM (
+      SELECT
+        AVG(average_rating)::numeric(4,2) AS avg_rating,
+        AVG(safety_security)::numeric(4,2) AS avg_safety_security,
+        AVG(cost_of_living)::numeric(4,2) AS avg_cost_of_living,
+        AVG(healthcare_access)::numeric(4,2) AS avg_healthcare_access,
+        AVG(transportation_mobility)::numeric(4,2) AS avg_transportation_mobility,
+        AVG(environment_nature)::numeric(4,2) AS avg_environment_nature,
+        AVG(education_schools)::numeric(4,2) AS avg_education_schools,
+        AVG(shops_amenities)::numeric(4,2) AS avg_shops_amenities,
+        AVG(sports_recreation)::numeric(4,2) AS avg_sports_recreation,
+        COUNT(*) AS rating_count
+      FROM ratings
+      WHERE district_id = district
+    ) AS sub
+    WHERE district_ratings.district_id = district;
+  END IF;
+
+  RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
 -- This trigger will call the update_district_rating function
-CREATE TRIGGER trg_update_district_rating
+CREATE TRIGGER trg_rating_insert
 AFTER INSERT ON ratings
 FOR EACH ROW
 EXECUTE FUNCTION update_district_rating();
+
+-- Those triggers will call the recalculate_district_rating function
+CREATE TRIGGER trg_rating_update
+AFTER UPDATE ON ratings
+FOR EACH ROW
+EXECUTE FUNCTION recalculate_district_rating();
+
+CREATE TRIGGER trg_rating_delete
+AFTER DELETE ON ratings
+FOR EACH ROW
+EXECUTE FUNCTION recalculate_district_rating();
+
 
 -- This SQL function is designed to update the rank of districts based on their average rating.
 CREATE OR REPLACE FUNCTION update_district_ranks()

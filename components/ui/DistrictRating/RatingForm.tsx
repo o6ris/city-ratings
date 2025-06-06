@@ -40,8 +40,6 @@ export default function RatingForm({
     comment: review?.comment ?? "",
   });
 
-  console.log("rating", rating)
-
   const totalScoreMemo = useMemo(() => {
     const total =
       (rating.safety_security +
@@ -217,7 +215,7 @@ export default function RatingForm({
             className="btn btn-secondary text-primary rounded-full"
             districtId={districtId}
             rating={{ ...rating, average_rating: totalScoreMemo }}
-            isEditable={review?.id ? true : false}
+            reviewId={review?.id}
           />
         </section>
       </section>
