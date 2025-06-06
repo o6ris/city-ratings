@@ -1,4 +1,4 @@
-const iconDict: Record<string, string> = {
+const criteriasDict: Record<string, string> = {
   safety_security: "Safety & Security",
   cost_of_living: "Cost of Living",
   healthcare_access: "Healthcare Access",
@@ -9,4 +9,4 @@ const iconDict: Record<string, string> = {
   shops_amenities: "Shops & Amenities",
 };
 
-export default iconDict;
+export default criteriasDict;

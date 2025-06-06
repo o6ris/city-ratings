@@ -1,6 +1,7 @@
 "use client";
 
 import useRating from "@/modules/hooks/ratings/useRating";
+import { useRouter } from "next/navigation";
 
 export default function SubmitRatingButton({
   className,
@@ -25,6 +26,7 @@ export default function SubmitRatingButton({
   };
 }) {
   const { postRating, updateRating } = useRating();
+  const router = useRouter();
 
   const handleSubmit = async () => {
     const payload = {
@@ -44,12 +46,7 @@ export default function SubmitRatingButton({
       if (response.error) {
         console.error("Error submitting rating:", response.error);
       } else {
-        console.log(
-          reviewId
-            ? "Rating updated successfully:"
-            : "Rating submitted successfully:",
-          response.data
-        );
+        router.push(`/district/${districtId}`);
       }
     } catch (error) {
       console.error("Unexpected error:", error);
