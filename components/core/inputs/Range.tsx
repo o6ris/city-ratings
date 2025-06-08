@@ -1,5 +1,6 @@
 import Icon from "@components/core/Icons/Icon";
 import { icons } from "lucide-react";
+import CriteriaInfos from "@/components/ui/CriteriaInfos/CriteriaInfos";
 
 export default function Range({
   min = 1,
@@ -7,6 +8,7 @@ export default function Range({
   step = 1,
   value = 5,
   name,
+  title,
   onChange,
   iconName,
   className,
@@ -15,7 +17,8 @@ export default function Range({
   max?: number;
   step?: number;
   value?: number;
-  name?: string;
+  name: string;
+  title: string;
   onChange?: (value: number) => void;
   iconName?: keyof typeof icons;
   className?: string;
@@ -38,6 +41,7 @@ export default function Range({
         <div className="flex items-center gap-2">
           <Icon name={iconName} size={20} color="#480201" />
           <label>{name}</label>
+          <CriteriaInfos triggerBtnContent={<Icon name="Info" size={16} />} criteriaName={title} triggerBtnStyle="" />
         </div>
         <p className={`!text-large !font-bold ${displayRatingColor(value)}`}>{value}</p>
       </div>

@@ -75,6 +75,7 @@ export default function RatingForm({
           value={rating.safety_security}
           iconName="ShieldUser"
           name="Safety & Security"
+          title="safety_security"
           onChange={(value) =>
             setRating((prev) => ({
               ...prev,
@@ -89,6 +90,7 @@ export default function RatingForm({
           value={rating.cost_of_living}
           iconName="CircleDollarSign"
           name="Cost of Living"
+          title="cost_of_living"
           onChange={(value) =>
             setRating((prev) => ({
               ...prev,
@@ -103,6 +105,7 @@ export default function RatingForm({
           value={rating.healthcare_access}
           iconName="HeartPlus"
           name="Healthcare Access"
+          title="healthcare_access"
           onChange={(value) =>
             setRating((prev) => ({
               ...prev,
@@ -117,6 +120,7 @@ export default function RatingForm({
           value={rating.transportation_mobility}
           iconName="BusFront"
           name="Transportation & Mobility"
+          title="transportation_mobility"
           onChange={(value) =>
             setRating((prev) => ({
               ...prev,
@@ -131,6 +135,7 @@ export default function RatingForm({
           value={rating.environment_nature}
           iconName="Trees"
           name="Environment & Nature"
+          title="environment_nature"
           onChange={(value) =>
             setRating((prev) => ({
               ...prev,
@@ -145,6 +150,7 @@ export default function RatingForm({
           value={rating.education_schools}
           iconName="BookText"
           name="Education & Schools"
+          title="education_schools"
           onChange={(value) =>
             setRating((prev) => ({
               ...prev,
@@ -159,6 +165,7 @@ export default function RatingForm({
           value={rating.shops_amenities}
           iconName="Store"
           name="Shops & Amenities"
+          title="shops_amenities"
           onChange={(value) =>
             setRating((prev) => ({
               ...prev,
@@ -173,6 +180,7 @@ export default function RatingForm({
           value={rating.sports_recreation}
           iconName="Dumbbell"
           name="Sports & Recreation"
+          title="sports_recreation"
           onChange={(value) =>
             setRating((prev) => ({
               ...prev,

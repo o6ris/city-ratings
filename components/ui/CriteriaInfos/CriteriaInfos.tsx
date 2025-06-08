@@ -10,7 +10,7 @@ export default function CriteriaInfos({
   criteriaName,
 }: {
   triggerBtnContent: ReactNode;
-  triggerBtnStyle: string;
+  triggerBtnStyle?: string;
   criteriaName: string;
 }) {
   return (
