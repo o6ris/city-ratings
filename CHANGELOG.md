@@ -1,20 +1,19 @@
-## [0.07.0] - 2025-06-06
+## [0.7.1] - 2025-06-06
 
-### ⭐ User Review Management
+### 🧠 Criteria Information Enhancement
 
-- **View Own Review**:
-  - When accessing a district's rating page, the app checks if the user has already reviewed the district.
-  - If so, the form is pre-filled with existing data for editing convenience.
+- **Extended `criteriaDict`**:
+  - Now holds **additional metadata** such as descriptions or icons for each criterion.
 
-- **Update Rating**:
-  - Users can now **update their review**.
-  - Average score is **recalculated** accordingly in the database.
+- **`CriteriaInfos` Modal**:
+  - A reusable modal component that displays **detailed information** about each rating criterion.
+  - Improves transparency and helps users understand what each score represents.
 
-- **Delete Rating**:
-  - Users can **delete their review** via a new `DeleteRatingButton` component.
-  - Deletion automatically adjusts the district’s aggregate data.
+- **District & Rating Form Integration**:
+  - The modal is accessible both on the **district page** and within the **rating form**.
+  - Users can click an **info button** next to each range input to learn more about each criterion.
 
-- **UX Enhancements**:
-  - After submitting a review, the app **navigates back** to the district page.
-  - Each `RatingCard` displays a direct link for users to **edit their review**.
+- **UI Polish**:
+  - Added **hover and pointer cursor** to info trigger buttons for better UX.
+
 
