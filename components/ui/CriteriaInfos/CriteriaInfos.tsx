@@ -17,7 +17,7 @@ export default function CriteriaInfos({
     <Modal
       modalId={`modal-criteria-info-${criteriaName}`}
       triggerBtnContent={triggerBtnContent}
-      triggerBtnStyle={triggerBtnStyle}
+      triggerBtnStyle={`${triggerBtnStyle} cursor-pointer`}
       content={
         <div className="text-primary flex flex-col gap-4">
           <div className="mx-auto">

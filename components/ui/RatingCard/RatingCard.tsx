@@ -23,8 +23,6 @@ export default function RatingCard({ review }: { review: Review }) {
     ? username.slice(0, maxChartUsername).trim() + "..."
     : username;
 
-  console.log("review", review);
-
   return (
     <div className="flex flex-col gap-4 p-4 bg-neutral text-neutral-content rounded-2xl w-full shadow-lg flex flex-col items-center justify-center">
       {/* header */}
@@ -49,7 +47,7 @@ export default function RatingCard({ review }: { review: Review }) {
             <div key={key}>
               <CriteriaInfos
                 triggerBtnContent={
-                  <div className="flex items-center justify-between rounded-2xl bg-base-100 shadow-sm border border-base-200 py-2 px-4">
+                  <div className="flex items-center justify-between rounded-2xl bg-base-100 shadow-sm border border-base-200 py-2 px-4 hover:bg-base-300">
                     <Icon
                       name={iconDict[key]}
                       size={20}

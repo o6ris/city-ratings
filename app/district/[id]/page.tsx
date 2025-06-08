@@ -81,10 +81,10 @@ export default async function OneDistrict({
             {/* CRITERIAS */}
             <section className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
               {Object.entries(rating.criterias).map(([key, value]) => (
-                <div key={key}>
+                <div key={key} className="">
                   <CriteriaInfos
                     triggerBtnContent={
-                      <div className="flex flex-col items-center rounded-2xl bg-neutral shadow-md border border-base-200 p-2">
+                      <div className="flex flex-col items-center rounded-2xl bg-neutral shadow-md border border-base-200 p-2 hover:bg-base-300">
                         <Icon name={iconDict[key]} size={20} color="#480201" />
                         <p className="truncate w-full">
                           {criteriasDict[key].title}
