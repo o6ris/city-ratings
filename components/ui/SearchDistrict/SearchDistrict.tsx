@@ -1,12 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getDistricts } from "@/app/home/action";
 import { debounce } from "lodash";
 
 type District = { id: string; name: string };
 
-export default function SearchDistrict() {
+export default function SearchDistrict({ modalId }: { modalId: string }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [districts, setDistricts] = useState<District[]>([]);
 
@@ -26,6 +27,11 @@ export default function SearchDistrict() {
     };
   }, [searchTerm]);
 
+  const closeModal = () => {
+    const modal = document.getElementById(modalId) as HTMLDialogElement | null;
+    modal?.close();
+  };
+
   return (
     <div className="max-w-2xl mx-auto p-4">
       <input
@@ -36,20 +42,18 @@ export default function SearchDistrict() {
         className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4"
       />
 
-      <ul className="space-y-2">
-        {districts.length > 0 ? (
-          districts.map((district) => (
-            <li
-              key={district.id}
-              className="p-3 bg-white shadow rounded hover:bg-gray-100"
-            >
-              {district.name}
-            </li>
-          ))
-        ) : (
-          <li className="text-gray-500 italic">No districts found.</li>
-        )}
-      </ul>
+      <div className="space-y-2">
+        {districts.map((district) => (
+          <Link
+            key={district.id}
+            className="p-3"
+            onClick={closeModal}
+            href={`/district/${district.id}`}
+          >
+            {district.name}
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }

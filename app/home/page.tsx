@@ -1,5 +1,4 @@
 export default async function Home() {
-
   return (
     <section>
       <header className="-mx-4 -mt-18 w-screen bg-[url(/Downtown_Calgary.jpg)] bg-cover bg-center text-white pt-32 pb-8 px-4 lg:-mx-[10rem] lg:-mt-[12rem] lg:px-[10rem] overflow-hidden">
@@ -10,13 +9,6 @@ export default async function Home() {
           Powered by real opinions from real residents
         </h2>
       </header>
-      {/* <ul>
-        {districts.map((district) => (
-          <li key={district.id}>
-            <Link href={`/district/${district.id}`}>{district.name}</Link>
-          </li>
-        ))}
-      </ul> */}
     </section>
   );
 }

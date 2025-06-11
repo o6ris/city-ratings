@@ -12,7 +12,7 @@ export default async function Navigation() {
       <div className="flex items-center gap-4">
         <Modal
           modalId="search-district"
-          content={<SearchDistrict />}
+          content={<SearchDistrict modalId="search-district" />}
           triggerBtnContent={
             <div className="flex items-center gap-2 p-2 text-primary">
               <Icon name="Search" color="#480201" />
