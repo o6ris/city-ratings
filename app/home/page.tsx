@@ -1,18 +1,22 @@
-import { getDistricts } from "./action";
-import Link from "next/link";
-
 export default async function Home() {
-  const districts = await getDistricts();
+
   return (
     <section>
-      <h1>Districts</h1>
-      <ul>
+      <header className="-mx-4 -mt-18 w-screen bg-[url(/Downtown_Calgary.jpg)] bg-cover bg-center text-white pt-32 pb-8 px-4 lg:-mx-[10rem] lg:-mt-[12rem] lg:px-[10rem] overflow-hidden">
+        <h1 className="leading-12 !text-xlarge text-shadow-lg lg:!text-xxlarge">
+          Find your perfect place to live
+        </h1>
+        <h2 className="leading-12 !text-sm text-shadow-lg lg:!text-medium">
+          Powered by real opinions from real residents
+        </h2>
+      </header>
+      {/* <ul>
         {districts.map((district) => (
           <li key={district.id}>
             <Link href={`/district/${district.id}`}>{district.name}</Link>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </section>
   );
 }
