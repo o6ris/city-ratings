@@ -14,15 +14,15 @@ export default async function Navigation() {
           modalId="search-district"
           content={<SearchDistrict modalId="search-district" />}
           triggerBtnContent={
-            <div className="flex items-center gap-2 p-2 text-primary">
+            <div className="flex items-center gap-2 p-2 text-primary opacity-50">
               <Icon name="Search" color="#480201" />
-              Find your community
+              <p className="italic">Find your community ...</p>
             </div>
           }
-          triggerBtnStyle="btn bg-neutral rounded-full flex-1 w-full"
+          triggerBtnStyle="btn bg-neutral rounded-full flex-1 w-full shadow-none border-none"
         />
         <Link
-          className="hidden lg:flex text-neutral font-black text-shadow-md"
+          className="hidden md:flex text-neutral font-black text-shadow-md"
           href={"/home"}
         >
           Home
@@ -30,7 +30,7 @@ export default async function Navigation() {
       </div>
 
       {/* Desktop Navigation */}
-      <div className="hidden lg:flex text-neutral font-black text-shadow-md gap-4 items-center">
+      <div className="hidden md:flex text-neutral font-black text-shadow-md gap-4 items-center">
         {user ? (
           <Modal
             modalId="modal-logout"

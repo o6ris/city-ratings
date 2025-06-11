@@ -39,14 +39,14 @@ export default function SearchDistrict({ modalId }: { modalId: string }) {
         placeholder="Eg: Bridgeland"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4"
+        className="input input-xl border border-3 border-base-300 w-full rounded-2xl p-8"
       />
 
-      <div className="space-y-2">
+      <div className="flex flex-col bg-base-300 rounded-2xl mt-2 max-h-90 overflow-auto">
         {districts.map((district) => (
           <Link
             key={district.id}
-            className="p-3"
+            className="py-2 px-4 hover:bg-base-200"
             onClick={closeModal}
             href={`/district/${district.id}`}
           >
