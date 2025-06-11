@@ -5,7 +5,7 @@ import Link from "next/link";
 export default async function Navigation() {
   const user = await isConnected();
   return (
-    <nav className="flex justify-between items-center w-full">
+    <nav className="flex justify-between items-center w-full z-100 fixed top-0 left-0 p-[1rem] lg:px-[10rem] lg:py-[2rem]">
       <div className="flex items-center gap-4">
         <Link href={"/home"}>Home</Link>
       </div>

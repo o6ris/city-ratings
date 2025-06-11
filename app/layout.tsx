@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${AlexandriaFont.variable} antialiased`}>
+      <body className={`${AlexandriaFont.variable} antialiased relative`}>
         <Navigation />
         {children}
       </body>
