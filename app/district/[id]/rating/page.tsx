@@ -11,7 +11,7 @@ export default async function OneDistrictRating({
   const review = await getOneReview(id);
 
   return (
-    <section className="flex flex-col gap-8 items-center mt-8 lg:mt-0 lg:items-start">
+    <section className="flex flex-col gap-10 items-center mt-8 lg:mt-0 lg:items-start">
       <h1 className="w-full break-words whitespace-normal">{district.name}</h1>
       <RatingForm districtId={id} review={review} />
     </section>

@@ -2,6 +2,7 @@
 
 import { User } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { isConnected, signout } from "@/lib/auth-actions";
 import Modal from "@/components/core/modal/Modal";
 import Link from "next/link";
@@ -12,6 +13,7 @@ import Icon from "@/components/core/Icons/Icon";
 export default function Navigation() {
   const [isAtTop, setIsAtTop] = useState(true);
   const [user, setUser] = useState<User | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     // Load user status
@@ -34,8 +36,8 @@ export default function Navigation() {
   return (
     <nav
       className={`flex justify-between items-center w-full z-100 top-0 left-0 p-[1rem] lg:px-[10rem] lg:py-[2rem] fixed transition-colors duration-300 ${
-        isAtTop ? "" : "bg-base-300 shadow-md"
-      }`}
+        pathname !== "/home" ? "bg-base-300 shadow-lg" : ""
+      } ${isAtTop ? "" : "bg-base-300 shadow-lg"}`}
     >
       <div className="flex items-center gap-4">
         <Modal
@@ -70,8 +72,12 @@ export default function Navigation() {
           />
         ) : (
           <>
-            <Link className="text-shadow-md" href="/login">Login</Link>
-            <Link className="text-shadow-md" href="/signup">Signup</Link>
+            <Link className="text-shadow-md" href="/login">
+              Login
+            </Link>
+            <Link className="text-shadow-md" href="/signup">
+              Signup
+            </Link>
           </>
         )}
       </div>
