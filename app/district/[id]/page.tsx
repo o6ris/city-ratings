@@ -41,7 +41,7 @@ export default async function OneDistrict({
   };
 
   return (
-    <div className="flex flex-col gap-8 w-full items-start">
+    <div className="flex flex-col gap-8 w-full items-start mt-10 lg:mt-0">
       <section className="flex flex-col gap-8 w-full items-start">
         <h1 className="w-full break-words whitespace-normal">
           {district.name}

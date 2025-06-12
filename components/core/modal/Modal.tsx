@@ -39,6 +39,7 @@ export default function Modal({
           {content}
           <div className="modal-action">
             <form method="dialog" className="flex gap-2 w-full">
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
               <button className="btn btn-neutral text-primary flex-1 shadow-sm border border-base-200 rounded-full">
                 {closeBtnText}
               </button>

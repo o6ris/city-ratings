@@ -1,19 +1,23 @@
-## [0.7.1] - 2025-06-06
+## [0.8.2] - 2025-06-11
 
-### 🧠 Criteria Information Enhancement
+✨ Features
 
-- **Extended `criteriaDict`**:
-  - Now holds **additional metadata** such as descriptions or icons for each criterion.
+- **Navigation**
+  - Added automatic redirection to `/home`
+  - Implemented **mobile burger menu** for better mobile navigation
+  - Navigation is now client-side to allow dynamic **background on scroll**
+- **SearchDistrict**
+  - Introduced a **modal to search districts**
+  - Automatically **closes the modal** after navigation
+  - Clears **search input** when closing the modal
 
-- **`CriteriaInfos` Modal**:
-  - A reusable modal component that displays **detailed information** about each rating criterion.
-  - Improves transparency and helps users understand what each score represents.
+🎨 UI Polish
 
-- **District & Rating Form Integration**:
-  - The modal is accessible both on the **district page** and within the **rating form**.
-  - Users can click an **info button** next to each range input to learn more about each criterion.
+- **Global Layout**
+  - Adjusted **page margins** to better accommodate the navigation bar
 
-- **UI Polish**:
-  - Added **hover and pointer cursor** to info trigger buttons for better UX.
+🛠️ Fixes
 
+- **Votes**
+  - Prevented vote removal when it's the **last remaining vote**
 
