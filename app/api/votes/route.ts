@@ -90,18 +90,29 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const hasVoted = allVotes.find((v) => {
-      return v.user_id === user.id;
-    });
+    const hasVoted = allVotes.find((v) => v.user_id === user.id);
 
-    // Group counts manually
-    const voteCounts = {
-      rating_id: allVotes[0].rating_id,
-      user_id: allVotes.map((v) => v.user_id),
-      up: allVotes.filter((v) => v.vote_type === "up").length,
-      down: allVotes.filter((v) => v.vote_type === "down").length,
-      has_voted: hasVoted ? hasVoted.vote_type : null,
+    const voteCounts: {
+      rating_id: string | null;
+      user_id: string[];
+      up: number;
+      down: number;
+      has_voted: "up" | "down" | null;
+    } = {
+      rating_id: null,
+      user_id: [],
+      up: 0,
+      down: 0,
+      has_voted: null,
     };
+
+    if (allVotes.length > 0) {
+      voteCounts.user_id = allVotes.map((v) => v.user_id);
+      voteCounts.up = allVotes.filter((v) => v.vote_type === "up").length;
+      voteCounts.down = allVotes.filter((v) => v.vote_type === "down").length;
+      voteCounts.has_voted = hasVoted ? hasVoted.vote_type : null;
+    }
+
     return voteCounts;
   };
 
