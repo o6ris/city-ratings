@@ -19,7 +19,7 @@ export default async function ReviewsPage({
   const { reviews, total } = await getOneDistrictReviews(id, { limit, offset });
 
   return (
-    <section className="flex flex-col gap-8 md:grid md:grid-cols-2  lg:grid lg:grid-cols-3 mt-4">
+    <section className="flex flex-col gap-8 mt-8 lg:mt-0 md:grid md:grid-cols-2  lg:grid lg:grid-cols-3 mt-4">
       <Link className="flex gap-2 items-center" href={`/district/${id}`}> <Icon name="MoveLeft" strokeWidth={2} size={20} /> Go back</Link>
       {reviews.map((review) => {
         return (
