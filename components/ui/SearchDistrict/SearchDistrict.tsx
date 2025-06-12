@@ -27,6 +27,22 @@ export default function SearchDistrict({ modalId }: { modalId: string }) {
     };
   }, [searchTerm]);
 
+  useEffect(() => {
+    const modal = document.getElementById(modalId) as HTMLDialogElement | null;
+
+    const handleClose = () => {
+      setSearchTerm("");
+      setDistricts([]);
+    };
+
+    // Add listener for modal close
+    modal?.addEventListener("close", handleClose);
+
+    return () => {
+      modal?.removeEventListener("close", handleClose);
+    };
+  }, [modalId]);
+
   const closeModal = () => {
     const modal = document.getElementById(modalId) as HTMLDialogElement | null;
     modal?.close();
