@@ -5,6 +5,7 @@ import iconDict from "@/modules/utils/iconDict";
 import criteriasDict from "@/modules/utils/criteriasDict";
 import Icon from "@/components/core/Icons/Icon";
 import CriteriaInfos from "@/components/ui/CriteriaInfos/CriteriaInfos";
+import DistrictMap from "@/components/ui/DistrictMap/DistrictMap";
 
 export default async function OneDistrict({
   params,
@@ -172,6 +173,11 @@ export default async function OneDistrict({
           </p>
         </div>
       </section>
+      <DistrictMap
+        polygon={district.polygon}
+        lat={district.lat}
+        lon={district.lon}
+      />
     </div>
   );
 }
