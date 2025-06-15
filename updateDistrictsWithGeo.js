@@ -3,8 +3,8 @@ import { districtsWithGeo } from "./districts_with_polygons.js";
 
 async function updateDistricts() {
   const supabase = createClient(
-    "https://vihmjmpkpxvqmdqfhxla.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZpaG1qbXBrcHh2cW1kcWZoeGxhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY4MjMxNTAsImV4cCI6MjA2MjM5OTE1MH0.e-Lx5oSLyBxhl9GXQzoi4zNAk0J4pw2Bf6d616fxwHk"
+    process.env.NEXT_PUBLIC_SUPABASE_UR,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   );
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
