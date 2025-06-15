@@ -2,6 +2,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { isConnected } from "@/lib/auth-actions";
+import { GeoJsonObject } from "geojson";
 
 type DistrictRatingCriterias = {
   cost_of_living: number;
@@ -27,6 +28,9 @@ type District = {
   population: number;
   sector: string;
   description: string | null;
+  geojson: GeoJsonObject;
+  lat: number;
+  lon: number;
   district_ratings: DistrictRating | null;
 };
 
@@ -55,7 +59,7 @@ export async function getOneDistrictInfos(
   const { data, error } = await supabase
     .from("districts")
     .select(
-      `id,name,population,sector,description,district_ratings ( district_id, average_rating,safety_security,cost_of_living,healthcare_access,transportation_mobility, environment_nature,education_schools,shops_amenities, sports_recreation, rank
+      `id,name,population,sector,description,geojson,lat,lon,district_ratings ( district_id, average_rating,safety_security,cost_of_living,healthcare_access,transportation_mobility, environment_nature,education_schools,shops_amenities, sports_recreation, rank
       )`
     )
     .eq("id", id)
@@ -80,6 +84,9 @@ export async function getOneDistrictInfos(
       population: data.population,
       sector: data.sector,
       description: data.description,
+      geojson: data.geojson,
+      lat: data.lat,
+      lon: data.lon,
       district_ratings: null,
     };
     return district;
@@ -105,6 +112,9 @@ export async function getOneDistrictInfos(
     population: data.population,
     sector: data.sector,
     description: data.description,
+    geojson: data.geojson,
+    lat: data.lat,
+    lon: data.lon,
     district_ratings: {
       district_id,
       average_rating,
@@ -198,7 +208,7 @@ export async function getOneDistrictReviews(
 export async function getOneReview(districtId: string) {
   const supabase = await createClient();
   const user = await isConnected();
-  
+
   if (!user) {
     return null;
   }
@@ -223,4 +233,3 @@ export async function getOneReview(districtId: string) {
 
   return data;
 }
-

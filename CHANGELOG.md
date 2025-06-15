@@ -1,23 +1,15 @@
-## [0.8.2] - 2025-06-11
+## [0.9.2] - 2025-06-15
 
 ✨ Features
 
-- **Navigation**
-  - Added automatic redirection to `/home`
-  - Implemented **mobile burger menu** for better mobile navigation
-  - Navigation is now client-side to allow dynamic **background on scroll**
-- **SearchDistrict**
-  - Introduced a **modal to search districts**
-  - Automatically **closes the modal** after navigation
-  - Clears **search input** when closing the modal
+- **DistrictMap**
+  - Created **map display component** for districts with leafleet
+  - Integrated with district data to display **all district maps**
+- **District**
+  - Stored **latitude, longitude, and GeoJSON** data for each district in the database
 
-🎨 UI Polish
+🔧 Scripts
 
-- **Global Layout**
-  - Adjusted **page margins** to better accommodate the navigation bar
-
-🛠️ Fixes
-
-- **Votes**
-  - Prevented vote removal when it's the **last remaining vote**
-
+- Added scripts to:
+  - **Fetch** latitude, longitude, and GeoJSON for each district
+  - **Insert** geographic data into the database
