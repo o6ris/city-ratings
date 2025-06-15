@@ -194,7 +194,7 @@ export default function RatingForm({
           <Textarea
             placeholder="Very nice area, I loved it!"
             name="Share your toughts"
-            className="w-full h-32 p-4 rounded-lg shadow-md border border-base-200 lg:h-64"
+            className="bg-neutral w-full h-32 p-4 rounded-lg shadow-md border border-base-200 lg:h-64"
             value={rating.comment}
             onChange={(value) =>
               setRating((prev) => ({
