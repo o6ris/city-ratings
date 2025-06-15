@@ -174,7 +174,7 @@ export default async function OneDistrict({
         </div>
       </section>
       <DistrictMap
-        polygon={district.polygon}
+        geojson={district.geojson}
         lat={district.lat}
         lon={district.lon}
       />
