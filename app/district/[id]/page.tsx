@@ -103,37 +103,8 @@ export default async function OneDistrict({
             </section>
           </div>
         ) : (
-          <div className="flex flex-col gap-8 w-full">
-            <section className="flex gap-4 items-center w-full">
-              <div
-                className={`flex-1 flex flex-col items-center gap-4 p-4 rounded-2xl xl:flex-none xl:w-[400px] ${scoreColor()}`}
-              >
-                <h3>Score</h3>
-                <div>
-                  <span className="!text-xxlarge !font-black">N/A</span>
-                  <span>/10</span>
-                </div>
-              </div>
-              <div className="flex-1 flex flex-col items-center gap-4 p-4 bg-primary text-secondary rounded-2xl xl:flex-none xl:w-[400px]">
-                <h3>Rank</h3>
-                <div>
-                  <span className="!text-xxlarge !font-black">N/A</span>
-                  <span>/10</span>
-                </div>
-              </div>
-            </section>
-            <section className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
-              {Object.entries(criteriasDict).map(([key]) => (
-                <div
-                  key={key}
-                  className="flex flex-col rounded-2xl bg-neutral shadow-md border border-base-200 p-2"
-                >
-                  <Icon name={iconDict[key]} size={20} color="#480201" />
-                  <p className="truncate w-full">{criteriasDict[key].title}</p>
-                  <span className="!text-xlarge !font-black">N/A</span>
-                </div>
-              ))}
-            </section>
+          <div className="flex justify-center items-center gap-8 w-full bg-base-300 py-20 px-10 rounded-2xl">
+            Be the first to leave a review, your feedback could help others!
           </div>
         )}
         <Link

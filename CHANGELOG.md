@@ -1,15 +1,11 @@
-## [0.9.2] - 2025-06-15
+## [0.9.3] - 2025-06-17
 
-✨ Features
+🎨 UI Polish
 
-- **DistrictMap**
-  - Created **map display component** for districts with leafleet
-  - Integrated with district data to display **all district maps**
-- **District**
-  - Stored **latitude, longitude, and GeoJSON** data for each district in the database
+- **RatingForm**
+  - Set **textarea background to white** for better visibility
 
-🔧 Scripts
+📦 Code Refactor
 
-- Added scripts to:
-  - **Fetch** latitude, longitude, and GeoJSON for each district
-  - **Insert** geographic data into the database
+- **District Page**
+  - If no ratings are available, display a **friendly message** instead of leaving empty space
