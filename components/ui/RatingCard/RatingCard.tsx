@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import useVotes from "@/modules/hooks/votes/useVotes";
 import Modal from "@/components/core/modal/Modal";
 import Icon from "@/components/core/Icons/Icon";
@@ -23,12 +24,23 @@ export default function RatingCard({ review }: { review: Review }) {
     ? username.slice(0, maxChartUsername).trim() + "..."
     : username;
 
+  const pathname = usePathname();
+
   return (
     <div className="flex flex-col gap-4 p-4 bg-neutral text-neutral-content rounded-2xl w-full shadow-lg flex flex-col items-center justify-center">
       {/* header */}
       <section className="flex justify-between items-center w-full">
         <div className="text-primary flex flex-col">
-          <strong className="">{review.district}</strong>
+          {pathname.includes(review.district_id) ? (
+            <strong>{review.district}</strong>
+          ) : (
+            <Link
+              href={`/district/${review.district_id}`}
+              className="font-bold"
+            >
+              {review.district}
+            </Link>
+          )}
           <p className="!text-xsmall italic">
             Review by {review.is_user_review ? "You" : shortUsername}
           </p>
