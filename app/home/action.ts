@@ -29,7 +29,6 @@ export async function getTopDistricts() {
     .select(
       `
     rank,
-    district_id,
     average_rating,
     safety_security,
     cost_of_living,
@@ -54,5 +53,41 @@ export async function getTopDistricts() {
     return [];
   }
 
-  return data;
+  const transformed = data.map(
+    ({
+      rank,
+      average_rating,
+      safety_security,
+      cost_of_living,
+      healthcare_access,
+      transportation_mobility,
+      environment_nature,
+      education_schools,
+      shops_amenities,
+      sports_recreation,
+      districts,
+    }) => {
+      const district = Array.isArray(districts) ? districts[0] : districts;
+
+      return {
+        rank,
+        id: district.id,
+        name: district.name,
+        sector: district.sector,
+        average_rating,
+        criterias: {
+          safety_security,
+          cost_of_living,
+          healthcare_access,
+          transportation_mobility,
+          environment_nature,
+          education_schools,
+          shops_amenities,
+          sports_recreation,
+        },
+      };
+    }
+  );
+
+  return transformed;
 }
