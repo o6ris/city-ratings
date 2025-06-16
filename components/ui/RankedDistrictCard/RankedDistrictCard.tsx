@@ -4,28 +4,9 @@ import Link from "next/link";
 import Icon from "@/components/core/Icons/Icon";
 import iconDict from "@/modules/utils/iconDict";
 import CriteriaInfos from "@/components/ui/CriteriaInfos/CriteriaInfos";
+import { districtRanks } from "@/types/districtRanks";
 
-type districtProps = {
-  district: {
-    id: string;
-    name: string;
-    sector: string;
-    rank: number;
-    average_rating: number;
-    criterias: {
-      safety_security: number;
-      cost_of_living: number;
-      healthcare_access: number;
-      transportation_mobility: number;
-      environment_nature: number;
-      education_schools: number;
-      shops_amenities: number;
-      sports_recreation: number;
-    };
-  };
-};
-
-export default function RankedDistrictCard({ district }: districtProps) {
+export default function RankedDistrictCard({ district }: districtRanks) {
   const maxChartDistrictName = 15;
   const districtName = district.name;
   const isDistrictNameLong = districtName.length > maxChartDistrictName;
