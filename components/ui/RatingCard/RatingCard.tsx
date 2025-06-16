@@ -27,10 +27,10 @@ export default function RatingCard({ review }: { review: Review }) {
     <div className="flex flex-col gap-4 p-4 bg-neutral text-neutral-content rounded-2xl w-full shadow-lg flex flex-col items-center justify-center">
       {/* header */}
       <section className="flex justify-between items-center w-full">
-        <div className="flex items-center gap-2">
-          <div className="w-[20px] h-[20px] bg-primary rounded-full"></div>
-          <p className="text-primary">
-            {review.is_user_review ? "You" : shortUsername}
+        <div className="text-primary flex flex-col">
+          <strong className="">{review.district}</strong>
+          <p className="!text-xsmall italic">
+            Review by {review.is_user_review ? "You" : shortUsername}
           </p>
         </div>
         <div>

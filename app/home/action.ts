@@ -119,7 +119,7 @@ export async function getlastReviews(options?: {
       transportation_mobility, environment_nature, education_schools, shops_amenities,
       sports_recreation, average_rating, users (
         id, name, email, avatar_url
-      )`,
+      ), districts (name)`,
       { count: "exact" }
     )
     .order("created_at", { ascending: false })
@@ -132,6 +132,7 @@ export async function getlastReviews(options?: {
 
   const transformed = data.map((review) => {
     const user = Array.isArray(review.users) ? review.users[0] : review.users;
+    const district = Array.isArray(review.districts) ? review.districts[0] : review.districts;
     const isUserReview = connectedUser && connectedUser.id === user.id;
 
     return {
@@ -141,6 +142,7 @@ export async function getlastReviews(options?: {
       created_at: review.created_at,
       is_user_review: isUserReview,
       district_id: review.district_id,
+      district: district.name,
       user: {
         name: user?.name || "Anonymous",
         avatar_url: user?.avatar_url || "No Avatar",
