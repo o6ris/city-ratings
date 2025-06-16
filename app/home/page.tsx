@@ -26,13 +26,11 @@ export default async function Home() {
       </header>
       <section className="flex flex-col gap-8">
         <h3>Top 3 communities</h3>
-        {topDistricts.map((district) => {
-          return (
-            <div key={district.id}>
-              <RankedDistrictCard district={district} />
-            </div>
-          );
-        })}
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
+          {topDistricts.map((district) => {
+            return <RankedDistrictCard key={district.id} district={district} />;
+          })}
+        </div>
       </section>
     </section>
   );

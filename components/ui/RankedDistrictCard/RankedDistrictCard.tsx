@@ -34,18 +34,23 @@ export default function RankedDistrictCard({ district }: districtProps) {
     : districtName;
 
   const renderRankedColor = () => {
-    if (district.rank === 1) return "from-yellow-500 via-yellow-300 to-yellow-500"
-    else if (district.rank === 2) return "from-slate-500 via-slate-300 to-slate-500" 
-    else return "from-orange-800 via-orange-300 to-orange-800"
-  }
+    if (district.rank === 1)
+      return "from-yellow-500 via-yellow-300 to-yellow-500";
+    else if (district.rank === 2)
+      return "from-slate-500 via-slate-300 to-slate-500";
+    else return "from-orange-800 via-orange-300 to-orange-800";
+  };
 
   return (
-    <>
-      <div className="flex flex-col gap-4 p-4 bg-neutral text-neutral-content rounded-t-2xl w-full shadow-lg flex flex-col items-center justify-center">
+    <div>
+      <div className="flex flex-col gap-4 p-4 bg-neutral text-neutral-content rounded-t-2xl w-full shadow-lg items-center justify-center">
         {/* header */}
         <section className="flex justify-between items-center w-full">
           <div className="flex items-center gap-2">
-            <Link href={`/district/${district.id}`} className="text-primary font-bold">
+            <Link
+              href={`/district/${district.id}`}
+              className="text-primary font-bold"
+            >
               {shortDistrictName} - {district.sector}
             </Link>
           </div>
@@ -57,13 +62,13 @@ export default function RankedDistrictCard({ district }: districtProps) {
           </div>
         </section>
         {/* Criterias  */}
-        <section className="grid grid-cols-4 w-full gap-2 md:grid-cols-4 md:gap-6  ">
+        <section className="grid grid-cols-4 w-full gap-2 md:grid-cols-4 md:gap-4">
           {Object.entries(district.criterias).map(([key, value]) => {
             return (
               <div key={key}>
                 <CriteriaInfos
                   triggerBtnContent={
-                    <div className="flex items-center justify-between rounded-2xl bg-base-100 shadow-sm border border-base-200 py-2 px-4 hover:bg-base-300">
+                    <div className="flex items-center justify-between rounded-2xl bg-base-100 shadow-sm border border-base-200 py-2 px-3 hover:bg-base-300">
                       <Icon
                         name={iconDict[key]}
                         size={20}
@@ -82,11 +87,13 @@ export default function RankedDistrictCard({ district }: districtProps) {
         </section>
         {/* footer */}
       </div>
-      <section className={`flex justify-center items-center w-full bg-gradient-to-r ${renderRankedColor()} rounded-b-2xl p-2`}>
+      <section
+        className={`flex justify-center items-center w-full bg-gradient-to-r ${renderRankedColor()} rounded-b-2xl p-2`}
+      >
         <span className="text-primary !font-black !text-medium">
           Top {district.rank}
         </span>
       </section>
-    </>
+    </div>
   );
 }
