@@ -1,7 +1,18 @@
 import Link from "next/link";
-import { districtRanks } from "@/types/districtRanks";
 
-export default function MiniRankedDistrictCard({ district }: districtRanks) {
+type districtRanksProps = {
+  rank: number;
+  id: string;
+  name: string;
+  sector: string;
+  average_rating: number;
+};
+
+export default function MiniRankedDistrictCard({
+  district,
+}: {
+  district: districtRanksProps;
+}) {
   const renderRankedColor = () => {
     if (district.rank === 1)
       return "bg-gradient-to-r from-yellow-500 via-yellow-300 to-yellow-500";

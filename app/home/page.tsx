@@ -84,7 +84,16 @@ export default async function Home() {
         <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {topDistricts.map((district) => {
             return (
-              <MiniRankedDistrictCard key={district.id} district={district} />
+              <MiniRankedDistrictCard
+                key={district.id}
+                district={{
+                  rank: district.rank,
+                  id: district.id,
+                  name: district.name,
+                  sector: district.sector,
+                  average_rating: district.average_rating,
+                }}
+              />
             );
           })}
         </div>
