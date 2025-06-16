@@ -1,4 +1,5 @@
-import { getTopDistricts } from "./action";
+import { getTopDistricts, getlastReviews } from "./action";
+import ReviewsCarrousel from "@/components/ui/Carrousel/ReviewsCarrousel";
 import SearchDistrict from "@/components/ui/SearchDistrict/SearchDistrict";
 import RankedDistrictCard from "@/components/ui/RankedDistrictCard/RankedDistrictCard";
 import Modal from "@/components/core/modal/Modal";
@@ -8,6 +9,7 @@ import Icon from "@/components/core/Icons/Icon";
 
 export default async function Home() {
   const topDistricts = await getTopDistricts();
+  const reviews = await getlastReviews({ limit: 10 });
 
   return (
     <section className="flex flex-col gap-8">
@@ -65,6 +67,14 @@ export default async function Home() {
             })}
           </div>
         </div>
+      </section>
+      <section>
+        {reviews.reviews.length > 0 && (
+          <>
+            <h2>Last reviews</h2>
+            <ReviewsCarrousel reviews={reviews.reviews} />
+          </>
+        )}
       </section>
     </section>
   );
