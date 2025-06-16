@@ -33,15 +33,21 @@ export default function RankedDistrictCard({ district }: districtProps) {
     ? districtName.slice(0, maxChartDistrictName).trim() + "..."
     : districtName;
 
+  const renderRankedColor = () => {
+    if (district.rank === 1) return "from-yellow-500 via-yellow-300 to-yellow-500"
+    else if (district.rank === 2) return "from-slate-500 via-slate-300 to-slate-500" 
+    else return "from-orange-800 via-orange-300 to-orange-800"
+  }
+
   return (
     <>
       <div className="flex flex-col gap-4 p-4 bg-neutral text-neutral-content rounded-t-2xl w-full shadow-lg flex flex-col items-center justify-center">
         {/* header */}
         <section className="flex justify-between items-center w-full">
           <div className="flex items-center gap-2">
-            <p className="text-primary">
+            <Link href={`/district/${district.id}`} className="text-primary font-bold">
               {shortDistrictName} - {district.sector}
-            </p>
+            </Link>
           </div>
           <div>
             <span className="text-primary !font-bold !text-2xl">
@@ -76,7 +82,7 @@ export default function RankedDistrictCard({ district }: districtProps) {
         </section>
         {/* footer */}
       </div>
-      <section className="flex justify-center items-center w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-b-2xl p-2">
+      <section className={`flex justify-center items-center w-full bg-gradient-to-r ${renderRankedColor()} rounded-b-2xl p-2`}>
         <span className="text-primary !font-black !text-medium">
           Top {district.rank}
         </span>
