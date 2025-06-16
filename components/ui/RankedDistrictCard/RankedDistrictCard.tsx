@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Icon from "@/components/core/Icons/Icon";
 import iconDict from "@/modules/utils/iconDict";
-import CriteriaInfos from "../CriteriaInfos/CriteriaInfos";
+import CriteriaInfos from "@/components/ui/CriteriaInfos/CriteriaInfos";
 
 type districtProps = {
   district: {
@@ -26,7 +26,7 @@ type districtProps = {
 };
 
 export default function RankedDistrictCard({ district }: districtProps) {
-  const maxChartDistrictName = 18;
+  const maxChartDistrictName = 15;
   const districtName = district.name;
   const isDistrictNameLong = districtName.length > maxChartDistrictName;
   const shortDistrictName = isDistrictNameLong
