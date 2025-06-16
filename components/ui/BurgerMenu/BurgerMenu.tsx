@@ -33,6 +33,12 @@ export default function BurgerMenu({ user, signout }: BurgerMenuProps) {
               Home
             </Link>
           </li>
+          <li>
+            {" "}
+            <Link onClick={closeDropdown} href={"/rank"}>
+              Ranks
+            </Link>
+          </li>
           {user ? (
             <li>
               <Modal
