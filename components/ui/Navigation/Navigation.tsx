@@ -59,7 +59,7 @@ export default function Navigation() {
         </Link>
         <Link
           className="hidden md:flex text-neutral font-black text-shadow-md"
-          href={"/rank"}
+          href={"/ranks"}
         >
           Ranks
         </Link>
