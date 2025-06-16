@@ -47,7 +47,7 @@ export async function getTopDistricts() {
   `
     )
     .order("rank", { ascending: true })
-    .limit(3);
+    .limit(10);
 
   if (error) {
     console.error("Error fetching top ranked districts:", error);
