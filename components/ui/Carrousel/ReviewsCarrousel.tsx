@@ -37,13 +37,13 @@ export default function ReviewsCarrousel({ reviews }: { reviews: Review[] }) {
       </div>
 
       {/* Arrows - only visible on large screens */}
-      <div className="absolute -left-2 top-1/2 -translate-y-1/2 z-10">
-        <button className="" onClick={() => scroll("left")}>
+      <div className="absolute -left-1 lg:-left-6 top-1/2 -translate-y-1/2 z-10">
+        <button className="bg-neutral p-2 rounded-full shadow-lg" onClick={() => scroll("left")}>
           ❮
         </button>
       </div>
-      <div className="absolute -right-2 top-1/2 -translate-y-1/2 z-10">
-        <button className="" onClick={() => scroll("right")}>
+      <div className="absolute -right-1 lg:-right-6 top-1/2 -translate-y-1/2 z-10">
+        <button className="bg-neutral p-2 rounded-full shadow-lg" onClick={() => scroll("right")}>
           ❯
         </button>
       </div>
