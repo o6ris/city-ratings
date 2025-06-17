@@ -8,7 +8,7 @@ export default async function Ranks() {
 
   return (
     <div className="flex flex-col items-center gap-8">
-      <div className="mt-20 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-20 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:mt-0">
         {districts.map((district) => {
           return (
             <MiniRankedDistrictCard key={district.id} district={district} />
