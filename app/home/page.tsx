@@ -7,6 +7,7 @@ import Modal from "@/components/core/modal/Modal";
 import iconDict from "@/modules/utils/iconDict";
 import criteriasDict from "@/modules/utils/criteriasDict";
 import Icon from "@/components/core/Icons/Icon";
+import Link from "next/link";
 
 export default async function Home() {
   const topDistricts = await getTopDistricts();
@@ -96,6 +97,9 @@ export default async function Home() {
               />
             );
           })}
+          <Link className="btn text-primary flex items-center justify-center gap-4 rounded-2xl  h-full" href={"/ranks"}>
+            See all <Icon name="MoveRight" strokeWidth={2} size={20} />
+          </Link>
         </div>
       </section>
     </section>
