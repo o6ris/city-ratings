@@ -1,11 +1,10 @@
-## [0.12.0] - 2025-06-18
+## [0.13.3] - 2025-06-18
 
-✨ Features
+🔧 DevOps
 
-- **Static Pages**
-  - Created **Privacy Policy** and **Terms of Use** pages
-  - Created an **About Us** page, accessible via the navigation menu
-- **Footer**
-  - Added a **footer component** with links to legal and about pages
+- **SEO & Metadata**
+  - Added **metadata for all static and dynamic pages**
+  - Created **sitemap.xml** for better search engine indexing
+  - Added **robots.txt** to guide search engine crawlers
 - **Branding**
-  - Added a **site logo** and displayed it in the navigation bar
+  - Updated **favicon** for the site
