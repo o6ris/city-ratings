@@ -1,11 +1,11 @@
-## [0.11.3] - 2025-06-17
+## [0.12.0] - 2025-06-18
 
 ✨ Features
 
-- **Rank Page**
-  - Created a **dedicated Rank page** accessible from the navigation menu
-  - Displayed **all ranked districts** with their respective scores
-  - Added a **button** to encourage users to **search and rate their community**
-- **miniDistrictRankedCard**
-  - Developed a compact component to **display ranked district summaries**
-
+- **Static Pages**
+  - Created **Privacy Policy** and **Terms of Use** pages
+  - Created an **About Us** page, accessible via the navigation menu
+- **Footer**
+  - Added a **footer component** with links to legal and about pages
+- **Branding**
+  - Added a **site logo** and displayed it in the navigation bar
