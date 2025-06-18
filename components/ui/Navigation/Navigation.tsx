@@ -9,6 +9,7 @@ import Link from "next/link";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 import SearchDistrict from "../SearchDistrict/SearchDistrict";
 import Icon from "@/components/core/Icons/Icon";
+import Image from "next/image";
 
 export default function Navigation() {
   const [isAtTop, setIsAtTop] = useState(true);
@@ -40,6 +41,22 @@ export default function Navigation() {
       } ${isAtTop ? "" : "bg-base-300 shadow-lg"}`}
     >
       <div className="flex items-center gap-4">
+        <div className="flex flex-start">
+          <Image
+            src="/logo.svg"
+            width={100}
+            height={100}
+            alt="Picture of the author"
+            className="hidden md:flex"
+          />
+          <Image
+            src="mini-logo.svg"
+            width={30}
+            height={30}
+            alt="Picture of the author"
+            className="flex md:hidden"
+          />
+        </div>
         <Modal
           modalId="search-district"
           content={<SearchDistrict modalId="search-district" />}
@@ -62,6 +79,12 @@ export default function Navigation() {
           href={"/ranks"}
         >
           Ranks
+        </Link>
+        <Link
+          className="hidden md:flex text-neutral font-black text-shadow-md"
+          href={"/about"}
+        >
+          About us
         </Link>
       </div>
 
