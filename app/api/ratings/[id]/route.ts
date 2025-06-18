@@ -18,9 +18,9 @@ const ratingSchema = z.object({
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  {params}: { params: Promise<{ id: string }> }
 ) {
-  const ratingId = params.id;
+  const { id } = await params;
   const supabase = await createClient();
 
   const body = await request.json();
@@ -45,7 +45,7 @@ export async function PATCH(
   const { data, error } = await supabase
     .from("ratings")
     .update({ ...result.data })
-    .eq("id", ratingId)
+    .eq("id", id)
     .eq("user_id", user.id)
     .select();
 
@@ -93,9 +93,9 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  {params}: { params: Promise<{ id: string }> }
 ) {
-  const ratingId = params.id;
+  const { id } = await params;
   const supabase = await createClient();
 
   // Authenticate the user
@@ -112,7 +112,7 @@ export async function DELETE(
   const { data: existing, error: fetchError } = await supabase
     .from("ratings")
     .select("id, district_id")
-    .eq("id", ratingId)
+    .eq("id", id)
     .eq("user_id", user.id)
     .single();
 
@@ -127,7 +127,7 @@ export async function DELETE(
   const { error: deleteError } = await supabase
     .from("ratings")
     .delete()
-    .eq("id", ratingId)
+    .eq("id", id)
     .eq("user_id", user.id);
 
   if (deleteError) {
@@ -142,7 +142,7 @@ export async function DELETE(
   }
 
   // Optional logging
-  console.log(`Rating ${ratingId} deleted for user ${user.id}`);
+  console.log(`Rating ${id} deleted for user ${user.id}`);
 
-  return NextResponse.json({ success: true, deletedId: ratingId });
+  return NextResponse.json({ success: true, deletedId: id });
 }

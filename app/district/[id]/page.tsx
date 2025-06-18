@@ -8,11 +8,12 @@ import Icon from "@/components/core/Icons/Icon";
 import CriteriaInfos from "@/components/ui/CriteriaInfos/CriteriaInfos";
 import DistrictMap from "@/components/ui/DistrictMap/DistrictMap";
 
-
-export async function generateMetadata(
-  { params }: { params: { id: string } }
-): Promise<Metadata> {
-  const district = await getOneDistrictInfos(params.id);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const district = await getOneDistrictInfos((await params).id);
 
   if (!district) {
     return {
@@ -34,7 +35,7 @@ export async function generateMetadata(
     openGraph: {
       title: `${district.name} | Neighbours Voices`,
       description: `See how ${district.name} ranks among Calgary neighborhoods. Read real reviews and scores from residents.`,
-      url: `https://www.neighboursvoices.ca/district/${params.id}`,
+      url: `https://www.neighboursvoices.ca/district/${(await params).id}`,
       siteName: "Neighbours Voices",
       locale: "en_CA",
       type: "article",

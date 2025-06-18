@@ -8,9 +8,9 @@ import RatingCard from "@/components/ui/RatingCard/RatingCard";
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const district = await getOneDistrictInfos(params.id);
+  const district = await getOneDistrictInfos((await params).id);
 
   if (!district) {
     return {
@@ -31,7 +31,7 @@ export async function generateMetadata({
     openGraph: {
       title: `Reviews for ${district.name} | Neighbours Voices`,
       description: `Read reviews for ${district.name}, Calgary. Insights from real residents on quality of life, affordability, and more.`,
-      url: `https://www.neighboursvoices.ca/district/${params.id}/reviews`,
+      url: `https://www.neighboursvoices.ca/district/${(await params).id}/reviews`,
       siteName: "Neighbours Voices",
       locale: "en_CA",
       type: "article",
@@ -48,11 +48,11 @@ export default async function ReviewsPage({
   searchParams,
   params,
 }: {
-  searchParams: { page?: string };
+  searchParams: Promise<{ page?: string }>;
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const page = Number(searchParams?.page ?? 1);
+  const page = Number((await searchParams)?.page ?? 1);
   const limit = 12;
   const offset = (page - 1) * limit;
 

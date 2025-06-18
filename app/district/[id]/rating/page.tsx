@@ -6,9 +6,9 @@ import RatingForm from "@/components/ui/DistrictRating/RatingForm";
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const district = await getOneDistrict(params.id);
+  const district = await getOneDistrict((await params).id);
 
   if (!district) {
     return {
@@ -30,7 +30,9 @@ export async function generateMetadata({
     openGraph: {
       title: `Reviews for ${district.name} | Neighbours Voices`,
       description: `Read reviews for ${district.name}, Calgary. Insights from real residents on quality of life, affordability, and more.`,
-      url: `https://www.neighboursvoices.ca/district/${params.id}/reviews`,
+      url: `https://www.neighboursvoices.ca/district/${
+        (await params).id
+      }/reviews`,
       siteName: "Neighbours Voices",
       locale: "en_CA",
       type: "article",
