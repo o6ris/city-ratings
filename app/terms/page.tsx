@@ -41,7 +41,7 @@ export default function TermsOfUsePage() {
       <p>We may update these Terms from time to time. Continued use of the Website after changes implies acceptance of the new terms.</p>
 
       <h2 className="text-xl font-semibold mt-6">7. Contact</h2>
-      <p>If you have any questions about these Terms, contact us at: <a href="mailto:youremail@example.com" className="text-blue-600 underline">youremail@example.com</a></p>
+      <p>If you have any questions about these Terms, contact: <a href="mailto:tsiry.ralamb@gmail.com" className="text-blue-600 underline">tsiry.ralamb@gmail.com</a></p>
     </main>
   );
 }

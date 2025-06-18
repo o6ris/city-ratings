@@ -59,7 +59,7 @@ export default function PrivacyPolicyPage() {
         <li>Request a copy of your personal data</li>
         <li>Withdraw consent at any time</li>
       </ul>
-      <p>For any request, contact: <a href="mailto:youremail@example.com" className="text-blue-600 underline">youremail@example.com</a></p>
+      <p>For any request, contact: <a href="mailto:tsiry.ralamb@gmail.com" className="text-blue-600 underline">tsiry.ralamb@gmail.com</a></p>
 
       <h2 className="text-xl font-semibold mt-6">7. Changes to This Policy</h2>
       <p>We may update this Privacy Policy. Continued use of the Website means you accept the revised version.</p>
