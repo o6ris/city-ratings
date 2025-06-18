@@ -80,6 +80,12 @@ export default function Navigation() {
         >
           Ranks
         </Link>
+        <Link
+          className="hidden md:flex text-neutral font-black text-shadow-md"
+          href={"/about"}
+        >
+          About us
+        </Link>
       </div>
 
       {/* Desktop Navigation */}

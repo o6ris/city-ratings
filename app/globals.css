@@ -84,7 +84,7 @@ span {
 }
 
 body, #__next {
-  padding: 2rem 1rem;
+  padding: 2rem 1rem 5rem 1rem;
   color: var(--color-primary);
   width: 100%;
 }
