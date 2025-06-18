@@ -31,7 +31,9 @@ export async function generateMetadata({
     openGraph: {
       title: `Reviews for ${district.name} | Neighbours Voices`,
       description: `Read reviews for ${district.name}, Calgary. Insights from real residents on quality of life, affordability, and more.`,
-      url: `https://www.neighboursvoices.ca/district/${(await params).id}/reviews`,
+      url: `https://www.neighboursvoices.ca/district/${
+        (await params).id
+      }/reviews`,
       siteName: "Neighbours Voices",
       locale: "en_CA",
       type: "article",
@@ -59,18 +61,20 @@ export default async function ReviewsPage({
   const { reviews, total } = await getOneDistrictReviews(id, { limit, offset });
 
   return (
-    <section className="flex flex-col gap-8 mt-10 lg:mt-0 md:grid md:grid-cols-2  lg:grid lg:grid-cols-3 mt-4">
+    <section className="flex flex-col gap-8 mt-10 lg:mt-0 mt-4">
       <Link className="flex gap-2 items-center" href={`/district/${id}`}>
         {" "}
         <Icon name="MoveLeft" strokeWidth={2} size={20} /> Go back
       </Link>
-      {reviews.map((review) => {
-        return (
-          <div key={review.id} className="flex-1 min-w-full">
-            <RatingCard review={review} />
-          </div>
-        );
-      })}
+      <div className="flex flex-col gap-8 md:grid md:grid-cols-2 lg:grid lg:grid-cols-3 ">
+        {reviews.map((review) => {
+          return (
+            <div key={review.id} className="flex-1 min-w-full">
+              <RatingCard review={review} />
+            </div>
+          );
+        })}
+      </div>
       <Pagination
         currentPage={page}
         totalPages={Math.ceil(total / limit)}
