@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getTopDistricts, getlastReviews } from "./action";
 import ReviewsCarrousel from "@/components/ui/Carrousel/ReviewsCarrousel";
 import SearchDistrict from "@/components/ui/SearchDistrict/SearchDistrict";
@@ -8,6 +9,19 @@ import iconDict from "@/modules/utils/iconDict";
 import criteriasDict from "@/modules/utils/criteriasDict";
 import Icon from "@/components/core/Icons/Icon";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Find the Best Community in Calgary",
+  description:
+    "Neighbour reviews, safety, cost of living, schools, and more — find your perfect community in Calgary today.",
+  keywords: [
+    "Calgary communities",
+    "where to live in Calgary",
+    "Calgary neighborhoods",
+    "community ratings Calgary",
+    "best neighborhood Calgary",
+  ],
+};
 
 export default async function Home() {
   const topDistricts = await getTopDistricts();
@@ -97,7 +111,10 @@ export default async function Home() {
               />
             );
           })}
-          <Link className="btn text-primary flex items-center justify-center gap-4 rounded-2xl  h-full" href={"/ranks"}>
+          <Link
+            className="btn text-primary flex items-center justify-center gap-4 rounded-2xl  h-full"
+            href={"/ranks"}
+          >
             See all <Icon name="MoveRight" strokeWidth={2} size={20} />
           </Link>
         </div>

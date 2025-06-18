@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Icon from "@/components/core/Icons/Icon";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "About Us",
+  description: "Learn why Neighbours Voices was created and how it helps Calgarians and newcomers find their perfect community.",
+};
+
 
 export default function AboutPage() {
   return (
