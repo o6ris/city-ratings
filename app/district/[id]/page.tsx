@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getOneDistrictInfos, getOneDistrictReviews } from "./action";
 import ReviewsCarrousel from "@/components/ui/Carrousel/ReviewsCarrousel";
@@ -6,6 +7,45 @@ import criteriasDict from "@/modules/utils/criteriasDict";
 import Icon from "@/components/core/Icons/Icon";
 import CriteriaInfos from "@/components/ui/CriteriaInfos/CriteriaInfos";
 import DistrictMap from "@/components/ui/DistrictMap/DistrictMap";
+
+
+export async function generateMetadata(
+  { params }: { params: { id: string } }
+): Promise<Metadata> {
+  const district = await getOneDistrictInfos(params.id);
+
+  if (!district) {
+    return {
+      title: "Community Not Found | Neighbours Voices",
+      description: "This Calgary community could not be found.",
+    };
+  }
+
+  return {
+    title: `${district.name} | Neighbours Voices`,
+    description: `Explore real reviews and scores for ${district.name}, a Calgary community rated by locals on safety, cost of living, schools, nature, and more.`,
+    keywords: [
+      `${district.name} Calgary`,
+      `${district.name} neighborhood review`,
+      `${district.name} community score`,
+      "Calgary neighborhood ranking",
+      "Calgary best districts",
+    ],
+    openGraph: {
+      title: `${district.name} | Neighbours Voices`,
+      description: `See how ${district.name} ranks among Calgary neighborhoods. Read real reviews and scores from residents.`,
+      url: `https://www.neighboursvoices.ca/district/${params.id}`,
+      siteName: "Neighbours Voices",
+      locale: "en_CA",
+      type: "article",
+    },
+    twitter: {
+      card: "summary",
+      title: `${district.name} | Neighbours Voices`,
+      description: `Explore what locals say about ${district.name} in Calgary. Score based on real reviews.`,
+    },
+  };
+}
 
 export default async function OneDistrict({
   params,
