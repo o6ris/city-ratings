@@ -46,14 +46,14 @@ export default function Navigation() {
             src="/logo.svg"
             width={100}
             height={100}
-            alt="Picture of the author"
+            alt="Neigbours Voices"
             className="hidden md:flex"
           />
           <Image
-            src="mini-logo.svg"
+            src="/mini-logo.svg"
             width={30}
             height={30}
-            alt="Picture of the author"
+            alt="Neibourhs voices"
             className="flex md:hidden"
           />
         </div>
