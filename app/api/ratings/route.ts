@@ -12,7 +12,7 @@ const ratingSchema = z.object({
   education_schools: z.number().int().min(1).max(10),
   shops_amenities: z.number().int().min(1).max(10),
   sports_recreation: z.number().int().min(1).max(10),
-  comment: z.string().min(5).max(1000),
+  comment: z.string().min(50).max(1000),
   average_rating: z.number().min(1).max(10),
 });
 

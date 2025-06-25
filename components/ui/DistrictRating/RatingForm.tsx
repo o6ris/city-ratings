@@ -6,6 +6,7 @@ import Range from "@/components/core/inputs/Range";
 import Textarea from "@/components/core/inputs/Textarea";
 import SubmitRatingButton from "@/components/ui/Buttons/SubmitRatingButton";
 import DeleteRatingbutton from "@/components/ui/Buttons/DeleteRatingButton";
+import Modal from "@/components/core/modal/Modal";
 
 export default function RatingForm({
   districtId,
@@ -191,18 +192,31 @@ export default function RatingForm({
       </section>
       <section className="flex flex-col gap-6 w-full">
         <section className="flex flex-col gap-6 w-full">
-          <Textarea
-            placeholder="Very nice area, I loved it!"
-            name="Share your toughts"
-            className="bg-neutral w-full h-32 p-4 rounded-lg shadow-md border border-base-200 lg:h-64"
-            value={rating.comment}
-            onChange={(value) =>
-              setRating((prev) => ({
-                ...prev,
-                comment: value,
-              }))
-            }
-          />
+          <div className="flex flex-col">
+            <Textarea
+              placeholder="Very nice area, I loved it!"
+              name="Share your toughts"
+              className="bg-neutral w-full h-32 p-4 rounded-lg shadow-md border border-base-200 lg:h-64"
+              value={rating.comment}
+              onChange={(value) =>
+                setRating((prev) => ({
+                  ...prev,
+                  comment: value,
+                }))
+              }
+            />
+            <div className="w-full flex">
+              <span
+                className={`ml-auto !text-xsmall ${
+                  rating.comment.length < 50 || rating.comment.length > 1000
+                    ? "text-error"
+                    : "text-primary"
+                }`}
+              >
+                {rating.comment.length}/1000
+              </span>
+            </div>
+          </div>
           <section
             className={`flex gap-2 items-center justify-between p-6 rounded-xl ${totalScorBgColor}`}
           >
@@ -224,12 +238,29 @@ export default function RatingForm({
           >
             Cancel
           </Link>
-          <SubmitRatingButton
-            className="btn btn-secondary text-primary rounded-full"
-            districtId={districtId}
-            rating={{ ...rating, average_rating: totalScoreMemo }}
-            reviewId={review?.id}
-          />
+          {rating.comment.length < 50 || rating.comment.length > 1000 ? (
+            <Modal
+              triggerBtnContent="Submit Rating"
+              triggerBtnStyle="btn btn-secondary text-primary rounded-full"
+              modalId="submit-rating-error"
+              content={
+                <div>
+                  <h3>Share your thoughts</h3>
+                  <p>
+                    Your comment must be between 50 and 1000 characters. Thank
+                    you!
+                  </p>
+                </div>
+              }
+            />
+          ) : (
+            <SubmitRatingButton
+              className="btn btn-secondary text-primary rounded-full"
+              districtId={districtId}
+              rating={{ ...rating, average_rating: totalScoreMemo }}
+              reviewId={review?.id}
+            />
+          )}
           {review?.id && (
             <DeleteRatingbutton reviewId={review.id} districtId={districtId} />
           )}
