@@ -57,7 +57,7 @@ export default function Navigation() {
       } ${isAtTop ? "" : "bg-base-300 shadow-lg"}`}
     >
       <div className="flex items-center gap-4">
-        <div className="flex flex-start">
+        <Link href="/home" className="flex flex-start">
           <Image
             src="/logo.svg"
             width={100}
@@ -72,7 +72,7 @@ export default function Navigation() {
             alt="Neibourhs voices"
             className="flex md:hidden"
           />
-        </div>
+        </Link>
         <Modal
           modalId="search-district"
           content={<SearchDistrict modalId="search-district" />}
