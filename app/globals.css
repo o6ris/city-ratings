@@ -1,3 +1,95 @@
 @import "tailwindcss";
+@theme {
+  --text-xxlarge: 3rem;
+  --text-xlarge: 2.5rem;
+  --text-large: 2rem;
+  --text-medium: 1.5rem;
+  --text-small: 1rem;
+  --text-xsmall: 0.75rem;
+  --font-weight-black: 900;
+  --font-weight-bold: 700;
+  --font-weight-regular: 400;
+  --font-weight-light: 300;
+  --font-weight-thin: 100;
+}
+@plugin "daisyui" {
+  themes: mytheme;
+}
+@plugin "daisyui/theme" {
+  name: "mytheme";
+  default: true; /* set as default */
+  prefersdark: false; /* set as default dark mode (prefers-color-scheme:dark) */
+  color-scheme: light; /* color of browser-provided UI */
 
+  --color-base-100: oklch(0.93 0.04 91);
+  --color-base-200: oklch(0.91 0.05 91);
+  --color-base-300: oklch(0.89 0.06 91);
+  --color-base-content: oklch(20% 0.05 240);
+  --color-primary: oklch(0.2545 0.1012 29.33);
+  --color-primary-content: oklch(98% 0.01 240);
+  --color-secondary: oklch(0.7925 0.1713 319.94);
+  --color-secondary-content: oklch(98% 0.01 200);
+  --color-accent: oklch(65% 0.25 160);
+  --color-accent-content: oklch(98% 0.01 160);
+  --color-neutral: oklch(0.98 0.012 63);
+  --color-neutral-content: oklch(98% 0.01 240);
+  --color-info: oklch(70% 0.2 220);
+  --color-info-content: oklch(98% 0.01 220);
+  --color-success: oklch(0.8 0.21 142);
+  --color-success-content: oklch(98% 0.01 140);
+  --color-warning: oklch(0.82 0.13 72);
+  --color-warning-content: oklch(20% 0.05 80);
+  --color-error: oklch(0.65 0.22 26);
+  --color-error-content: oklch(98% 0.01 30);
 
+  /* border radius */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+
+  /* base sizes */
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  /* border size */
+  --border: 1px;
+
+  /* effects */
+  --depth: 1;
+  --noise: 0;
+}
+
+h1 {
+  font-size: var(--text-xxlarge);
+  font-weight: var(--font-weight-black);
+}
+
+h2 {
+  font-size: var(--text-xlarge);
+  font-weight: var(--font-weight-bold);
+}
+h3 {
+  font-size: var(--text-large);
+  font-weight: var(--font-weight-bold);
+}
+h4 {
+  font-size: var(--text-medium);
+  font-weight: var(--font-weight-bold);
+}
+p,
+label,
+span {
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-regular);
+}
+
+body, #__next {
+  padding: 2rem 1rem 5rem 1rem;
+  color: var(--color-primary);
+  width: 100%;
+}
+@media screen and (min-width: 1020px) {
+  body, #__next {
+    padding: 10rem;
+  }
+}
