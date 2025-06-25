@@ -58,6 +58,7 @@ $$ LANGUAGE plpgsql;
 --  This SQL function is designed to update the average rating of a district whenever a rating is updated or deleted
 CREATE OR REPLACE FUNCTION recalculate_district_rating()
 RETURNS TRIGGER AS $$
+
 DECLARE
   district UUID;
   rating_count INTEGER;
@@ -111,24 +112,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- This trigger will call the update_district_rating function
-CREATE TRIGGER trg_rating_insert
-AFTER INSERT ON ratings
-FOR EACH ROW
-EXECUTE FUNCTION update_district_rating();
-
--- Those triggers will call the recalculate_district_rating function
-CREATE TRIGGER trg_rating_update
-AFTER UPDATE ON ratings
-FOR EACH ROW
-EXECUTE FUNCTION recalculate_district_rating();
-
-CREATE TRIGGER trg_rating_delete
-AFTER DELETE ON ratings
-FOR EACH ROW
-EXECUTE FUNCTION recalculate_district_rating();
-
-
 -- This SQL function is designed to update the rank of districts based on their average rating.
 CREATE OR REPLACE FUNCTION update_district_ranks()
 RETURNS VOID AS $$
@@ -143,21 +126,6 @@ BEGIN
   SET rank = r.new_rank
   FROM ranked r
   WHERE dr.district_id = r.district_id
-  AND dr.rank IS DISTINCT FROM r.new_rank;
+    AND dr.rank IS DISTINCT FROM r.new_rank;
   END;
 $$ LANGUAGE plpgsql;
-
--- This trigger will call the update_district_ranks function
-CREATE OR REPLACE FUNCTION trigger_update_district_ranks()
-RETURNS TRIGGER AS $$
-BEGIN
-  PERFORM update_district_ranks();
-  RETURN NULL;
-END;
-$$ LANGUAGE plpgsql;
-
--- This trigger will call the update_district_ranks function
-CREATE TRIGGER trg_update_district_ranks
-AFTER INSERT OR UPDATE ON district_ratings
-FOR EACH STATEMENT
-EXECUTE FUNCTION trigger_update_district_ranks();

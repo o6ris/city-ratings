@@ -1,0 +1,1 @@
+INSERT INTO "public"."cities" ("id", "name", "province", "population", "location", "created_at") VALUES ('9a659157-ac83-476d-aeb2-b521bd2b5525', 'Calgary', 'Alberta', '1481800', '(-114.0719,51.0447)', '2025-05-09 23:26:10.524215');
