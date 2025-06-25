@@ -23,7 +23,9 @@ export default function Navigation() {
       setUser(connectedUser);
     };
     fetchUser();
+  }, [user]);
 
+  useEffect(() => {
     // Scroll detection
     const handleScroll = () => {
       setIsAtTop(window.scrollY === 0);

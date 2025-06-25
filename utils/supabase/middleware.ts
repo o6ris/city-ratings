@@ -47,14 +47,19 @@ export async function updateSession(request: NextRequest) {
     "/email-confirmation",
     "/auth/callback",
     "/home",
-    "/district",
+    "/ranks",
+    "/privacy",
+    "/terms",
+    "/about",
   ];
 
   const isPublic =
     PUBLIC_PATHS.some(
       (publicPath) => path === publicPath || path.startsWith(publicPath + "/")
     ) ||
+    /^\/district$/.test(path) ||
     /^\/district\/[^/]+$/.test(path) ||
+    /^\/district\/[^/]+\/reviews$/.test(path) ||
     path.startsWith("/api/auth");
 
   if (!user && !isPublic) {
