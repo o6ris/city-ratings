@@ -1,17 +1,14 @@
-## [0.13.4] - 2025-06-19
+## [0.13.5] - 2025-06-20
 
 ✨ Features
 
-- **RatingForm**
-  - Displayed **helper text** when the comment section isn't properly filled out
-- **Home Page**
-  - Added **additional content** to enrich the homepage experience
+- **UserProvider**
+  - Created a **global UserProvider** to manage user state
+  - Integrated UserProvider into **LoginForm**, **Navigation**, and **auth actions**
+- **Navigation**
+  - Clicking the **site logo** now navigates back to the **home page**
 
 🛠️ Fixes
 
-- **LoginForm**
-  - Fixed **top margin issue** on mobile view
-- **Middleware**
-  - Handled **protected routes** more securely
-- **Navigation**
-  - Fixed display of **login/logout buttons** after sign-in and sign-out
+- **Terminology**
+  - Replaced incorrect label **"sector"** with **"quadrant"**
