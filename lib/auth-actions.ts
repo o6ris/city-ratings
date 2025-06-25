@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
 export async function signup(
   formData: FormData
 ): Promise<{ message: string } | undefined> {
@@ -98,7 +100,7 @@ export async function signInWithGoogle(): Promise<{ url: string | null }> {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "http://localhost:3000/auth/callback",
+      redirectTo: `${baseUrl}/auth/callback`,
       queryParams: {
         access_type: "offline",
         prompt: "consent",
