@@ -1,10 +1,17 @@
-## [0.13.3] - 2025-06-18
+## [0.13.4] - 2025-06-19
 
-🔧 DevOps
+✨ Features
 
-- **SEO & Metadata**
-  - Added **metadata for all static and dynamic pages**
-  - Created **sitemap.xml** for better search engine indexing
-  - Added **robots.txt** to guide search engine crawlers
-- **Branding**
-  - Updated **favicon** for the site
+- **RatingForm**
+  - Displayed **helper text** when the comment section isn't properly filled out
+- **Home Page**
+  - Added **additional content** to enrich the homepage experience
+
+🛠️ Fixes
+
+- **LoginForm**
+  - Fixed **top margin issue** on mobile view
+- **Middleware**
+  - Handled **protected routes** more securely
+- **Navigation**
+  - Fixed display of **login/logout buttons** after sign-in and sign-out
