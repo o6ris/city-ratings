@@ -14,7 +14,6 @@ type Review = {
 
 export default function useRating() {
   const postRating = async (payload: Review) => {
-    console.log("hook payload", payload);
     const response = await fetch("/api/ratings", {
       method: "POST",
       headers: {

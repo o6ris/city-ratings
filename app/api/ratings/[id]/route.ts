@@ -87,7 +87,6 @@ export async function PATCH(
     // Optional: don't fail the request, just log this
   }
 
-  console.log("Inserted data:", data);
   return NextResponse.json({ success: true, data });
 }
 
@@ -140,9 +139,6 @@ export async function DELETE(
       { status: 500 }
     );
   }
-
-  // Optional logging
-  console.log(`Rating ${id} deleted for user ${user.id}`);
 
   return NextResponse.json({ success: true, deletedId: id });
 }
