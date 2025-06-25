@@ -74,6 +74,5 @@ export async function POST(request: Request) {
     // Optional: don't fail the request, just log this
   }
 
-  console.log("Inserted data:", data);
   return NextResponse.json({ success: true, data });
 }

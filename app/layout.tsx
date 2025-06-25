@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Providers } from "./providers";
 import { Alexandria } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/ui/Navigation/Navigation";
@@ -14,13 +15,14 @@ export const metadata: Metadata = {
     default: "Neighbours Voices",
     template: "%s | Neighbours Voices",
   },
-  description: "Find the best community in Calgary. Honest reviews and ratings from locals to help newcomers and Calgarians find where they belong.",
+  description:
+    "Find the best community in Calgary. Honest reviews and ratings from locals to help newcomers and Calgarians find where they belong.",
   keywords: [
     "Calgary neighborhoods",
     "community reviews",
     "Calgary community ratings",
     "move to Calgary",
-    "neighborhood comparison Calgary"
+    "neighborhood comparison Calgary",
   ],
   metadataBase: new URL("https://www.neighboursvoices.ca"),
   openGraph: {
@@ -42,14 +44,14 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Neighbours Voices",
-    description: "Discover the best communities in Calgary through honest local reviews.",
+    description:
+      "Discover the best communities in Calgary through honest local reviews.",
     images: ["/logo.svg"],
   },
   icons: {
     icon: "/favicon.ico",
   },
 };
-
 
 export default function RootLayout({
   children,
@@ -59,9 +61,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${AlexandriaFont.variable} antialiased relative`}>
-        <Navigation />
-        {children}
-        <Footer />
+        <Providers>
+          <Navigation />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
