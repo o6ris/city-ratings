@@ -1,6 +1,8 @@
 "use client";
 
-import { User } from "@supabase/supabase-js";
+import { useContext } from "react";
+import UserContext from "@/modules/providers/UserProvider";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { isConnected, signout } from "@/lib/auth-actions";
@@ -13,8 +15,20 @@ import Image from "next/image";
 
 export default function Navigation() {
   const [isAtTop, setIsAtTop] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
+  const { setUser, user } = useContext(UserContext);
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleSignout = async () => {
+    const { error } = await signout();
+    if (!error) {
+      setUser(null);
+      router.push("/home");
+    } else {
+      console.error("Error signing out:", error);
+      router.push("/error");
+    }
+  };
 
   useEffect(() => {
     // Load user status
@@ -114,7 +128,7 @@ export default function Navigation() {
       </div>
 
       {/* Mobile Menu */}
-      <BurgerMenu user={user} signout={signout} />
+      <BurgerMenu user={user} signout={handleSignout} />
     </nav>
   );
 }

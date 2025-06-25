@@ -1,7 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -72,7 +70,7 @@ export async function login(formData: FormData) {
       };
     }
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error, data } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -83,8 +81,13 @@ export async function login(formData: FormData) {
         status: error.status,
       };
     }
-
-    revalidatePath("/home", "layout");
+    if (!data?.user) {
+      return {
+        message: "User not found.",
+        status: 404,
+      };
+    }
+    return data.user;
   } catch (err: unknown) {
     console.error("Unexpected login error:", err);
     return {
@@ -119,12 +122,7 @@ export async function signInWithGoogle(): Promise<{ url: string | null }> {
 export async function signout() {
   const supabase = await createClient();
   const { error } = await supabase.auth.signOut();
-  if (error) {
-    console.log(error);
-    redirect("/error");
-  }
-
-  redirect("/home");
+  return { error };
 }
 
 export async function isConnected() {
