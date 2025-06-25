@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4 mt-10 lg:mt-0">
       <h1 className="">About Us</h1>
       <p>
         Finding the right community in a new city isn&apos;t always easy, and

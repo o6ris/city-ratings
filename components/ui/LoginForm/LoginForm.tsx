@@ -30,7 +30,7 @@ export default function LoginForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col items-center gap-8 p-4 max-w-sm mx-auto"
+      className="flex flex-col items-center gap-8 p-4 max-w-sm mx-auto mt-10 lg:mt-0"
     >
       {/* email */}
       <div className="flex flex-col gap-2 w-full">
