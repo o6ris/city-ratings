@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Terms of Use",
@@ -78,13 +79,11 @@ export default function TermsOfUsePage() {
 
       <h2 className="text-xl font-semibold mt-6">7. Contact</h2>
       <p>
-        If you have any questions about these Terms, contact:{" "}
-        <a
-          href="mailto:tsiry.ralamb@gmail.com"
-          className="text-blue-600 underline"
-        >
-          tsiry.ralamb@gmail.com
-        </a>
+        If you have any questions about these Terms,{" "}
+        <Link href={"/contact"} className="text-blue-500 hover:underline">
+          contact us
+        </Link>
+        .
       </p>
     </main>
   );
