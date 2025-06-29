@@ -5,7 +5,8 @@ import UserContext from "@/modules/providers/UserProvider";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { isConnected, signout } from "@/lib/auth-actions";
+import { createClient } from "@/utils/supabase/client";
+import { signout } from "@/lib/auth-actions";
 import Modal from "@/components/core/modal/Modal";
 import Link from "next/link";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
@@ -31,13 +32,15 @@ export default function Navigation() {
   };
 
   useEffect(() => {
-    // Load user status
     const fetchUser = async () => {
-      const connectedUser = await isConnected();
-      setUser(connectedUser);
+      const supabase = createClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
     };
     fetchUser();
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     // Scroll detection
