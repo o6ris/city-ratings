@@ -15,7 +15,7 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
+          cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
           supabaseResponse = NextResponse.next({
@@ -54,6 +54,9 @@ export async function updateSession(request: NextRequest) {
     "/contact",
   ];
 
+  // Define public API routes that don't require authentication
+  const PUBLIC_API_ROUTES = ["/api/auth", "/api/contact"];
+
   const isPublic =
     PUBLIC_PATHS.some(
       (publicPath) => path === publicPath || path.startsWith(publicPath + "/")
@@ -61,7 +64,7 @@ export async function updateSession(request: NextRequest) {
     /^\/district$/.test(path) ||
     /^\/district\/[^/]+$/.test(path) ||
     /^\/district\/[^/]+\/reviews$/.test(path) ||
-    path.startsWith("/api/auth");
+    PUBLIC_API_ROUTES.some((apiRoute) => path.startsWith(apiRoute));
 
   if (!user && !isPublic) {
     const url = request.nextUrl.clone();
