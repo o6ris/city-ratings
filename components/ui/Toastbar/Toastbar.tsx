@@ -5,7 +5,7 @@ import Icon from "@/components/core/Icons/Icon";
 import NotificationContext from "@/modules/providers/ToastProvider";
 
 export default function Toastbar() {
-  const { notification, handleNotification, isSuccess } =
+  const { notification, handleNotification, isSuccess,  } =
     useContext(NotificationContext);
 
   if (!notification) {
