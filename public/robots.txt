@@ -1,4 +1,13 @@
 User-agent: *
-Disallow:
+Disallow: /login
+Disallow: /signup
+Disallow: /auth
+Disallow: /account
+Disallow: /dashboard
+Disallow: /api
+Disallow: /404
+Disallow: /500
+
+Allow: /
 
 Sitemap: https://www.neighboursvoices.com/sitemap.xml
