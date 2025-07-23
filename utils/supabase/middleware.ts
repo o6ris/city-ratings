@@ -52,6 +52,8 @@ export async function updateSession(request: NextRequest) {
     "/terms",
     "/about",
     "/contact",
+    "/sitemap.xml",
+    "/robots.txt",
   ];
 
   // Define public API routes that don't require authentication
