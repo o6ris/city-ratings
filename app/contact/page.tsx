@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import useContact from "@/modules/hooks/contact/useContact";
 import Input from "@/components/core/inputs/Input";
 import Textarea from "@/components/core/inputs/Textarea";
+import NotificationContext from "@/modules/providers/ToastProvider";
 
 function Contact() {
+  const { handleNotification } = useContext(NotificationContext);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,6 +27,10 @@ function Contact() {
           e.preventDefault();
           try {
             await postContact(formData);
+            handleNotification(
+              "Your message has been sent successfully!",
+              true
+            );
             setFormData({ name: "", email: "", message: "" });
           } catch (error) {
             console.error("Failed to send message:", error);
