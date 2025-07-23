@@ -4,9 +4,11 @@ import { createClient } from "@/utils/supabase/server";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+import { User } from "@supabase/supabase-js"; // Import User type
+
 export async function signup(
   formData: FormData
-): Promise<{ message: string } | undefined> {
+): Promise<User | { message: string; status: number | undefined }> {
   try {
     const supabase = await createClient();
 
@@ -19,7 +21,7 @@ export async function signup(
       typeof password !== "string" ||
       typeof username !== "string"
     ) {
-      return { message: "Invalid input type." };
+      return { message: "Invalid input type.", status: 400 };
     }
 
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
@@ -31,7 +33,10 @@ export async function signup(
 
     if (signUpError) {
       console.error("Signup error:", signUpError);
-      return { message: signUpError.message ?? "Failed to sign up." };
+      return { 
+        message: signUpError.message ?? "Failed to sign up.", 
+        status: 400 
+      };
     }
 
     const user = signUpData?.user;
@@ -47,12 +52,28 @@ export async function signup(
 
       if (insertError) {
         console.error("Error inserting into users table:", insertError);
-        return { message: "Something went wrong during account creation." };
+        return { 
+          message: "Something went wrong during account creation.", 
+          status: 500 
+        };
       }
+
+      // Return the user object on success
+      return user;
     }
+
+    // This shouldn't happen, but just in case
+    return { 
+      message: "User creation failed unexpectedly.", 
+      status: 500 
+    };
+
   } catch (err) {
     console.error("Unexpected signup error:", err);
-    return { message: "Something went wrong. Please try again later." };
+    return { 
+      message: "Something went wrong. Please try again later.", 
+      status: 500 
+    };
   }
 }
 
