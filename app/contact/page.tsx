@@ -33,7 +33,13 @@ function Contact() {
             );
             setFormData({ name: "", email: "", message: "" });
           } catch (error) {
-            console.error("Failed to send message:", error);
+            if (error instanceof Error) {
+              console.error("Failed to send message:", error);
+              handleNotification(error.message, false);
+            } else {
+              console.error("An unexpected error occurred:", error);
+              handleNotification("An unexpected error occurred", false);
+            }
           }
         }}
         className=" flex flex-col gap-4"

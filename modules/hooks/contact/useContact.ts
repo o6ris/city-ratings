@@ -5,21 +5,34 @@ export default function useContact() {
     email: string;
     message: string;
   }) => {
-    console.log("payload", payload)
-    const response = await fetch(`${baseUrl}/api/contact`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-    console.log("response", response)
-    if (!response.ok) {
-      throw new Error("Failed to send contact message");
+    try {
+      const response = await fetch(`${baseUrl}/api/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        const errorMessages = Object.entries(data.errors)
+          .map(
+            ([field, messages]) =>
+              `${field}: ${(messages as string[]).join(", ")}`
+          )
+          .join("; ");
+
+        throw new Error(`Validation failed: ${errorMessages}`);
+      }
+      return data;
+    } catch (error) {
+      // console.error("Error posting contact:", error);
+      if (error instanceof Error) {
+        throw error;
+      } else {
+        throw new Error("An unexpected error occurred");
+      }
     }
-    const data = await response.json();
-    console.log("response data", data)
-    return data;
   };
 
   return { postContact };
