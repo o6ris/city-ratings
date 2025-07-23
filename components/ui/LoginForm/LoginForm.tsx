@@ -1,5 +1,8 @@
 "use client";
 
+import { useContext } from "react";
+import UserContext from "@/modules/providers/UserProvider";
+import { User } from "@supabase/supabase-js";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Icon from "@/components/core/Icons/Icon";
@@ -10,19 +13,23 @@ export default function LoginForm({
   onAction,
   onActionText,
 }: {
-  onAction: (formData: FormData) => Promise<{ message: string } | undefined>;
+  onAction: (
+    formData: FormData
+  ) => Promise<User | { message: string; status: number | undefined }>;
   onActionText: string;
 }) {
   const [errorMessage, setErrorMessage] = useState("");
+  const { setUser } = useContext(UserContext);
   const router = useRouter();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const result = await onAction(formData);
-    if (result?.message) {
+    if ("message" in result) {
       setErrorMessage(result.message);
     } else {
+      setUser(result);
       router.push(onActionText === "Sign up" ? "/email-confirmation" : "/home");
     }
   }
@@ -97,7 +104,9 @@ export default function LoginForm({
         </button>
         <SignInWithGoogleButton
           buttonText={
-            onActionText === "Login" ? "Login with Google" : "Signup with Google"
+            onActionText === "Login"
+              ? "Login with Google"
+              : "Signup with Google"
           }
         />
       </div>

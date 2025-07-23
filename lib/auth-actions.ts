@@ -1,14 +1,14 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
+import { User } from "@supabase/supabase-js"; // Import User type
+
 export async function signup(
   formData: FormData
-): Promise<{ message: string } | undefined> {
+): Promise<User | { message: string; status: number | undefined }> {
   try {
     const supabase = await createClient();
 
@@ -21,7 +21,7 @@ export async function signup(
       typeof password !== "string" ||
       typeof username !== "string"
     ) {
-      return { message: "Invalid input type." };
+      return { message: "Invalid input type.", status: 400 };
     }
 
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
@@ -33,7 +33,10 @@ export async function signup(
 
     if (signUpError) {
       console.error("Signup error:", signUpError);
-      return { message: signUpError.message ?? "Failed to sign up." };
+      return { 
+        message: signUpError.message ?? "Failed to sign up.", 
+        status: 400 
+      };
     }
 
     const user = signUpData?.user;
@@ -49,12 +52,28 @@ export async function signup(
 
       if (insertError) {
         console.error("Error inserting into users table:", insertError);
-        return { message: "Something went wrong during account creation." };
+        return { 
+          message: "Something went wrong during account creation.", 
+          status: 500 
+        };
       }
+
+      // Return the user object on success
+      return user;
     }
+
+    // This shouldn't happen, but just in case
+    return { 
+      message: "User creation failed unexpectedly.", 
+      status: 500 
+    };
+
   } catch (err) {
     console.error("Unexpected signup error:", err);
-    return { message: "Something went wrong. Please try again later." };
+    return { 
+      message: "Something went wrong. Please try again later.", 
+      status: 500 
+    };
   }
 }
 
@@ -72,7 +91,7 @@ export async function login(formData: FormData) {
       };
     }
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error, data } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -83,8 +102,13 @@ export async function login(formData: FormData) {
         status: error.status,
       };
     }
-
-    revalidatePath("/home", "layout");
+    if (!data?.user) {
+      return {
+        message: "User not found.",
+        status: 404,
+      };
+    }
+    return data.user;
   } catch (err: unknown) {
     console.error("Unexpected login error:", err);
     return {
@@ -119,12 +143,7 @@ export async function signInWithGoogle(): Promise<{ url: string | null }> {
 export async function signout() {
   const supabase = await createClient();
   const { error } = await supabase.auth.signOut();
-  if (error) {
-    console.log(error);
-    redirect("/error");
-  }
-
-  redirect("/home");
+  return { error };
 }
 
 export async function isConnected() {

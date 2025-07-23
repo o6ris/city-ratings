@@ -179,7 +179,7 @@ export default async function OneDistrict({
           </p>
         </div>
         <div className="flex flex-col gap-2 bg-neutral p-4 rounded-2xl box-shadow border border-base-200">
-          <p>Sector</p>
+          <p>Quadrant</p>
           <p className="!text-medium !font-bold">
             {district.sector.charAt(0).toUpperCase() + district.sector.slice(1)}
           </p>

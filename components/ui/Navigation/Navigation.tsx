@@ -1,9 +1,12 @@
 "use client";
 
-import { User } from "@supabase/supabase-js";
+import { useContext } from "react";
+import UserContext from "@/modules/providers/UserProvider";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { isConnected, signout } from "@/lib/auth-actions";
+import { createClient } from "@/utils/supabase/client";
+import { signout } from "@/lib/auth-actions";
 import Modal from "@/components/core/modal/Modal";
 import Link from "next/link";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
@@ -13,17 +16,31 @@ import Image from "next/image";
 
 export default function Navigation() {
   const [isAtTop, setIsAtTop] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
+  const { setUser, user } = useContext(UserContext);
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleSignout = async () => {
+    const { error } = await signout();
+    if (!error) {
+      setUser(null);
+      router.push("/home");
+    } else {
+      console.error("Error signing out:", error);
+      router.push("/error");
+    }
+  };
 
   useEffect(() => {
-    // Load user status
     const fetchUser = async () => {
-      const connectedUser = await isConnected();
-      setUser(connectedUser);
+      const supabase = createClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
     };
     fetchUser();
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     // Scroll detection
@@ -43,7 +60,7 @@ export default function Navigation() {
       } ${isAtTop ? "" : "bg-base-300 shadow-lg"}`}
     >
       <div className="flex items-center gap-4">
-        <div className="flex flex-start">
+        <Link href="/home" className="flex flex-start">
           <Image
             src="/logo.svg"
             width={100}
@@ -58,7 +75,7 @@ export default function Navigation() {
             alt="Neibourhs voices"
             className="flex md:hidden"
           />
-        </div>
+        </Link>
         <Modal
           modalId="search-district"
           content={<SearchDistrict modalId="search-district" />}
@@ -114,7 +131,7 @@ export default function Navigation() {
       </div>
 
       {/* Mobile Menu */}
-      <BurgerMenu user={user} signout={signout} />
+      <BurgerMenu user={user} signout={handleSignout} />
     </nav>
   );
 }

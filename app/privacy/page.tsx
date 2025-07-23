@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -84,13 +85,10 @@ export default function PrivacyPolicyPage() {
         <li>Withdraw consent at any time</li>
       </ul>
       <p>
-        For any request, contact:{" "}
-        <a
-          href="mailto:tsiry.ralamb@gmail.com"
-          className="text-blue-600 underline"
-        >
-          tsiry.ralamb@gmail.com
-        </a>
+        For any request,{" "}
+        <Link href={"/contact"} className="text-blue-500 hover:underline">
+          contact us
+        </Link>
       </p>
 
       <h2 className="text-xl font-semibold mt-6">7. Changes to This Policy</h2>

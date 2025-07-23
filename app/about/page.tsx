@@ -4,9 +4,9 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "Learn why Neighbours Voices was created and how it helps Calgarians and newcomers find their perfect community.",
+  description:
+    "Learn why Neighbours Voices was created and how it helps Calgarians and newcomers find their perfect community.",
 };
-
 
 export default function AboutPage() {
   return (
@@ -62,8 +62,11 @@ export default function AboutPage() {
       <p>
         If you&apos;d like to contribute to the project in any way, feedback,
         partnerships, development, or spreading the word, feel free to reach
-        out. I&apos;d love to hear from you.
+        out. I&apos;d love to hear from you :
       </p>
+      <Link href={"/contact"} className="text-blue-500 hover:underline">
+        contact us
+      </Link>
 
       {/* TODO : Setup a buy me a coffe thing */}
       {/* <p>

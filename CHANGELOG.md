@@ -1,17 +1,18 @@
-## [0.13.4] - 2025-06-19
+## [0.14.5] - 2025-07-23
 
 ✨ Features
 
-- **RatingForm**
-  - Displayed **helper text** when the comment section isn't properly filled out
-- **Home Page**
-  - Added **additional content** to enrich the homepage experience
+- **Contact Page**
+  - Created a **contact form** and corresponding `/contact` route
+  - Integrated the form into the **About Us** page
+  - Added a **toast bar** for submit confirmation feedback
+  - Improved **error handling** in `useContact` and `ContactForm` for better UX
 
 🛠️ Fixes
 
-- **LoginForm**
-  - Fixed **top margin issue** on mobile view
-- **Middleware**
-  - Handled **protected routes** more securely
 - **Navigation**
-  - Fixed display of **login/logout buttons** after sign-in and sign-out
+  - Ensured **auth detection remains client-side** to prevent hydration mismatches
+- **Middleware**
+  - Defined **public API routes** for `/contact` to avoid unintended protection
+- **Toast Notification**
+  - Fixed **type definition** in toast configuration
