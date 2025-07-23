@@ -36,6 +36,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/terms`,
       lastModified: new Date(),
     },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: new Date(),
+    },
     ...dynamicPages,
   ];
 }

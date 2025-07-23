@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, ReactNode } from "react";
 import { User } from "@supabase/supabase-js";
 
 type UserContextType = {
@@ -11,7 +11,6 @@ export const UserContext = createContext<UserContextType>({
   setUser: () => {},
 });
 
-import { ReactNode } from "react";
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
