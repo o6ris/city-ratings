@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className=" absolute bottom-0 left-0 w-full">
       <div className="container mx-auto text-center mb-6">
         <p className="!text-xsmall">
-          &copy; {new Date().getFullYear()} Neighbours Voices 0.13.4. All rights reserved.
+          &copy; {new Date().getFullYear()} Neighbours Voices 0.14.6. All rights reserved.
         </p>
         <div className="text-xsmall">
           <Link href="/terms" className="text-blue-600 hover:underline">
