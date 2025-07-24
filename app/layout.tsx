@@ -4,6 +4,7 @@ import { Alexandria } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/ui/Navigation/Navigation";
 import Footer from "@/components/ui/Footer/Footer";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const AlexandriaFont = Alexandria({
   subsets: ["latin"],
@@ -66,6 +67,12 @@ export default function RootLayout({
           {children}
           <Footer />
         </Providers>
+        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID &&
+          process.env.NODE_ENV === "production" && (
+            <GoogleAnalytics
+              gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID!}
+            />
+          )}
       </body>
     </html>
   );
