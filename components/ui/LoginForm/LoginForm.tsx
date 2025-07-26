@@ -1,6 +1,7 @@
 "use client";
 
 import { useContext } from "react";
+import { useSearchParams } from "next/navigation";
 import UserContext from "@/modules/providers/UserProvider";
 import { User } from "@supabase/supabase-js";
 import { useState } from "react";
@@ -21,6 +22,8 @@ export default function LoginForm({
   const [errorMessage, setErrorMessage] = useState("");
   const { setUser } = useContext(UserContext);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo");
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -30,7 +33,11 @@ export default function LoginForm({
       setErrorMessage(result.message);
     } else {
       setUser(result);
-      router.push(onActionText === "Sign up" ? "/email-confirmation" : "/home");
+      if (onActionText === "Sign up") {
+        router.push("/email-confirmation");
+      } else {
+        router.push(redirectTo || "/home");
+      }
     }
   }
 
