@@ -90,7 +90,7 @@ export default function RatingForm({
           step={1}
           value={rating.cost_of_living}
           iconName="CircleDollarSign"
-          name="Cost of Living"
+          name="Affordability"
           title="cost_of_living"
           onChange={(value) =>
             setRating((prev) => ({
