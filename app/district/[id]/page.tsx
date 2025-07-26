@@ -132,7 +132,7 @@ export default async function OneDistrict({
                           {criteriasDict[key].title}
                         </p>
                         <span className="!text-xlarge !font-black">
-                          {value}
+                          {value}<span>/10</span>
                         </span>
                       </div>
                     }

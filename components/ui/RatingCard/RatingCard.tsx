@@ -12,7 +12,7 @@ import CriteriaInfos from "../CriteriaInfos/CriteriaInfos";
 
 export default function RatingCard({ review }: { review: Review }) {
   const { postVote, voteCounts } = useVotes(review.id);
-  const maxCharsComment = 200; // TODO: or however many characters fit into your h-32
+  const maxCharsComment = 90; // TODO: or however many characters fit into your h-32
   const maxChartUsername = 20; // TODO: or however many characters fit into full width
   const isCommentLong = review.comment.length > maxCharsComment;
   const shortComment = isCommentLong
@@ -78,9 +78,8 @@ export default function RatingCard({ review }: { review: Review }) {
       </section>
       {/* Comment */}
       <section className="flex justify-start w-full">
-        <div className="text-primary h-32 w-full break-words overflow-hidden">
+        <div className="text-primary h-32 w-full break-words overflow-hidden border border-base-300 rounded-xl p-2">
           <p className="whitespace-pre-wrap">
-            {`" `}
             {shortComment}
             {isCommentLong && (
               <Modal
@@ -106,7 +105,6 @@ export default function RatingCard({ review }: { review: Review }) {
                 }
               />
             )}
-            {` "`}
           </p>
         </div>
       </section>
