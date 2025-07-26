@@ -112,11 +112,11 @@ export default function Navigation() {
         {user ? (
           <Modal
             modalId="modal-logout"
-            content={<h4>Are you sure you want to logout?</h4>}
+            content={<h4 className="text-primary">Are you sure you want to logout?</h4>}
             triggerBtnContent="Logout"
             triggerBtnStyle="cursor-pointer text-shadow-md"
             onActionBtnText="Logout"
-            onAction={signout}
+            onAction={handleSignout}
           />
         ) : (
           <>

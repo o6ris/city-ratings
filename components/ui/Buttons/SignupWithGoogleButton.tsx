@@ -1,5 +1,6 @@
 "use client";
 import { signInWithGoogle } from "@/lib/auth-actions";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 
 interface SignInWithGoogleButtonProps {
@@ -9,8 +10,11 @@ interface SignInWithGoogleButtonProps {
 const SignInWithGoogleButton: React.FC<SignInWithGoogleButtonProps> = ({
   buttonText,
 }) => {
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo") || "/home";
+
   const handleGoogleLogin = async () => {
-    const { url } = await signInWithGoogle();
+    const { url } = await signInWithGoogle(redirectTo);
     if (url) {
       window.location.href = url; // ✅ This is safe in client
     } else {
