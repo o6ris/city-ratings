@@ -33,9 +33,9 @@ export async function signup(
 
     if (signUpError) {
       console.error("Signup error:", signUpError);
-      return { 
-        message: signUpError.message ?? "Failed to sign up.", 
-        status: 400 
+      return {
+        message: signUpError.message ?? "Failed to sign up.",
+        status: 400,
       };
     }
 
@@ -52,9 +52,9 @@ export async function signup(
 
       if (insertError) {
         console.error("Error inserting into users table:", insertError);
-        return { 
-          message: "Something went wrong during account creation.", 
-          status: 500 
+        return {
+          message: "Something went wrong during account creation.",
+          status: 500,
         };
       }
 
@@ -63,16 +63,15 @@ export async function signup(
     }
 
     // This shouldn't happen, but just in case
-    return { 
-      message: "User creation failed unexpectedly.", 
-      status: 500 
+    return {
+      message: "User creation failed unexpectedly.",
+      status: 500,
     };
-
   } catch (err) {
     console.error("Unexpected signup error:", err);
-    return { 
-      message: "Something went wrong. Please try again later.", 
-      status: 500 
+    return {
+      message: "Something went wrong. Please try again later.",
+      status: 500,
     };
   }
 }
@@ -119,12 +118,16 @@ export async function login(formData: FormData) {
 }
 
 // lib/auth-actions.ts
-export async function signInWithGoogle(): Promise<{ url: string | null }> {
+export async function signInWithGoogle(
+  redirectToAfterLogin: string = "/home"
+): Promise<{ url: string | null }> {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${baseUrl}/auth/callback`,
+      redirectTo: `${baseUrl}/auth/callback?redirectTo=${encodeURIComponent(
+        redirectToAfterLogin
+      )}`,
       queryParams: {
         access_type: "offline",
         prompt: "consent",

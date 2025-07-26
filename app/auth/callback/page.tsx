@@ -1,15 +1,19 @@
 "use client";
 import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 
 export default function AuthCallback() {
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo");
+
   useEffect(() => {
     const handleAuth = async () => {
       const supabase = createClient();
       const { data: sessionData } = await supabase.auth.getSession();
 
       const user = sessionData.session?.user;
-      if (!user) return window.location.href = "/error";
+      if (!user) return (window.location.href = "/error");
 
       const { data: existingUser } = await supabase
         .from("users")
@@ -28,16 +32,16 @@ export default function AuthCallback() {
         ]);
         if (insertError) {
           console.error("Failed to insert user:", insertError);
-          return window.location.href = "/error";
+          return (window.location.href = "/error");
         }
       }
 
       // ✅ Force full reload so SSR gets cookies
-      window.location.href = "/home";
+      window.location.href = redirectTo || "/home";
     };
 
     handleAuth();
-  }, []);
+  }, [redirectTo]);
 
   return <p className="text-center mt-10">Signing you in…</p>;
 }
