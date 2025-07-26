@@ -46,7 +46,7 @@ export default function SubmitRatingButton({
       if (response.error) {
         console.error("Error submitting rating:", response.error);
       } else {
-        router.push(`/district/${districtId}`);
+        router.push(`/rate-confirmation/${districtId}`);
       }
     } catch (error) {
       console.error("Unexpected error:", error);
