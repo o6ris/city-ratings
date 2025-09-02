@@ -156,3 +156,15 @@ create table public.district_ratings (
   constraint district_ratings_pkey primary key (district_id),
   constraint district_ratings_district_id_fkey foreign KEY (district_id) references districts (id)
 ) TABLESPACE pg_default;
+
+-- ===================== SURVEYS =====================
+create table survey (
+  id uuid primary key default gen_random_uuid(),
+  district uuid not null references districts(id), 
+  "user" text not null,                             
+  understanding text check (understanding in ('Yes','Not sure','No')) not null,
+  recommend text check (recommend in ('Yes','Maybe','No')) not null,
+  ease_of_review int check (ease_of_review >= 1 and ease_of_review <= 5) not null,
+  feedback text check (char_length(feedback) <= 500),
+  created_at timestamp with time zone default now()
+);
