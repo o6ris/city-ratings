@@ -12,7 +12,7 @@ export default async function RateConfirmation({
   return (
     <div className="flex flex-col items-center gap-8 mt-12 lg:mt-0">
       <h3>Thanks for rating {district.name}!</h3>
-      <Survey />
+      <Survey district={id} />
       <Link
         className="btn btn-secondary text-primary rounded-full"
         href={`/district/${id}`}

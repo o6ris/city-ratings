@@ -3,7 +3,7 @@
 import { useContext, useState } from "react";
 import UserContext from "@/modules/providers/UserProvider";
 
-function Survey() {
+function Survey({ district }: { district: string }) {
   const { user } = useContext(UserContext);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
@@ -12,22 +12,35 @@ function Survey() {
     recommend: "",
     comment: "",
   });
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+
+const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const value =
+    e.target.name === "easeOfReview" ? parseInt(e.target.value, 10) : e.target.value;
+  setForm({ ...form, [e.target.name]: value });
+};
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await fetch("/api/survey", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...form, district, user: user?.email }),
+    });
+    setSubmitted(true);
   };
   console.log("user in survey", user);
-  console.log("form", form)
+  console.log("form", form);
   return (
     <section>
       {!submitted ? (
         <form
-          onSubmit={console.log("sublitted")}
+          onSubmit={handleSubmit}
           className="w-full max-w p-6 mt-6 bg-white rounded-2xl shadow-lg space-y-4"
         >
           <p className="text-lg font-semibold text-center">
-            Before you go, could you answer 3 quick questions? (it takes less than 10 seconds)
+            Before you go, could you answer 3 quick questions? (it takes less
+            than 10 seconds)
           </p>
 
           {/* Question 1 */}
@@ -96,7 +109,8 @@ function Survey() {
           {/* Optional Comment */}
           <div>
             <label className="block font-medium">
-              If something was confusing or hard, could you tell us what it was? (optional)
+              If something was confusing or hard, could you tell us what it was?
+              (optional)
             </label>
             <textarea
               name="comment"
