@@ -36,4 +36,38 @@ export async function POST(request: Request) {
   }
 
   console.log("inserting survey", result.data);
+
+  const payload = {
+    district: result.data.district,
+    user: result.data.user,
+    understanding: result.data.understanding,
+    recommend: result.data.recommend,
+    ease_of_review: result.data.easeOfReview, // map here
+    feedback: result.data.feedback,
+  };
+
+  const { data, error } = await supabase
+    .from("survey")
+    .insert([payload])
+    .select();
+
+  if (error) {
+    console.error("Error inserting data:", {
+      message: error.message,
+      details: error.details,
+      hint: error.hint,
+      code: error.code,
+    });
+    return NextResponse.json(
+      {
+        error: "Failed to submit survey",
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code,
+      },
+      { status: 500 }
+    );
+  }
+  return NextResponse.json({ success: true, data });
 }
