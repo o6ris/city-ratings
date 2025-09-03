@@ -59,6 +59,9 @@ export async function updateSession(request: NextRequest) {
   // Define public API routes that don't require authentication
   const PUBLIC_API_ROUTES = ["/api/auth", "/api/contact"];
 
+  // Check if it's a GET request to /api/votes (allow public read access)
+  const isPublicVotesRead = path === "/api/votes" && request.method === "GET";
+
   const isPublic =
     PUBLIC_PATHS.some(
       (publicPath) => path === publicPath || path.startsWith(publicPath + "/")
@@ -66,7 +69,8 @@ export async function updateSession(request: NextRequest) {
     /^\/district$/.test(path) ||
     /^\/district\/[^/]+$/.test(path) ||
     /^\/district\/[^/]+\/reviews$/.test(path) ||
-    PUBLIC_API_ROUTES.some((apiRoute) => path.startsWith(apiRoute));
+    PUBLIC_API_ROUTES.some((apiRoute) => path.startsWith(apiRoute)) ||
+    isPublicVotesRead;
 
   if (!user && !isPublic) {
     const url = request.nextUrl.clone();

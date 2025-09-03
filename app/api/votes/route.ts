@@ -8,12 +8,8 @@ export async function GET(request: NextRequest) {
   // Get the authenticated user
   const {
     data: { user },
-    error: authError,
   } = await supabase.auth.getUser();
 
-  if (authError || !user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
 
   // ✅ Count up and down votes for this rating
   const { data: allVotes, error: countError } = await supabase
@@ -28,17 +24,16 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const hasVoted = allVotes.find((v) => {
-    return v.user_id === user.id;
-  });
+  const hasVoted = user ? allVotes.find((v) => v.user_id === user.id) : null;
 
   // Group counts manually
   const voteCounts = {
-    rating_id: allVotes[0].rating_id,
-    user_id: allVotes.map((v) => v.user_id),
-    up: allVotes.filter((v) => v.vote_type === "up").length,
-    down: allVotes.filter((v) => v.vote_type === "down").length,
+    rating_id: allVotes && allVotes.length > 0 ? allVotes[0].rating_id : rating_id,
+    user_id: allVotes ? allVotes.map((v) => v.user_id) : [],
+    up: allVotes ? allVotes.filter((v) => v.vote_type === "up").length : 0,
+    down: allVotes ? allVotes.filter((v) => v.vote_type === "down").length : 0,
     has_voted: hasVoted ? hasVoted.vote_type : null,
+    is_authenticated: !!user, // Add this to know if user can vote
   };
 
   return NextResponse.json(voteCounts);
