@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useVotes from "@/modules/hooks/votes/useVotes";
 import Modal from "@/components/core/modal/Modal";
 import Icon from "@/components/core/Icons/Icon";
@@ -25,12 +25,13 @@ export default function RatingCard({ review }: { review: Review }) {
     : username;
 
   const pathname = usePathname();
+  const router = useRouter();
 
   // Handle voting - show message for non-authenticated users
   const handleVote = (voteType: "up" | "down") => {
     if (voteCounts?.is_authenticated === false) {
       // You can show a toast/alert here or redirect to login
-      alert("Please log in to vote on reviews");
+      router.push("/login");
       return;
     }
     postVote({
@@ -65,7 +66,7 @@ export default function RatingCard({ review }: { review: Review }) {
           <span className="text-primary">/10</span>
         </div>
       </section>
-      
+
       {/* Criterias */}
       <section className="grid grid-cols-4 w-full gap-2 md:grid-cols-4 md:gap-6">
         {Object.entries(review.criterias).map(([key, value]) => {
@@ -90,7 +91,7 @@ export default function RatingCard({ review }: { review: Review }) {
           );
         })}
       </section>
-      
+
       {/* Comment */}
       <section className="flex justify-start w-full">
         <div className="text-primary h-32 w-full break-words overflow-hidden border border-base-300 rounded-xl p-2">
@@ -123,18 +124,23 @@ export default function RatingCard({ review }: { review: Review }) {
           </p>
         </div>
       </section>
-      
+
       {/* footer */}
       <section className="flex justify-between items-center w-full">
         <div className="flex items-center gap-2">
           <button
+            // disabled={voteCounts?.is_authenticated === false}
             onClick={() => handleVote("up")}
             className={`${
               voteCounts?.has_voted === "up" ? "btn-secondary" : ""
             } btn rounded-full flex items-center gap-2 ${
               voteCounts?.is_authenticated === false ? "opacity-75" : ""
             }`}
-            title={voteCounts?.is_authenticated === false ? "Login to vote" : "Upvote"}
+            title={
+              voteCounts?.is_authenticated === false
+                ? "Login to vote"
+                : "Upvote"
+            }
           >
             <span className="text-primary">
               {voteCounts ? voteCounts.up : 0}
@@ -142,13 +148,18 @@ export default function RatingCard({ review }: { review: Review }) {
             <Icon name="ThumbsUp" strokeWidth={2} size={16} color="#480201" />
           </button>
           <button
+            // disabled={voteCounts?.is_authenticated === false}
             onClick={() => handleVote("down")}
             className={`${
               voteCounts?.has_voted === "down" ? "btn-secondary" : ""
             } btn rounded-full flex items-center gap-2 ${
               voteCounts?.is_authenticated === false ? "opacity-75" : ""
             }`}
-            title={voteCounts?.is_authenticated === false ? "Login to vote" : "Downvote"}
+            title={
+              voteCounts?.is_authenticated === false
+                ? "Login to vote"
+                : "Downvote"
+            }
           >
             <span className="text-primary">
               {voteCounts ? voteCounts.down : 0}
