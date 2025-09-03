@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useVotes from "@/modules/hooks/votes/useVotes";
 import Modal from "@/components/core/modal/Modal";
 import Icon from "@/components/core/Icons/Icon";
@@ -12,8 +12,8 @@ import CriteriaInfos from "../CriteriaInfos/CriteriaInfos";
 
 export default function RatingCard({ review }: { review: Review }) {
   const { postVote, voteCounts } = useVotes(review.id);
-  const maxCharsComment = 90; // TODO: or however many characters fit into your h-32
-  const maxChartUsername = 20; // TODO: or however many characters fit into full width
+  const maxCharsComment = 90;
+  const maxChartUsername = 20;
   const isCommentLong = review.comment.length > maxCharsComment;
   const shortComment = isCommentLong
     ? review.comment.slice(0, maxCharsComment).trim() + "..."
@@ -25,6 +25,20 @@ export default function RatingCard({ review }: { review: Review }) {
     : username;
 
   const pathname = usePathname();
+  const router = useRouter();
+
+  // Handle voting - show message for non-authenticated users
+  const handleVote = (voteType: "up" | "down") => {
+    if (voteCounts?.is_authenticated === false) {
+      // You can show a toast/alert here or redirect to login
+      router.push("/login");
+      return;
+    }
+    postVote({
+      rating_id: review.id,
+      vote_type: voteType,
+    });
+  };
 
   return (
     <div className="flex flex-col gap-4 p-4 bg-neutral text-neutral-content rounded-2xl w-full shadow-lg flex flex-col items-center justify-center">
@@ -52,8 +66,9 @@ export default function RatingCard({ review }: { review: Review }) {
           <span className="text-primary">/10</span>
         </div>
       </section>
-      {/* Criterias  */}
-      <section className="grid grid-cols-4 w-full gap-2 md:grid-cols-4 md:gap-6  ">
+
+      {/* Criterias */}
+      <section className="grid grid-cols-4 w-full gap-2 md:grid-cols-4 md:gap-6">
         {Object.entries(review.criterias).map(([key, value]) => {
           return (
             <div key={key}>
@@ -76,6 +91,7 @@ export default function RatingCard({ review }: { review: Review }) {
           );
         })}
       </section>
+
       {/* Comment */}
       <section className="flex justify-start w-full">
         <div className="text-primary h-32 w-full break-words overflow-hidden border border-base-300 rounded-xl p-2">
@@ -108,19 +124,23 @@ export default function RatingCard({ review }: { review: Review }) {
           </p>
         </div>
       </section>
+
       {/* footer */}
       <section className="flex justify-between items-center w-full">
         <div className="flex items-center gap-2">
           <button
-            onClick={() =>
-              postVote({
-                rating_id: review.id,
-                vote_type: "up",
-              })
-            }
+            // disabled={voteCounts?.is_authenticated === false}
+            onClick={() => handleVote("up")}
             className={`${
               voteCounts?.has_voted === "up" ? "btn-secondary" : ""
-            } btn rounded-full flex items-center gap-2`}
+            } btn rounded-full flex items-center gap-2 ${
+              voteCounts?.is_authenticated === false ? "opacity-75" : ""
+            }`}
+            title={
+              voteCounts?.is_authenticated === false
+                ? "Login to vote"
+                : "Upvote"
+            }
           >
             <span className="text-primary">
               {voteCounts ? voteCounts.up : 0}
@@ -128,15 +148,18 @@ export default function RatingCard({ review }: { review: Review }) {
             <Icon name="ThumbsUp" strokeWidth={2} size={16} color="#480201" />
           </button>
           <button
-            onClick={() =>
-              postVote({
-                rating_id: review.id,
-                vote_type: "down",
-              })
-            }
+            // disabled={voteCounts?.is_authenticated === false}
+            onClick={() => handleVote("down")}
             className={`${
               voteCounts?.has_voted === "down" ? "btn-secondary" : ""
-            } btn rounded-full flex items-center gap-2`}
+            } btn rounded-full flex items-center gap-2 ${
+              voteCounts?.is_authenticated === false ? "opacity-75" : ""
+            }`}
+            title={
+              voteCounts?.is_authenticated === false
+                ? "Login to vote"
+                : "Downvote"
+            }
           >
             <span className="text-primary">
               {voteCounts ? voteCounts.down : 0}
