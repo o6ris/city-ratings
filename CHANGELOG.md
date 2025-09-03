@@ -1,21 +1,19 @@
-## [0.14.7] - 2025-07-23
+## [0.14.8] - 2025-08-02
 
 ✨ Features
 
-- **Login Flow**
-  - Stored the **last visited path** before login to enhance redirect accuracy
-  - After login or signup with Google, users are redirected to their **previously visited page**
-- **Rating Flow**
-  - After submitting a rating, users are now redirected to a **rate-confirmation page**
+- **Voting**
+  - **RatingCard** now redirects users to the **login page** if they try to vote while not connected
+- **Survey System**
+  - Added **survey UI** on the rate-confirmation page
+  - Created **API route and database table** to handle survey submissions and store responses
 
 🛠️ Fixes
 
-- **Navigation**
-  - Ensured redirection to **home after logout**
-- **RatingCard**
-  - Fixed issue with the **"open comment modal"** button not triggering
-- **Hydration**
-  - Wrapped components using `useSearchParams()` inside **`<Suspense>` boundaries** to avoid build errors
-- **Text & Copy**
-  - Updated label from **"Cost of Living" → "Affordability"** for clarity
-  - Added **`/10` indicators** next to scores for better user understanding
+- **Voting**
+  - Made **vote counts public** while keeping the **voting action protected for authenticated users**
+
+🔧 DevOps
+
+- **Development Environment**
+  - Set **Prettier** as the default code formatter
