@@ -7,6 +7,18 @@ const surveySchema = z.object({
   user: z.string().email(),
   understanding: z.enum(["Yes", "Not sure", "No"]),
   recommend: z.enum(["Yes", "Maybe", "No"]),
+  source: z.enum([
+    "google",
+    "ai",
+    "social",
+    "friend",
+    "newsletter",
+    "association",
+    "forum",
+    "event",
+    "founder",
+    "other",
+  ]),
   easeOfReview: z.number().int().min(1).max(5),
   feedback: z.string().max(500).optional(),
 });
@@ -15,8 +27,6 @@ export async function POST(request: Request) {
   const supabase = await createClient();
 
   const body = await request.json();
-
-  console.log("body", body);
 
   const result = surveySchema.safeParse(body);
   if (!result.success) {
@@ -35,14 +45,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  console.log("inserting survey", result.data);
-
   const payload = {
     district: result.data.district,
     user: result.data.user,
     understanding: result.data.understanding,
     recommend: result.data.recommend,
-    ease_of_review: result.data.easeOfReview, // map here
+    source: result.data.source,
+    ease_of_review: result.data.easeOfReview,
     feedback: result.data.feedback,
   };
 
