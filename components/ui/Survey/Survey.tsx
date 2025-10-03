@@ -11,14 +11,21 @@ function Survey({ district }: { district: string }) {
     easeOfReview: "",
     recommend: "",
     comment: "",
+    source: "",
   });
 
-const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  const value =
-    e.target.name === "easeOfReview" ? parseInt(e.target.value, 10) : e.target.value;
-  setForm({ ...form, [e.target.name]: value });
-};
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const value =
+      e.target.name === "easeOfReview"
+        ? parseInt(e.target.value, 10)
+        : e.target.value;
 
+    setForm({ ...form, [e.target.name]: value });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,8 +36,6 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
     });
     setSubmitted(true);
   };
-  console.log("user in survey", user);
-  console.log("form", form);
   return (
     <section>
       {!submitted ? (
@@ -104,6 +109,34 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElemen
                 </label>
               ))}
             </div>
+          </div>
+
+          {/* Question 4 */}
+          <div>
+            <label className="block font-medium">
+              4. How did you hear about NeighboursVoices.com?
+            </label>
+            <select
+              name="source"
+              className="w-full mt-2 p-2 border rounded-lg"
+              value={form.source || ""}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>
+                Select one
+              </option>
+              <option value="google">Google search</option>
+              <option value="ai">Ai search</option>
+              <option value="social">Social media</option>
+              <option value="friend">Friend recommendation</option>
+              <option value="newsletter">Community newsletter</option>
+              <option value="association">Local association / HOA</option>
+              <option value="forum">Online forum / group</option>
+              <option value="event">Flyer / Poster / Event</option>
+              <option value="founder">Founder</option>
+              <option value="other">Other</option>
+            </select>
           </div>
 
           {/* Optional Comment */}
